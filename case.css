@@ -170,3 +170,62 @@
   .slide-stage #slide-image{max-width:90vw;max-height:80vh}
   .side-peek,.next-case,.thumbnails button{transition:none!important}
 }
+
+
+/* Clean pinned viewer: remove thumbnail strip from the image area */
+.thumbnails,
+.slide-hint{
+  display:none!important;
+}
+
+.viewer-toolbar{
+  top:14px;
+  width:min(1500px,88vw);
+  pointer-events:none;
+}
+.viewer-toolbar #slide-count,
+.viewer-toolbar #full-image{
+  pointer-events:auto;
+  padding:8px 10px;
+  background:rgba(52,49,50,.72);
+  backdrop-filter:blur(8px);
+  border-radius:2px;
+}
+.viewer-toolbar #full-image{
+  border:1px solid #ffffff2e;
+  text-decoration:none;
+}
+.viewer-toolbar #full-image:hover{
+  background:#BE1622;
+  border-color:#BE1622;
+}
+
+/* Give the image a clean viewport and keep it fully visible */
+.slide-stage{
+  top:10vh;
+  height:80vh;
+  max-height:80vh;
+}
+.slide-stage #slide-image{
+  max-width:80vw;
+  max-height:80vh;
+}
+
+/* Adjacent slides remain visible but stay clearly secondary */
+.side-peek{
+  width:18vw;
+  height:64vh;
+  opacity:.46;
+  filter:brightness(.64) saturate(.78);
+}
+@media(max-width:900px){
+  .viewer-toolbar{width:92vw}
+  .slide-stage #slide-image{max-width:86vw;max-height:78vh}
+  .side-peek{width:11vw;height:58vh;opacity:.36}
+}
+@media(max-width:650px){
+  .viewer-toolbar{top:10px}
+  .slide-stage{top:11vh;height:78vh;max-height:78vh}
+  .slide-stage #slide-image{max-width:92vw;max-height:78vh}
+  .side-peek{width:8vw;height:52vh;opacity:.25}
+}
