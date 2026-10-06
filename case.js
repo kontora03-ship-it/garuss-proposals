@@ -4,21 +4,37 @@ const counter=document.querySelector('#slide-count'),previous=document.querySele
 const thumbs=[...document.querySelectorAll('[data-slide]')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 
-const prevPeek=document.createElement('img');
-const nextPeek=document.createElement('img');
-prevPeek.className='side-peek side-peek-prev';
-nextPeek.className='side-peek side-peek-next';
-prevPeek.alt=''; nextPeek.alt='';
-prevPeek.setAttribute('aria-hidden','true');
-nextPeek.setAttribute('aria-hidden','true');
-stage.insertBefore(prevPeek,image);
-stage.appendChild(nextPeek);
+const leftPeek=document.createElement('img');
+const rightPeek=document.createElement('img');
+leftPeek.className='side-peek side-peek-prev';
+rightPeek.className='side-peek side-peek-next';
+leftPeek.alt=''; rightPeek.alt='';
+leftPeek.setAttribute('aria-hidden','true');
+rightPeek.setAttribute('aria-hidden','true');
+stage.insertBefore(leftPeek,image);
+stage.appendChild(rightPeek);
 
 let current=0,requested=0,sequence=0,lastDirection=1;
 function updatePeeks(index){
-  const prev=data.images[index-1],nextItem=data.images[index+1];
-  if(prev){prevPeek.src=prev.src;prevPeek.hidden=false;}else{prevPeek.removeAttribute('src');prevPeek.hidden=true;}
-  if(nextItem){nextPeek.src=nextItem.src;nextPeek.hidden=false;}else{nextPeek.removeAttribute('src');nextPeek.hidden=true;}
+  const previousSlide=data.images[index-1];
+  const nextSlide=data.images[index+1];
+
+  // Left is always previous, right is always next.
+  if(previousSlide){
+    leftPeek.src=previousSlide.src;
+    leftPeek.hidden=false;
+  }else{
+    leftPeek.removeAttribute('src');
+    leftPeek.hidden=true;
+  }
+
+  if(nextSlide){
+    rightPeek.src=nextSlide.src;
+    rightPeek.hidden=false;
+  }else{
+    rightPeek.removeAttribute('src');
+    rightPeek.hidden=true;
+  }
 }
 function animateFrame(direction){
   if(reduced.matches)return;
@@ -26,7 +42,7 @@ function animateFrame(direction){
     {opacity:.55,transform:`translateX(${direction*28}px) scale(.992)`},
     {opacity:1,transform:'translateX(0) scale(1)'}
   ],{duration:620,easing:'cubic-bezier(.22,1,.36,1)'});
-  [prevPeek,nextPeek].forEach((peek,i)=>{
+  [leftPeek,rightPeek].forEach((peek,i)=>{
     if(peek.hidden)return;
     peek.animate([
       {opacity:0,transform:`translateX(${direction*(i?18:-18)}px) scale(.985)`},
@@ -94,43 +110,50 @@ if(slideHint)slideHint.textContent='Когда изображение в цен�
 let wheelSum=0,wheelLocked=false,wheelReset;
 let viewerPinned=false;
 let releasedDirection=0;
-let snapInProgress=false;
+let pinnedScrollY=0;
+let forcingScroll=false;
 
 function stageCenterDelta(){
   const rect=stage.getBoundingClientRect();
   return (rect.top+rect.height/2)-(innerHeight/2);
 }
-function snapStageToCenter(behavior='smooth'){
+function lockStageExactly(){
   const delta=stageCenterDelta();
-  if(Math.abs(delta)<=2)return;
-  snapInProgress=true;
-  scrollBy({top:delta,behavior:reduced.matches?'auto':behavior});
-  setTimeout(()=>{snapInProgress=false;},behavior==='smooth'?420:40);
+  pinnedScrollY=Math.round(scrollY+delta);
+  forcingScroll=true;
+  scrollTo({top:pinnedScrollY,behavior:'auto'});
+  requestAnimationFrame(()=>{forcingScroll=false;});
 }
 function shouldCapture(event){
   const delta=stageCenterDelta();
   const projected=delta-event.deltaY;
-  const threshold=Math.min(180,innerHeight*.18);
-  if(event.deltaY>0){
-    return delta>=-24&&(delta<=threshold||projected<=0);
-  }
-  return delta<=24&&(-delta<=threshold||projected>=0);
+  const closeEnough=Math.abs(delta)<=Math.min(150,innerHeight*.15);
+  const crossesCenter=(delta>0&&projected<=0)||(delta<0&&projected>=0);
+  return closeEnough||crossesCenter;
 }
 function setPinned(value){
   viewerPinned=value;
   stage.classList.toggle('is-pinned',value);
+  wheelSum=0;
   if(value){
     releasedDirection=0;
-    wheelSum=0;
+    lockStageExactly();
   }
 }
+
+addEventListener('scroll',()=>{
+  if(!viewerPinned||forcingScroll)return;
+  if(Math.abs(scrollY-pinnedScrollY)>1){
+    forcingScroll=true;
+    scrollTo({top:pinnedScrollY,behavior:'auto'});
+    requestAnimationFrame(()=>{forcingScroll=false;});
+  }
+},{passive:true});
 
 addEventListener('wheel',event=>{
   if(Math.abs(event.deltaY)<Math.abs(event.deltaX))return;
   const direction=event.deltaY>0?1:-1;
 
-  // After leaving an end, keep normal page scrolling in that direction.
-  // Reversing direction arms the viewer again.
   if(!viewerPinned&&releasedDirection){
     if(direction===releasedDirection)return;
     releasedDirection=0;
@@ -140,14 +163,12 @@ addEventListener('wheel',event=>{
     if(!shouldCapture(event))return;
     event.preventDefault();
     setPinned(true);
-    snapStageToCenter('smooth');
     return;
   }
 
   const atFirst=requested<=0;
   const atLast=requested>=data.images.length-1;
 
-  // Release only outward: last slide -> down, first slide -> up.
   if((direction>0&&atLast)||(direction<0&&atFirst)){
     setPinned(false);
     releasedDirection=direction;
@@ -155,12 +176,13 @@ addEventListener('wheel',event=>{
   }
 
   event.preventDefault();
-  if(snapInProgress||wheelLocked)return;
+  lockStageExactly();
+  if(wheelLocked)return;
 
   wheelSum+=event.deltaY;
   clearTimeout(wheelReset);
-  wheelReset=setTimeout(()=>{wheelSum=0;},160);
-  if(Math.abs(wheelSum)<44)return;
+  wheelReset=setTimeout(()=>{wheelSum=0;},170);
+  if(Math.abs(wheelSum)<48)return;
 
   const target=requested+direction;
   if(target<0||target>=data.images.length)return;
@@ -168,7 +190,10 @@ addEventListener('wheel',event=>{
   wheelLocked=true;
   wheelSum=0;
   show(target,direction);
-  setTimeout(()=>{wheelLocked=false;},620);
+  setTimeout(()=>{
+    wheelLocked=false;
+    if(viewerPinned)lockStageExactly();
+  },680);
 },{passive:false});
 
 /* Keep stage height matched to the rendered central slide */
@@ -177,8 +202,8 @@ function syncStageHeight(){
     const h=image.getBoundingClientRect().height;
     if(h>0)stage.style.setProperty('--stage-height',Math.ceil(h)+'px');
     if(viewerPinned){
-      requestAnimationFrame(()=>snapStageToCenter('auto'));
-      setTimeout(()=>{if(viewerPinned)snapStageToCenter('smooth');},560);
+      requestAnimationFrame(()=>lockStageExactly());
+      setTimeout(()=>{if(viewerPinned)lockStageExactly();},560);
     }
   });
 }
