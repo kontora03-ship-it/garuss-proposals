@@ -20,3 +20,25 @@
 .case-header>a:not(:has(img)):hover{
   color:#AE2C2B;
 }
+
+
+/* Compact case-header navigation buttons */
+.case-header>a:not(:has(img)){
+  width:max-content;
+  justify-self:start;
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:10px 14px;
+  border:1px solid #ffffff55;
+  border-radius:3px;
+  background:transparent;
+  color:#fff;
+}
+.case-header>a:not(:has(img)):hover{
+  background:#fff;
+  color:#AE2C2B;
+}
+.case-header>a:last-child{
+  justify-self:end;
+}
