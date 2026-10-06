@@ -121,3 +121,15 @@ addEventListener('wheel',event=>{
   show(target,direction);
   setTimeout(()=>{wheelLocked=false;},560);
 },{passive:false});
+
+
+/* Keep stage height matched to the rendered central slide */
+function syncStageHeight(){
+  requestAnimationFrame(()=>{
+    const h=image.getBoundingClientRect().height;
+    if(h>0)stage.style.setProperty('--stage-height',Math.ceil(h)+'px');
+  });
+}
+image.addEventListener('load',syncStageHeight);
+addEventListener('resize',syncStageHeight,{passive:true});
+if(image.complete)syncStageHeight();
