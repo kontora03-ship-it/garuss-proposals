@@ -11,6 +11,7 @@ const toolbar=document.querySelector('.viewer-toolbar');
 const hint=document.querySelector('.slide-hint');
 const thumbnails=document.querySelector('.thumbnails');
 const thumbs=[...document.querySelectorAll('[data-slide]')];
+const thumbImages=thumbs.map(button=>button.querySelector('img'));
 const header=document.querySelector('.case-header');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -42,6 +43,18 @@ let scrollVelocity=0;
 
 function clampIndex(index){
   return Math.max(0,Math.min(data.images.length-1,index));
+}
+
+function hydrateThumb(index){
+  if(index<0||index>=thumbImages.length)return;
+  const thumb=thumbImages[index];
+  if(!thumb||thumb.dataset.loaded==='1'||!thumb.dataset.src)return;
+  thumb.dataset.loaded='1';
+  thumb.src=thumb.dataset.src;
+}
+
+function hydrateThumbWindow(index){
+  for(let i=index-1;i<=index+1;i++)hydrateThumb(i);
 }
 
 function updatePeeks(index){
@@ -137,6 +150,7 @@ function show(index,direction){
       if(fullImage)fullImage.href=slide.src;
 
       thumbs.forEach((button,i)=>button.setAttribute('aria-current',String(i===index)));
+      hydrateThumbWindow(index);
       updatePeeks(index);
 
       const activeThumb=thumbs[index];
@@ -265,6 +279,7 @@ stage.addEventListener('touchend',event=>{
 addEventListener('scroll',requestScrollUpdate,{passive:true});
 addEventListener('resize',layoutViewer,{passive:true});
 
+hydrateThumbWindow(0);
 updatePeeks(0);
 layoutViewer();
 requestScrollUpdate();
