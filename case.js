@@ -34,15 +34,30 @@ if(slideHint) slideHint.textContent='Листайте колесом мыши, �
 let wheelSum=0,wheelLocked=false,wheelReset;
 stage.addEventListener('wheel',event=>{
   if(Math.abs(event.deltaY)<Math.abs(event.deltaX)) return;
+
+  const rect=stage.getBoundingClientRect();
+  const stageCenter=rect.top+rect.height/2;
+  const viewportCenter=innerHeight/2;
+  const centerTolerance=Math.min(110,innerHeight*.12);
+  const isCentered=Math.abs(stageCenter-viewportCenter)<=centerTolerance;
+
+  // Before the image reaches the screen center, keep normal page scrolling.
+  if(!isCentered) return;
+
   const direction=event.deltaY>0?1:-1;
   const target=requested+direction;
+
+  // At the first/last slide, release the wheel back to page scrolling.
   if(target<0||target>=data.images.length) return;
+
   event.preventDefault();
   if(wheelLocked) return;
+
   wheelSum+=event.deltaY;
   clearTimeout(wheelReset);
   wheelReset=setTimeout(()=>{wheelSum=0;},140);
   if(Math.abs(wheelSum)<36) return;
+
   wheelLocked=true;
   wheelSum=0;
   show(target);
