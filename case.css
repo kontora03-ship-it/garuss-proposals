@@ -208,3 +208,29 @@
   .slide-stage #slide-image{max-width:86vw;max-height:none}
   .side-peek{width:10vw;height:78%;opacity:.34}
 }
+
+
+/* Keep navigation strip strictly below the current image */
+.slide-stage{
+  height:var(--stage-height,auto);
+  min-height:0;
+  transition:height .55s cubic-bezier(.22,1,.36,1),opacity .4s ease;
+}
+.slide-hint,
+.thumbnails{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  float:none!important;
+  clear:both;
+}
+.slide-hint{
+  margin:12px auto 10px!important;
+}
+.thumbnails{
+  margin:0 auto!important;
+  z-index:4;
+}
