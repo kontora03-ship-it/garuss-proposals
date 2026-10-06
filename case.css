@@ -189,11 +189,11 @@
 .gallery-image{
   cursor:zoom-in;
   opacity:0;
-  transform:translateY(18px) scale(.997);
+  transform:translateY(10px) scale(.9985);
   filter:none;
   transition:
-    opacity 1.15s cubic-bezier(.22,1,.36,1),
-    transform 1.25s cubic-bezier(.22,1,.36,1);
+    opacity 1.45s cubic-bezier(.16,1,.3,1),
+    transform 1.65s cubic-bezier(.16,1,.3,1);
   will-change:opacity,transform;
 }
 .gallery-item.is-visible.is-ready .gallery-image{
@@ -274,7 +274,7 @@ body.lightbox-open{
 
 @media(max-width:650px){
   .gallery-image{
-    transform:translateY(12px) scale(.998);
+    transform:translateY(7px) scale(.999);
     filter:none;
   }
   .case-lightbox{
