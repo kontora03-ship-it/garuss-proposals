@@ -405,3 +405,117 @@ footer a:after{content:"  ↗"}
   .presentation-grid{grid-template-columns:1fr;gap:34px;}
   .presentation-card h2{min-height:0;font-size:22px}
 }
+
+
+/* Compact refinement: calmer spacing and footer */
+.catalog{
+  padding-top:48px;
+  padding-bottom:58px;
+}
+.catalog-heading{
+  min-height:auto;
+  padding:18px 0 36px;
+}
+.catalog-heading h1{
+  font-size:clamp(58px,7vw,112px);
+  line-height:.9;
+  margin-top:24px;
+}
+.catalog-heading p{
+  margin-top:10px;
+  font-size:15px;
+  line-height:1.5;
+}
+.categories{
+  margin-top:0;
+  padding:14px 0;
+  margin-bottom:18px;
+}
+.result-count{
+  margin:4px 0 20px;
+}
+.presentation-grid{
+  gap:30px 20px;
+}
+.presentation-link{
+  padding-bottom:14px;
+}
+.card-meta{
+  margin-top:12px;
+  margin-bottom:6px;
+}
+.presentation-card h2,
+.presentation-card:nth-child(1) h2{
+  min-height:auto;
+  font-size:20px;
+  line-height:1.2;
+}
+.empty{
+  min-height:190px;
+  padding:30px;
+  margin-top:18px;
+}
+.empty h2{
+  font-size:clamp(28px,3vw,44px);
+}
+.empty:after{
+  font-size:clamp(16px,2vw,28px);
+  margin-top:20px;
+  padding-top:14px;
+}
+
+/* restrained footer */
+footer{
+  min-height:0;
+  padding:24px 5% 28px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  grid-template-rows:auto;
+  align-items:center;
+  gap:22px;
+  background:var(--red);
+}
+footer:before{
+  content:none;
+}
+footer span:first-of-type,
+footer span:nth-of-type(2){
+  align-self:auto;
+}
+footer span:nth-of-type(2){
+  justify-self:center;
+  font-size:12px;
+  opacity:.9;
+}
+footer a{
+  position:static;
+  transform:none;
+  right:auto;
+  top:auto;
+  font-family:"CoFo Sans",Arial,sans-serif;
+  font-size:13px;
+  padding:0;
+  border:0;
+  border-radius:0;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+footer a:after{
+  content:" ↗";
+}
+@media(max-width:800px){
+  .catalog{padding-top:34px;padding-bottom:44px}
+  .catalog-heading{padding-bottom:30px}
+  .catalog-heading h1{font-size:clamp(48px,12vw,82px)}
+  .presentation-grid{gap:28px 14px}
+  footer{
+    padding:22px 6%;
+    grid-template-columns:1fr auto;
+    gap:10px 20px;
+  }
+  footer span:nth-of-type(2){
+    grid-column:1 / -1;
+    grid-row:2;
+    justify-self:start;
+  }
+}
