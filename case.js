@@ -114,3 +114,24 @@ if(viewer){
     else figure.classList.add('is-visible');
   });
 }
+
+
+/* Case scroll progress */
+const progressBar=document.createElement('div');
+progressBar.className='case-scroll-progress';
+progressBar.setAttribute('aria-hidden','true');
+document.body.appendChild(progressBar);
+
+let progressRaf=0;
+function updateScrollProgress(){
+  progressRaf=0;
+  const maxScroll=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+  const progress=Math.max(0,Math.min(1,scrollY/maxScroll));
+  progressBar.style.transform=`scaleX(${progress})`;
+}
+function requestProgressUpdate(){
+  if(!progressRaf)progressRaf=requestAnimationFrame(updateScrollProgress);
+}
+addEventListener('scroll',requestProgressUpdate,{passive:true});
+addEventListener('resize',requestProgressUpdate,{passive:true});
+requestProgressUpdate();
