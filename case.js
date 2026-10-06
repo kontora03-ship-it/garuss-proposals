@@ -72,8 +72,8 @@ function animateFrame(direction){
     {opacity:.48,transform:`translateX(${direction*22}px) scale(.994)`},
     {opacity:1,transform:'translateX(0) scale(1)'}
   ],{
-    duration:620,
-    easing:'cubic-bezier(.22,1,.36,1)'
+    duration:700,
+    easing:'cubic-bezier(.16,1,.3,1)'
   });
 
   [leftPeek,rightPeek].forEach((peek,i)=>{
@@ -82,8 +82,8 @@ function animateFrame(direction){
       {opacity:.08,transform:`translateY(-50%) translateX(${direction*(i?14:-14)}px) scale(.965)`},
       {opacity:.42,transform:'translateY(-50%) translateX(0) scale(.97)'}
     ],{
-      duration:720,
-      easing:'cubic-bezier(.22,1,.36,1)'
+      duration:760,
+      easing:'cubic-bezier(.16,1,.3,1)'
     });
   });
 }
@@ -134,7 +134,7 @@ function show(index,direction){
 
       loading=false;
       resolve();
-      setTimeout(pumpToTarget,380);
+      setTimeout(pumpToTarget,220);
     };
 
     preload.onerror=()=>{
@@ -163,7 +163,7 @@ function setTarget(index){
 function layoutViewer(){
   const headerHeight=Math.round(header?.getBoundingClientRect().height||0);
   const shellHeight=Math.max(420,innerHeight-headerHeight);
-  const step=Math.max(360,Math.round(innerHeight*.72));
+  const step=Math.max(190,Math.round(innerHeight*.36));
 
   document.documentElement.style.setProperty('--case-header-h',headerHeight+'px');
   viewer.style.height=(shellHeight+(data.images.length-1)*step)+'px';
