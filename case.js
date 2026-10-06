@@ -1,5 +1,6 @@
 const data=JSON.parse(document.querySelector('#case-data').textContent);
 const viewer=document.querySelector('.viewer');
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 
 if(viewer){
   viewer.innerHTML='';
