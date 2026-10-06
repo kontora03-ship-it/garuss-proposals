@@ -254,3 +254,17 @@
     #000 100%
   );
 }
+
+
+/* Deferred thumbnail loading */
+.thumbnails img{
+  opacity:1;
+  transition:opacity .35s ease;
+}
+.thumbnails img[data-src]:not([data-loaded="1"]){
+  opacity:0;
+}
+.thumbnails button{
+  background:
+    linear-gradient(135deg,#353132 0%,#2c292a 100%);
+}
