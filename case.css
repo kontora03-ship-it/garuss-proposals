@@ -189,18 +189,17 @@
 .gallery-image{
   cursor:zoom-in;
   opacity:0;
-  transform:translateY(24px) scale(.995);
-  filter:blur(8px);
+  transform:translateY(18px) scale(.997);
+  filter:none;
   transition:
-    opacity .8s cubic-bezier(.22,1,.36,1),
-    transform .9s cubic-bezier(.22,1,.36,1),
-    filter .85s ease;
-  will-change:opacity,transform,filter;
+    opacity 1.15s cubic-bezier(.22,1,.36,1),
+    transform 1.25s cubic-bezier(.22,1,.36,1);
+  will-change:opacity,transform;
 }
 .gallery-item.is-visible.is-ready .gallery-image{
   opacity:1;
   transform:translateY(0) scale(1);
-  filter:blur(0);
+  filter:none;
 }
 .gallery-image:focus-visible{
   outline:2px solid #fff;
@@ -275,8 +274,8 @@ body.lightbox-open{
 
 @media(max-width:650px){
   .gallery-image{
-    transform:translateY(16px) scale(.997);
-    filter:blur(5px);
+    transform:translateY(12px) scale(.998);
+    filter:none;
   }
   .case-lightbox{
     padding:14px;
