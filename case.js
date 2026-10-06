@@ -36,6 +36,9 @@ let targetIndex=0;
 let loading=false;
 let sequence=0;
 let scrollRaf=0;
+let lastScrollY=scrollY;
+let lastScrollTime=performance.now();
+let scrollVelocity=0;
 
 function clampIndex(index){
   return Math.max(0,Math.min(data.images.length-1,index));
@@ -65,15 +68,30 @@ function updatePeeks(index){
   }
 }
 
+function transitionTiming(){
+  // Slow wheel/trackpad = softer, longer transition.
+  // Fast movement = shorter transition and quicker catch-up.
+  const speed=Math.min(2.4,scrollVelocity);
+  const main=Math.round(820-speed*220);
+  const side=Math.round(900-speed*245);
+  const catchup=Math.round(260-speed*75);
+  return {
+    main:Math.max(300,main),
+    side:Math.max(340,side),
+    catchup:Math.max(70,catchup)
+  };
+}
+
 function animateFrame(direction){
   if(reduced.matches)return;
+  const timing=transitionTiming();
 
   image.animate([
     {opacity:.48,transform:`translateX(${direction*22}px) scale(.994)`},
     {opacity:1,transform:'translateX(0) scale(1)'}
   ],{
-    duration:700,
-    easing:'cubic-bezier(.16,1,.3,1)'
+    duration:timing.main,
+    easing:'cubic-bezier(.18,.82,.22,1)'
   });
 
   [leftPeek,rightPeek].forEach((peek,i)=>{
@@ -82,8 +100,8 @@ function animateFrame(direction){
       {opacity:.08,transform:`translateY(-50%) translateX(${direction*(i?14:-14)}px) scale(.965)`},
       {opacity:.42,transform:'translateY(-50%) translateX(0) scale(.97)'}
     ],{
-      duration:760,
-      easing:'cubic-bezier(.16,1,.3,1)'
+      duration:timing.side,
+      easing:'cubic-bezier(.18,.82,.22,1)'
     });
   });
 }
@@ -134,7 +152,7 @@ function show(index,direction){
 
       loading=false;
       resolve();
-      setTimeout(pumpToTarget,220);
+      setTimeout(pumpToTarget,transitionTiming().catchup);
     };
 
     preload.onerror=()=>{
@@ -163,7 +181,7 @@ function setTarget(index){
 function layoutViewer(){
   const headerHeight=Math.round(header?.getBoundingClientRect().height||0);
   const shellHeight=Math.max(420,innerHeight-headerHeight);
-  const step=Math.max(190,Math.round(innerHeight*.36));
+  const step=Math.max(125,Math.round(innerHeight*.24));
 
   document.documentElement.style.setProperty('--case-header-h',headerHeight+'px');
   viewer.style.height=(shellHeight+(data.images.length-1)*step)+'px';
@@ -184,6 +202,19 @@ function scrollMetrics(){
 
 function updateFromScroll(){
   scrollRaf=0;
+
+  const now=performance.now();
+  const dt=Math.max(16,now-lastScrollTime);
+  const dy=Math.abs(scrollY-lastScrollY);
+  const instantVelocity=dy/dt;
+
+  // Smooth velocity so transitions accelerate/decelerate instead of snapping.
+  scrollVelocity=scrollVelocity*.62+instantVelocity*.38;
+  if(dy<1)scrollVelocity*=.82;
+
+  lastScrollY=scrollY;
+  lastScrollTime=now;
+
   const {start,distance}=scrollMetrics();
   const progress=Math.max(0,Math.min(1,(scrollY-start)/distance));
   const index=Math.round(progress*(data.images.length-1));
@@ -204,7 +235,7 @@ function scrollToIndex(index){
   });
 }
 
-if(hint)hint.textContent='Прокручивайте страницу — блок остаётся на месте, изображения меняются внутри';
+if(hint)hint.textContent='Медленный скролл — плавная смена, быстрый — ускоренная';
 
 if(previous)previous.addEventListener('click',()=>scrollToIndex(current-1));
 if(next)next.addEventListener('click',()=>scrollToIndex(current+1));
