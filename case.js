@@ -26,3 +26,25 @@ addEventListener('keydown',event=>{if(event.altKey||event.metaKey||event.ctrlKey
 let touch=null;
 stage.addEventListener('touchstart',event=>{if(event.touches.length===1)touch={x:event.touches[0].clientX,y:event.touches[0].clientY};else touch=null;},{passive:true});
 stage.addEventListener('touchend',event=>{if(!touch)return;const dx=event.changedTouches[0].clientX-touch.x,dy=event.changedTouches[0].clientY-touch.y;touch=null;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)show(requested+(dx<0?1:-1));},{passive:true});
+
+
+/* Wheel/trackpad slide navigation */
+const slideHint=document.querySelector('.slide-hint');
+if(slideHint) slideHint.textContent='Листайте колесом мыши, трекпадом, стрелками клавиатуры или свайпом';
+let wheelSum=0,wheelLocked=false,wheelReset;
+stage.addEventListener('wheel',event=>{
+  if(Math.abs(event.deltaY)<Math.abs(event.deltaX)) return;
+  const direction=event.deltaY>0?1:-1;
+  const target=requested+direction;
+  if(target<0||target>=data.images.length) return;
+  event.preventDefault();
+  if(wheelLocked) return;
+  wheelSum+=event.deltaY;
+  clearTimeout(wheelReset);
+  wheelReset=setTimeout(()=>{wheelSum=0;},140);
+  if(Math.abs(wheelSum)<36) return;
+  wheelLocked=true;
+  wheelSum=0;
+  show(target);
+  setTimeout(()=>{wheelLocked=false;},420);
+},{passive:false});
