@@ -21,7 +21,7 @@ function entrance(){
   const distance=Math.hypot((x-width/2)/width,(y-height/2)/height);
   tiles.push({x,y,delay:Math.random()*1750+distance*250});
  }
- ctx.fillStyle='#AE2C2B';ctx.fillRect(0,0,width,height);canvas.style.background='transparent';
+ ctx.fillStyle='#BE1622';ctx.fillRect(0,0,width,height);canvas.style.background='transparent';
  let start;
  function draw(now){
   if(!root.classList.contains('intro-pending')){finish();return;}
