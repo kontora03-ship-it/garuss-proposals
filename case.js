@@ -64,7 +64,7 @@ if(viewer){
             observer.unobserve(entry.target);
           }
         });
-      },{rootMargin:'0px 0px -8% 0px',threshold:.08})
+      },{rootMargin:'0px 0px -14% 0px',threshold:.14})
     : null;
 
   data.images.forEach((slide,index)=>{
