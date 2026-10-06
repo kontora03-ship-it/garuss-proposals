@@ -42,3 +42,17 @@
 .case-header>a:last-child{
   justify-self:end;
 }
+
+
+/* Scroll-driven case viewer */
+.viewer-toolbar>div{display:none!important}
+.viewer-toolbar{
+  grid-template-columns:auto 1fr auto;
+  min-height:38px;
+}
+#slide-count{font-weight:600}
+.slide-stage{cursor:ns-resize}
+.slide-hint{
+  margin-top:10px;
+  opacity:.72;
+}
