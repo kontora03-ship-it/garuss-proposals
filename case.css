@@ -262,3 +262,31 @@
   .slide-stage{position:relative;top:auto;transform:none}
   .viewer-toolbar,.slide-hint,.thumbnails{position:static;transform:none}
 }
+
+
+/* Fit central slide to 80% of viewport, always fully visible */
+.slide-stage{
+  height:80vh;
+  max-height:80vh;
+  min-height:0;
+}
+.slide-stage #slide-image{
+  width:auto;
+  height:auto;
+  max-width:80vw;
+  max-height:80vh;
+  object-fit:contain;
+  object-position:center center;
+}
+.side-peek{
+  height:72vh;
+  max-height:72vh;
+}
+@media(max-width:1100px){
+  .slide-stage{height:80vh;max-height:80vh}
+  .slide-stage #slide-image{max-width:80vw;max-height:80vh}
+}
+@media(max-width:700px){
+  .slide-stage{height:78vh;max-height:78vh}
+  .slide-stage #slide-image{max-width:92vw;max-height:78vh}
+}
