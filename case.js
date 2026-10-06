@@ -67,7 +67,7 @@ updatePeeks(0);
 const slideHint=document.querySelector('.slide-hint');
 if(slideHint)slideHint.textContent='Прокручивайте страницу — блок фиксируется и последовательно показывает все слайды';
 
-const stepVH=56;
+const stepVH=72;
 function setupPinnedViewer(){
   if(!viewer||reduced.matches)return;
   viewer.style.setProperty('--slide-count',String(data.images.length));
@@ -81,8 +81,11 @@ function updateFromScroll(){
   if(!viewer||reduced.matches)return;
   const rect=viewer.getBoundingClientRect();
   const viewerTop=scrollY+rect.top;
-  const pinStart=viewerTop;
-  const pinDistance=Math.max(1,viewer.offsetHeight-innerHeight);
+  const stickyTop=innerHeight*.10;
+  const stageHeight=innerHeight*.80;
+  const pinStart=viewerTop-stickyTop;
+  const pinEnd=viewerTop+viewer.offsetHeight-stageHeight-stickyTop;
+  const pinDistance=Math.max(1,pinEnd-pinStart);
   const progress=Math.max(0,Math.min(1,(scrollY-pinStart)/pinDistance));
   const exact=progress*(data.images.length-1);
   const index=Math.max(0,Math.min(data.images.length-1,Math.round(exact)));
@@ -98,9 +101,13 @@ function scrollToSlide(index){
   index=Math.max(0,Math.min(data.images.length-1,index));
   const rect=viewer.getBoundingClientRect();
   const viewerTop=scrollY+rect.top;
-  const pinDistance=Math.max(1,viewer.offsetHeight-innerHeight);
+  const stickyTop=innerHeight*.10;
+  const stageHeight=innerHeight*.80;
+  const pinStart=viewerTop-stickyTop;
+  const pinEnd=viewerTop+viewer.offsetHeight-stageHeight-stickyTop;
+  const pinDistance=Math.max(1,pinEnd-pinStart);
   const progress=data.images.length<=1?0:index/(data.images.length-1);
-  scrollTo({top:viewerTop+pinDistance*progress,behavior:reduced.matches?'auto':'smooth'});
+  scrollTo({top:pinStart+pinDistance*progress,behavior:reduced.matches?'auto':'smooth'});
 }
 if(previous)previous.addEventListener('click',()=>scrollToSlide(current-1));
 if(next)next.addEventListener('click',()=>scrollToSlide(current+1));
