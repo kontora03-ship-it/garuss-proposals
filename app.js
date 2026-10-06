@@ -34,8 +34,8 @@ function entrance(){
    ctx.fillRect(tile.x,tile.y,cell,cell);
   }
   ctx.globalAlpha=1;
-  if(elapsed>=1500&&!logoAnimation){logoAnimation=logo.animate([{transform:initial},{transform:'translate(0,0) scale(1)'}],{duration:1550,easing:'cubic-bezier(.45,0,.15,1)',fill:'forwards'});}
-  if(elapsed>=3170){finish();return;}
+  if(elapsed>=1500&&!logoAnimation){logoAnimation=logo.animate([{transform:initial},{transform:'translate(0,0) scale(1)'}],{duration:1150,easing:'cubic-bezier(.45,0,.15,1)',fill:'forwards'});}
+  if(elapsed>=2770){finish();return;}
   frame=requestAnimationFrame(draw);
  }
  frame=requestAnimationFrame(draw);
