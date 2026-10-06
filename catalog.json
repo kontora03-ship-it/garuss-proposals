@@ -431,33 +431,6 @@
     "slides": 20
   },
   {
-    "slug": "gv-gold-game",
-    "source": "Предложение_Путь к золоту.pdf",
-    "client": "GV Gold",
-    "title": "Игра «Путь к золоту»",
-    "categories": [
-      "Настольные игры"
-    ],
-    "pages": 4,
-    "size": 0.7,
-    "description": "Концепция корпоративной настольной игры для GV Gold. Игровое поле, карточки и фишки знакомят участников с этапами золотодобычи и развитием предприятия.",
-    "images": [
-      {
-        "src": "/garuss-proposals/cases/gv-gold-game/02.jpg",
-        "width": 1800,
-        "height": 1273,
-        "page": 2
-      },
-      {
-        "src": "/garuss-proposals/cases/gv-gold-game/03.jpg",
-        "width": 1800,
-        "height": 1273,
-        "page": 3
-      }
-    ],
-    "slides": 2
-  },
-  {
     "slug": "nordgold-game",
     "source": "КП_Nordgold_Монополия.pdf",
     "client": "Nordgold",
