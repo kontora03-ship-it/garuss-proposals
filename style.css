@@ -355,3 +355,53 @@ footer a:after{content:"  ↗"}
   .presentation-card h2,
   .presentation-card:nth-child(1) h2{font-size:24px}
 }
+
+
+/* Grid correction: stable, even catalogue rows */
+.presentation-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:38px 22px;
+  grid-auto-flow:row;
+  align-items:start;
+}
+.presentation-card,
+.presentation-card:nth-child(1),
+.presentation-card:nth-child(4),
+.presentation-card:nth-child(6),
+.presentation-card:nth-child(8){
+  grid-column:auto;
+  grid-row:auto;
+}
+.presentation-card .cover,
+.presentation-card:nth-child(1) .cover,
+.presentation-card:nth-child(4) .cover,
+.presentation-card:nth-child(8) .cover{
+  aspect-ratio:4/3;
+}
+.presentation-card h2,
+.presentation-card:nth-child(1) h2{
+  font-size:22px;
+  line-height:1.15;
+  max-width:90%;
+}
+.presentation-card:nth-child(1) .card-meta:before{display:none}
+.presentation-link{
+  display:grid;
+  grid-template-rows:auto auto auto;
+  height:100%;
+}
+.card-meta{
+  min-height:18px;
+  margin-top:15px;
+}
+.presentation-card h2{
+  min-height:50px;
+}
+@media(max-width:1100px){
+  .presentation-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:620px){
+  .presentation-grid{grid-template-columns:1fr;gap:34px;}
+  .presentation-card h2{min-height:0;font-size:22px}
+}
