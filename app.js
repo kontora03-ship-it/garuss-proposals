@@ -19,7 +19,7 @@ function entrance(){
  const tiles=[];
  for(let y=0;y<height;y+=cell)for(let x=0;x<width;x+=cell){
   const distance=Math.hypot((x-width/2)/width,(y-height/2)/height);
-  tiles.push({x,y,delay:Math.random()*1750+distance*250});
+  tiles.push({x,y,delay:Math.random()*875+distance*125});
  }
  ctx.fillStyle='#BE1622';ctx.fillRect(0,0,width,height);canvas.style.background='transparent';
  let start;
@@ -30,12 +30,12 @@ function entrance(){
   ctx.clearRect(0,0,width,height);
   for(const tile of tiles){
    // Each full-size, opaque square disappears in a single frame.
-   if(elapsed>=850+tile.delay)continue;
+   if(elapsed>=425+tile.delay)continue;
    ctx.fillRect(tile.x,tile.y,cell,cell);
   }
   ctx.globalAlpha=1;
-  if(elapsed>=3000&&!logoAnimation){logoAnimation=logo.animate([{transform:initial},{transform:'translate(0,0) scale(1)'}],{duration:1550,easing:'cubic-bezier(.45,0,.15,1)',fill:'forwards'});}
-  if(elapsed>=4670){finish();return;}
+  if(elapsed>=1500&&!logoAnimation){logoAnimation=logo.animate([{transform:initial},{transform:'translate(0,0) scale(1)'}],{duration:1550,easing:'cubic-bezier(.45,0,.15,1)',fill:'forwards'});}
+  if(elapsed>=3170){finish();return;}
   frame=requestAnimationFrame(draw);
  }
  frame=requestAnimationFrame(draw);
