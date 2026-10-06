@@ -92,42 +92,94 @@ const slideHint=document.querySelector('.slide-hint');
 if(slideHint)slideHint.textContent='Когда изображение в центре экрана — листайте колесом, трекпадом, стрелками или свайпом';
 
 let wheelSum=0,wheelLocked=false,wheelReset;
-function centered(){
+let viewerPinned=false;
+let releasedDirection=0;
+let snapInProgress=false;
+
+function stageCenterDelta(){
   const rect=stage.getBoundingClientRect();
-  const imageCenter=rect.top+rect.height/2;
-  const viewportCenter=innerHeight/2;
-  return Math.abs(imageCenter-viewportCenter)<=32;
+  return (rect.top+rect.height/2)-(innerHeight/2);
 }
+function snapStageToCenter(behavior='smooth'){
+  const delta=stageCenterDelta();
+  if(Math.abs(delta)<=2)return;
+  snapInProgress=true;
+  scrollBy({top:delta,behavior:reduced.matches?'auto':behavior});
+  setTimeout(()=>{snapInProgress=false;},behavior==='smooth'?420:40);
+}
+function shouldCapture(event){
+  const delta=stageCenterDelta();
+  const projected=delta-event.deltaY;
+  const threshold=Math.min(180,innerHeight*.18);
+  if(event.deltaY>0){
+    return delta>=-24&&(delta<=threshold||projected<=0);
+  }
+  return delta<=24&&(-delta<=threshold||projected>=0);
+}
+function setPinned(value){
+  viewerPinned=value;
+  stage.classList.toggle('is-pinned',value);
+  if(value){
+    releasedDirection=0;
+    wheelSum=0;
+  }
+}
+
 addEventListener('wheel',event=>{
   if(Math.abs(event.deltaY)<Math.abs(event.deltaX))return;
-  if(!centered())return;
-
   const direction=event.deltaY>0?1:-1;
-  const target=requested+direction;
 
-  // At the ends, immediately return control to normal page scrolling.
-  if(target<0||target>=data.images.length)return;
+  // After leaving an end, keep normal page scrolling in that direction.
+  // Reversing direction arms the viewer again.
+  if(!viewerPinned&&releasedDirection){
+    if(direction===releasedDirection)return;
+    releasedDirection=0;
+  }
+
+  if(!viewerPinned){
+    if(!shouldCapture(event))return;
+    event.preventDefault();
+    setPinned(true);
+    snapStageToCenter('smooth');
+    return;
+  }
+
+  const atFirst=requested<=0;
+  const atLast=requested>=data.images.length-1;
+
+  // Release only outward: last slide -> down, first slide -> up.
+  if((direction>0&&atLast)||(direction<0&&atFirst)){
+    setPinned(false);
+    releasedDirection=direction;
+    return;
+  }
 
   event.preventDefault();
-  if(wheelLocked)return;
+  if(snapInProgress||wheelLocked)return;
 
   wheelSum+=event.deltaY;
   clearTimeout(wheelReset);
-  wheelReset=setTimeout(()=>{wheelSum=0;},150);
-  if(Math.abs(wheelSum)<42)return;
+  wheelReset=setTimeout(()=>{wheelSum=0;},160);
+  if(Math.abs(wheelSum)<44)return;
+
+  const target=requested+direction;
+  if(target<0||target>=data.images.length)return;
 
   wheelLocked=true;
   wheelSum=0;
   show(target,direction);
-  setTimeout(()=>{wheelLocked=false;},560);
+  setTimeout(()=>{wheelLocked=false;},620);
 },{passive:false});
-
 
 /* Keep stage height matched to the rendered central slide */
 function syncStageHeight(){
   requestAnimationFrame(()=>{
     const h=image.getBoundingClientRect().height;
     if(h>0)stage.style.setProperty('--stage-height',Math.ceil(h)+'px');
+    if(viewerPinned){
+      requestAnimationFrame(()=>snapStageToCenter('auto'));
+      setTimeout(()=>{if(viewerPinned)snapStageToCenter('smooth');},560);
+    }
   });
 }
 image.addEventListener('load',syncStageHeight);
