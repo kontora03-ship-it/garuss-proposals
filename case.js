@@ -121,3 +121,30 @@ addEventListener('wheel',event=>{
   show(target,direction);
   setTimeout(()=>{wheelLocked=false;},560);
 },{passive:false});
+
+
+/* Snap viewer to viewport center before wheel-driven slide changes */
+let snapLock=false,snapTimer;
+function stageCenterDelta(){
+  const rect=stage.getBoundingClientRect();
+  return (rect.top+rect.height/2)-(innerHeight/2);
+}
+function snapStageToCenter(){
+  const delta=stageCenterDelta();
+  if(Math.abs(delta)<=18)return;
+  snapLock=true;
+  scrollBy({top:delta,behavior:reduced.matches?'auto':'smooth'});
+  clearTimeout(snapTimer);
+  snapTimer=setTimeout(()=>{snapLock=false;},520);
+}
+addEventListener('scroll',()=>{
+  if(snapLock)return;
+  const rect=stage.getBoundingClientRect();
+  const viewportCenter=innerHeight/2;
+  const stageCenter=rect.top+rect.height/2;
+  const nearCenter=Math.abs(stageCenter-viewportCenter)<Math.min(170,innerHeight*.18);
+  const mostlyVisible=rect.top<innerHeight*.72&&rect.bottom>innerHeight*.28;
+  if(!nearCenter||!mostlyVisible)return;
+  clearTimeout(snapTimer);
+  snapTimer=setTimeout(()=>snapStageToCenter(),90);
+},{passive:true});
