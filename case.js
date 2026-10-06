@@ -1,5 +1,6 @@
 const data=JSON.parse(document.querySelector('#case-data').textContent);
 const image=document.querySelector('#slide-image'),stage=document.querySelector('#slide-stage');
+const viewer=document.querySelector('.viewer');
 const counter=document.querySelector('#slide-count'),previous=document.querySelector('#previous-slide'),next=document.querySelector('#next-slide');
 const thumbs=[...document.querySelectorAll('[data-slide]')];
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
@@ -8,7 +9,7 @@ const prevPeek=document.createElement('img');
 const nextPeek=document.createElement('img');
 prevPeek.className='side-peek side-peek-prev';
 nextPeek.className='side-peek side-peek-next';
-prevPeek.alt=''; nextPeek.alt='';
+prevPeek.alt='';nextPeek.alt='';
 prevPeek.setAttribute('aria-hidden','true');
 nextPeek.setAttribute('aria-hidden','true');
 stage.insertBefore(prevPeek,image);
@@ -16,27 +17,28 @@ stage.appendChild(nextPeek);
 
 let current=0,requested=0,sequence=0,lastDirection=1;
 function updatePeeks(index){
-  const prev=data.images[index-1],nextItem=data.images[index+1];
-  if(prev){prevPeek.src=prev.src;prevPeek.hidden=false;}else{prevPeek.removeAttribute('src');prevPeek.hidden=true;}
-  if(nextItem){nextPeek.src=nextItem.src;nextPeek.hidden=false;}else{nextPeek.removeAttribute('src');nextPeek.hidden=true;}
+  const p=data.images[index-1],n=data.images[index+1];
+  if(p){prevPeek.src=p.src;prevPeek.hidden=false;}else{prevPeek.hidden=true;prevPeek.removeAttribute('src');}
+  if(n){nextPeek.src=n.src;nextPeek.hidden=false;}else{nextPeek.hidden=true;nextPeek.removeAttribute('src');}
 }
 function animateFrame(direction){
   if(reduced.matches)return;
   image.animate([
-    {opacity:.55,transform:`translateX(${direction*28}px) scale(.992)`},
+    {opacity:.58,transform:`translateX(${direction*24}px) scale(.994)`},
     {opacity:1,transform:'translateX(0) scale(1)'}
-  ],{duration:620,easing:'cubic-bezier(.22,1,.36,1)'});
+  ],{duration:650,easing:'cubic-bezier(.22,1,.36,1)'});
   [prevPeek,nextPeek].forEach((peek,i)=>{
     if(peek.hidden)return;
     peek.animate([
-      {opacity:0,transform:`translateX(${direction*(i?18:-18)}px) scale(.985)`},
-      {opacity:.42,transform:'translateX(0) scale(1)'}
-    ],{duration:700,easing:'cubic-bezier(.22,1,.36,1)'});
+      {opacity:.22,transform:`translateY(-50%) translateX(${direction*(i?14:-14)}px) scale(.925)`},
+      {opacity:.58,transform:'translateY(-50%) translateX(0) scale(.94)'}
+    ],{duration:720,easing:'cubic-bezier(.22,1,.36,1)'});
   });
 }
 function show(index,direction){
-  if(index<0||index>=data.images.length)return;
-  lastDirection=direction??(index>current?1:index<current?-1:lastDirection);
+  index=Math.max(0,Math.min(data.images.length-1,index));
+  if(index===current&&image.complete){updatePeeks(index);return;}
+  lastDirection=direction??(index>current?1:-1);
   requested=index;
   const token=++sequence,slide=data.images[index],preload=new Image();
   stage.classList.add('loading');
@@ -55,96 +57,67 @@ function show(index,direction){
     updatePeeks(index);
     stage.classList.remove('loading');
     animateFrame(lastDirection);
-    [data.images[index-1],data.images[index+1]].filter(Boolean).forEach(item=>{const adjacent=new Image();adjacent.src=item.src;});
+    [data.images[index-1],data.images[index+1]].filter(Boolean).forEach(item=>{const a=new Image();a.src=item.src;});
   };
-  preload.onerror=()=>{
-    if(token!==sequence)return;
-    stage.classList.remove('loading');
-    requested=current;
-    counter.textContent='Не удалось загрузить. Попробуйте ещё раз.';
-  };
+  preload.onerror=()=>{if(token===sequence){stage.classList.remove('loading');requested=current;}};
   preload.src=slide.src;
 }
 updatePeeks(0);
 
-if(previous)previous.addEventListener('click',()=>show(requested-1,-1));
-if(next)next.addEventListener('click',()=>show(requested+1,1));
-thumbs.forEach(button=>button.addEventListener('click',()=>{const i=Number(button.dataset.slide);show(i,i>=current?1:-1);}));
+const slideHint=document.querySelector('.slide-hint');
+if(slideHint)slideHint.textContent='Прокручивайте страницу — блок фиксируется и последовательно показывает все слайды';
+
+const stepVH=56;
+function setupPinnedViewer(){
+  if(!viewer||reduced.matches)return;
+  viewer.style.setProperty('--slide-count',String(data.images.length));
+  viewer.style.setProperty('--slide-step',stepVH+'vh');
+}
+setupPinnedViewer();
+
+let raf=0;
+function updateFromScroll(){
+  raf=0;
+  if(!viewer||reduced.matches)return;
+  const rect=viewer.getBoundingClientRect();
+  const viewerTop=scrollY+rect.top;
+  const pinStart=viewerTop;
+  const pinDistance=Math.max(1,viewer.offsetHeight-innerHeight);
+  const progress=Math.max(0,Math.min(1,(scrollY-pinStart)/pinDistance));
+  const exact=progress*(data.images.length-1);
+  const index=Math.max(0,Math.min(data.images.length-1,Math.round(exact)));
+  if(index!==requested)show(index,index>requested?1:-1);
+}
+function requestUpdate(){if(!raf)raf=requestAnimationFrame(updateFromScroll);}
+addEventListener('scroll',requestUpdate,{passive:true});
+addEventListener('resize',()=>{setupPinnedViewer();requestUpdate();},{passive:true});
+requestUpdate();
+
+function scrollToSlide(index){
+  if(!viewer)return;
+  index=Math.max(0,Math.min(data.images.length-1,index));
+  const rect=viewer.getBoundingClientRect();
+  const viewerTop=scrollY+rect.top;
+  const pinDistance=Math.max(1,viewer.offsetHeight-innerHeight);
+  const progress=data.images.length<=1?0:index/(data.images.length-1);
+  scrollTo({top:viewerTop+pinDistance*progress,behavior:reduced.matches?'auto':'smooth'});
+}
+if(previous)previous.addEventListener('click',()=>scrollToSlide(current-1));
+if(next)next.addEventListener('click',()=>scrollToSlide(current+1));
+thumbs.forEach(button=>button.addEventListener('click',()=>scrollToSlide(Number(button.dataset.slide))));
 addEventListener('keydown',event=>{
   if(event.altKey||event.metaKey||event.ctrlKey||/INPUT|TEXTAREA|SELECT/.test(event.target.tagName))return;
-  if(event.key==='ArrowRight'){event.preventDefault();show(requested+1,1);}
-  if(event.key==='ArrowLeft'){event.preventDefault();show(requested-1,-1);}
+  if(event.key==='ArrowRight'){event.preventDefault();scrollToSlide(current+1);}
+  if(event.key==='ArrowLeft'){event.preventDefault();scrollToSlide(current-1);}
 });
 
 let touch=null;
 stage.addEventListener('touchstart',event=>{
-  if(event.touches.length===1)touch={x:event.touches[0].clientX,y:event.touches[0].clientY};
-  else touch=null;
+  if(event.touches.length===1)touch={x:event.touches[0].clientX,y:event.touches[0].clientY};else touch=null;
 },{passive:true});
 stage.addEventListener('touchend',event=>{
   if(!touch)return;
   const dx=event.changedTouches[0].clientX-touch.x,dy=event.changedTouches[0].clientY-touch.y;
   touch=null;
-  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)show(requested+(dx<0?1:-1),dx<0?1:-1);
-},{passive:true});
-
-const slideHint=document.querySelector('.slide-hint');
-if(slideHint)slideHint.textContent='Когда изображение в центре экрана — листайте колесом, трекпадом, стрелками или свайпом';
-
-let wheelSum=0,wheelLocked=false,wheelReset;
-function centered(){
-  const rect=stage.getBoundingClientRect();
-  const imageCenter=rect.top+rect.height/2;
-  const viewportCenter=innerHeight/2;
-  return Math.abs(imageCenter-viewportCenter)<=32;
-}
-addEventListener('wheel',event=>{
-  if(Math.abs(event.deltaY)<Math.abs(event.deltaX))return;
-  if(!centered())return;
-
-  const direction=event.deltaY>0?1:-1;
-  const target=requested+direction;
-
-  // At the ends, immediately return control to normal page scrolling.
-  if(target<0||target>=data.images.length)return;
-
-  event.preventDefault();
-  if(wheelLocked)return;
-
-  wheelSum+=event.deltaY;
-  clearTimeout(wheelReset);
-  wheelReset=setTimeout(()=>{wheelSum=0;},150);
-  if(Math.abs(wheelSum)<42)return;
-
-  wheelLocked=true;
-  wheelSum=0;
-  show(target,direction);
-  setTimeout(()=>{wheelLocked=false;},560);
-},{passive:false});
-
-
-/* Snap viewer to viewport center before wheel-driven slide changes */
-let snapLock=false,snapTimer;
-function stageCenterDelta(){
-  const rect=stage.getBoundingClientRect();
-  return (rect.top+rect.height/2)-(innerHeight/2);
-}
-function snapStageToCenter(){
-  const delta=stageCenterDelta();
-  if(Math.abs(delta)<=18)return;
-  snapLock=true;
-  scrollBy({top:delta,behavior:reduced.matches?'auto':'smooth'});
-  clearTimeout(snapTimer);
-  snapTimer=setTimeout(()=>{snapLock=false;},520);
-}
-addEventListener('scroll',()=>{
-  if(snapLock)return;
-  const rect=stage.getBoundingClientRect();
-  const viewportCenter=innerHeight/2;
-  const stageCenter=rect.top+rect.height/2;
-  const nearCenter=Math.abs(stageCenter-viewportCenter)<Math.min(170,innerHeight*.18);
-  const mostlyVisible=rect.top<innerHeight*.72&&rect.bottom>innerHeight*.28;
-  if(!nearCenter||!mostlyVisible)return;
-  clearTimeout(snapTimer);
-  snapTimer=setTimeout(()=>snapStageToCenter(),90);
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.5)scrollToSlide(current+(dx<0?1:-1));
 },{passive:true});
