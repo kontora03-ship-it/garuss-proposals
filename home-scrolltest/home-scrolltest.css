@@ -153,3 +153,27 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 @media(prefers-reduced-motion:reduce){
   .hero-squares-front,.hero-copy,.hero-scroll-line i,.featured-rail,.test-grid .presentation-card,.featured-image img{transition:none!important;transform:none!important}
 }
+
+/* Hero title hard lock: keep the two authored lines intact. */
+#hero-title{
+  display:block;
+  width:min(1180px,88vw);
+  max-width:100%;
+  color:#fff;
+}
+#hero-title>.hero-line{
+  display:block!important;
+  color:#fff!important;
+  white-space:nowrap!important;
+}
+#hero-title .hero-dot{
+  display:inline!important;
+  color:#BE1622!important;
+}
+@media(max-width:900px){
+  #hero-title{width:90vw}
+}
+@media(max-width:650px){
+  #hero-title{width:92vw}
+  #hero-title>.hero-line{white-space:normal!important}
+}
