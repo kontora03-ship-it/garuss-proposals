@@ -177,3 +177,22 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
   #hero-title{width:92vw}
   #hero-title>.hero-line{white-space:normal!important}
 }
+
+/* Hero title appears on its own, independent of scroll. */
+#hero-title>.hero-line{
+  opacity:0;
+  transform:translate3d(0,22px,0);
+  animation:heroTitleArrive .78s cubic-bezier(.16,1,.3,1) forwards;
+}
+#hero-title>.hero-line:nth-child(1){animation-delay:.12s}
+#hero-title>.hero-line:nth-child(2){animation-delay:.20s}
+@keyframes heroTitleArrive{
+  to{opacity:1;transform:translate3d(0,0,0)}
+}
+@media(prefers-reduced-motion:reduce){
+  #hero-title>.hero-line{
+    opacity:1;
+    transform:none;
+    animation:none;
+  }
+}
