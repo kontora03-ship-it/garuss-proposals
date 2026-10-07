@@ -550,3 +550,26 @@ footer,
 .presentation-link:before{background:#BE1622}
 .presentation-link:hover:after,
 .presentation-link:focus-visible:after{border-color:#BE1622}
+
+/* Minimal navigation and clear catalogue hierarchy */
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.header .logo-anchor{grid-column:2;grid-row:1;justify-self:center}
+.header .main-site{grid-column:3;grid-row:1}
+.header .header-link,.header .header-link:hover,.header .header-link:focus-visible{background:transparent;border:0;border-radius:0;box-shadow:none;backdrop-filter:none;color:white;padding:12px 0;text-underline-offset:7px}
+.header .header-link:hover,.header .header-link:focus-visible{text-decoration:underline}
+.catalog-heading:after{content:none}
+.catalog-heading h1{margin-top:0}
+.catalog-heading p{border:0;padding:0;max-width:300px}
+.categories{gap:24px;margin-bottom:28px}
+.categories button,.categories button.active,.categories button:hover{background:transparent;border:0;padding:12px 0;color:var(--muted);transform:none}
+.categories button.active,.categories button:hover{color:white}
+.categories button:after{left:0;right:0;bottom:2px}
+.categories button.active:after{display:block;transform:scaleX(1)}
+.presentation-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:1100px){.presentation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.header{grid-template-columns:1fr auto;min-height:90px;gap:20px}.header .logo-anchor{grid-column:1;grid-row:1;justify-self:start;width:150px}.header .main-site{grid-column:2;grid-row:1}.categories{flex-wrap:nowrap;overflow-x:auto;gap:22px;margin-left:0;margin-right:0;padding-left:0;padding-right:0}.categories button{min-height:44px}.catalog-heading p{margin-top:24px}}
+@media(max-width:620px){.presentation-grid{grid-template-columns:1fr}}
+
+.presentation-link:after{content:none}
+.card-meta{margin-right:0}
+.card-meta span:last-child,.presentation-link:hover .card-meta span:last-child,.presentation-link:focus-visible .card-meta span:last-child{display:inline;opacity:1;transform:none}

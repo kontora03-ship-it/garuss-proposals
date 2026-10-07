@@ -320,3 +320,16 @@ body.lightbox-open{
   pointer-events:none;
   will-change:transform;
 }
+
+/* Plain navigation and next-project preview */
+.case-header>a:not(:has(img)),.case-header>a:not(:has(img)):hover{background:transparent;border:0;border-radius:0;color:white;padding:12px 0;text-underline-offset:7px}
+.case-header>a:not(:has(img)):hover,.case-bottom>.back-link:hover{text-decoration:underline}
+.case-header>a:has(img){grid-column:2;grid-row:1;justify-self:center}
+.case-header>.back-link{grid-column:1;grid-row:1;justify-self:start}
+.case-bottom{align-items:flex-start}
+.next-case{display:block;width:min(520px,65%);max-width:none;text-align:left}
+.next-case img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:18px}
+.next-case span{font-size:12px}
+.next-case strong{display:block;font-size:24px}
+.case-lightbox-close,.case-lightbox-close:hover{background:transparent;border:0;border-radius:0;transform:none;text-shadow:0 1px 6px #000}
+@media(max-width:650px){.case-header{grid-template-columns:1fr auto;min-height:74px}.case-header>a:has(img){grid-column:2;grid-row:1;justify-self:end}.case-header>.back-link{grid-column:1;grid-row:1}.next-case{width:100%}.case-bottom{gap:28px}}
