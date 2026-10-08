@@ -4,10 +4,19 @@ const heroStage=document.querySelector('.hero-stage');
 const heroCopy=document.querySelector('.hero-copy');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const sc=window.ScrollCraft.mount(root,{lerp:.18});
+const sc=window.ScrollCraft.mount(root,{lerp:.12});
 
 /* Hero progress + pointer depth */
 let mx=.5,my=.45,tx=.5,ty=.45;
+let lampCursor=null,lampPower=0,lastFrame=0;
+const lampAnchor=document.querySelector('.lamp-breathe--one ellipse');
+const scene=document.querySelector('#garuss-parallax');
+const featuredAct=document.querySelector('.featured-act');
+heroStage.addEventListener('pointermove',e=>{
+ if(e.pointerType==='mouse')lampCursor={x:e.clientX,y:e.clientY};
+},{passive:true});
+heroStage.addEventListener('pointerleave',()=>{lampCursor=null},{passive:true});
+addEventListener('blur',()=>{lampCursor=null});
 heroStage.addEventListener('pointermove',e=>{
   if(reduce||e.pointerType!=='mouse')return;
   const r=heroStage.getBoundingClientRect();
@@ -16,7 +25,8 @@ heroStage.addEventListener('pointermove',e=>{
 },{passive:true});
 heroStage.addEventListener('pointerleave',()=>{tx=.5;ty=.45},{passive:true});
 
-function frame(){
+function frame(now){
+  const dt=Math.min(64,now-(lastFrame||now));lastFrame=now;
   mx+=(tx-mx)*.07;my+=(ty-my)*.07;
   heroStage.style.setProperty('--mx',mx.toFixed(3));
   heroStage.style.setProperty('--my',my.toFixed(3));
@@ -27,15 +37,27 @@ function frame(){
   heroStage.style.setProperty('--scene-scroll',reduce?'0px':(p*28).toFixed(2)+'px');
   heroStage.style.setProperty('--draw-progress',reduce?'1':Math.min(1,.18+p*2.2).toFixed(3));
   // Copy holds its exact size and position, then fades as the red section approaches, even after the stage releases.
-  const nextTop=document.querySelector('.featured-act').getBoundingClientRect().top;
+  const nextTop=featuredAct.getBoundingClientRect().top;
   const copyBottom=heroCopy.getBoundingClientRect().bottom;
-  const fadeStart=Math.min(innerHeight*.88,copyBottom+200);
-  const fadeEnd=Math.min(fadeStart-100,copyBottom+60);
+  const fadeStart=Math.min(innerHeight*.92,copyBottom+260);
+  const fadeEnd=Math.min(fadeStart-180,copyBottom+60);
   const fade=Math.max(0,Math.min(1,(fadeStart-nextTop)/(fadeStart-fadeEnd)));
   const eased=fade*fade*(3-2*fade);
   heroCopy.style.opacity=(1-eased).toFixed(3);
   heroCopy.style.pointerEvents=fade>=.98?'none':'';
   heroCopy.inert=fade>=.98;
+  // Anchor follows the registered room layer, including parallax and stage release.
+  let targetLight=0;
+  if(lampCursor&&scene.classList.contains('scene-ready')){
+    const b=lampAnchor.getBoundingClientRect();
+    const distance=Math.hypot(lampCursor.x-(b.left+b.width/2),lampCursor.y-(b.top+b.height/2));
+    const radius=Math.min(300,Math.max(170,innerWidth*.20));
+    const proximity=Math.max(0,Math.min(1,1-distance/radius));
+    targetLight=proximity*proximity*(3-2*proximity);
+  }
+  lampPower+=(targetLight-lampPower)*(1-Math.exp(-dt/240));
+  if(Math.abs(targetLight-lampPower)<.001)lampPower=targetLight;
+  scene.style.setProperty('--lamp-power',lampPower.toFixed(4));
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
@@ -128,3 +150,12 @@ addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
   }
   requestAnimationFrame(tick);
 })();
+
+/* Smooth anchor navigation without changing the scroll-driven scene timing. */
+document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',e=>{
+ const target=document.querySelector(link.getAttribute('href'));
+ if(!target)return;
+ e.preventDefault();
+ target.scrollIntoView({behavior:reduce?'instant':'smooth',block:'start'});
+ history.replaceState(null,'',link.getAttribute('href'));
+}));

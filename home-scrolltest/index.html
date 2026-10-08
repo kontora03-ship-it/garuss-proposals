@@ -9,7 +9,7 @@
 <link rel="icon" href="/garuss-proposals/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/garuss-proposals/style.css?v=20261007-clean">
 <link rel="stylesheet" href="/garuss-proposals/vendor/scrollcraft/scrollcraft.css?v=030">
-<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=15">
+<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=16">
 <link rel="preload" as="image" href="parallax-assets/night-v13/room.webp">
 <link rel="preload" as="image" href="parallax-assets/night-v13/front.webp">
 </head>
@@ -46,6 +46,16 @@
           <img class="garuss-parallax__layer garuss-parallax__city" src="parallax-assets/night-v13/city.webp" width="1672" height="941" alt="" decoding="async">
           <img class="garuss-parallax__layer garuss-parallax__room" src="parallax-assets/night-v13/room.webp" width="1672" height="941" alt="" decoding="async">
           <img class="garuss-parallax__layer garuss-parallax__front" src="parallax-assets/night-v13/front.webp" width="1672" height="941" alt="" decoding="async">
+          <img class="garuss-parallax__layer garuss-parallax__room lamp-lit lamp-lit--room" src="parallax-assets/night-v13/room.webp" width="1672" height="941" alt="">
+          <img class="garuss-parallax__layer garuss-parallax__front lamp-lit lamp-lit--front" src="parallax-assets/night-v13/front.webp" width="1672" height="941" alt="">
+          <svg class="lamp-interaction" viewBox="0 0 1672 941" aria-hidden="true">
+            <defs><radialGradient id="interactive-warmth"><stop stop-color="#ffdfad" stop-opacity=".48"/><stop offset=".45" stop-color="#eeba78" stop-opacity=".16"/><stop offset="1" stop-color="#eeba78" stop-opacity="0"/></radialGradient></defs>
+            <g class="lamp-warmth"><ellipse cx="1056" cy="292" rx="160" ry="58" fill="url(#interactive-warmth)"/><ellipse cx="1120" cy="625" rx="285" ry="180" fill="url(#interactive-warmth)"/></g>
+            <g class="lamp-meter">
+              <path class="lamp-meter-track" d="M1141 235 A29 29 0 1 1 1141 285" pathLength="1"/>
+              <path class="lamp-meter-fill" d="M1141 235 A29 29 0 1 1 1141 285" pathLength="1"/>
+            </g>
+          </svg>
           <svg class="studio-light-glow" viewBox="0 0 1672 941" aria-hidden="true">
             <defs>
               <radialGradient id="lamp-halo"><stop offset="0" stop-color="#ffe3b6" stop-opacity=".8"/><stop offset=".35" stop-color="#e6ad64" stop-opacity=".35"/><stop offset="1" stop-color="#d99954" stop-opacity="0"/></radialGradient>
@@ -100,7 +110,7 @@
   <section id="catalog" class="catalog test-catalog" aria-labelledby="catalog-title">
     <div class="catalog-heading test-catalog-heading" data-sc-in>
       <div><span class="eyebrow">ВСЕ ПРОЕКТЫ</span><h2 id="catalog-title">Каталог<span class="title-dot">.</span></h2></div>
-      <p>Здесь возвращаемся к спокойной сетке. Эффекты остаются фоном, а не мешают просмотру.</p>
+      <p>Подарки, мерч, награды и упаковка — от идеи до готового изделия.</p>
     </div>
 
     <nav class="categories" aria-label="Разделы каталога">
@@ -130,11 +140,11 @@
 
 <footer class="test-footer">
   <span>GARUSS © 2026</span>
-  <span>Тестовая версия — основная не изменена</span>
+  <span>Корпоративные подарки и мерч</span>
   <a href="/garuss-proposals/">Основная версия</a>
 </footer>
 
 <script src="/garuss-proposals/vendor/scrollcraft/scrollcraft.js?v=030"></script>
-<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=15"></script>
+<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=16"></script>
 </body>
 </html>

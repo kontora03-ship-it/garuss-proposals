@@ -497,3 +497,48 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
  .home-scrolltest .hero-act>.hero-copy{top:clamp(140px,21svh,175px);max-width:90vw}
 }
 @media(prefers-reduced-motion:reduce){.lamp-breathe{animation:none;opacity:.2}.studio-light-glow{transform:none}}
+
+/* v16: shared reading rhythm and proximity lighting. */
+.home-scrolltest .hero-copy p{max-width:390px;text-wrap:pretty;line-height:1.6}
+.home-scrolltest .test-catalog-heading{grid-template-columns:1fr!important;gap:26px;align-items:start!important;padding-bottom:36px!important}
+.home-scrolltest .test-catalog-heading p{max-width:460px!important;font-size:17px;line-height:1.6;text-wrap:pretty}
+.home-scrolltest .test-catalog-heading h2{margin-left:-.035em}
+.home-scrolltest .featured-card>div:last-child{grid-template-columns:1fr;gap:9px;min-height:112px;padding-top:20px}
+.home-scrolltest .featured-card h3{text-align:left;line-height:1.12;text-wrap:balance;font-size:clamp(24px,2.4vw,38px)}
+.home-scrolltest .featured-card span{padding:0;line-height:1.4}
+.home-scrolltest .featured-stage{padding-top:112px;grid-template-rows:auto 1fr}
+.home-scrolltest .featured-head{padding-bottom:26px}
+.home-scrolltest .featured-image{height:min(57vh,600px)}
+.home-scrolltest .featured-act::before{content:"";position:absolute;left:0;right:0;top:-56px;height:57px;z-index:4;pointer-events:none;background:linear-gradient(0deg,#BE1622,rgba(190,22,34,.55) 36%,rgba(190,22,34,0))}
+.home-scrolltest .featured-act::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:88px;z-index:4;pointer-events:none;background:linear-gradient(0deg,#343132,rgba(52,49,50,.6) 28%,rgba(52,49,50,0))}
+.home-scrolltest .test-catalog{padding-top:82px;padding-bottom:90px}
+.home-scrolltest .categories{justify-content:flex-start;gap:12px 26px;margin-bottom:36px}
+.home-scrolltest .test-grid{column-gap:28px;row-gap:46px}
+.home-scrolltest .test-grid h2{line-height:1.15;text-align:left;text-wrap:pretty}
+.home-scrolltest .test-grid .card-meta{margin-top:18px}
+.home-scrolltest .test-footer{gap:22px;align-items:center}
+.home-scrolltest .hero-project-link,.home-scrolltest .test-navigation a{transition:color .45s,border-color .45s}
+.home-scrolltest .featured-image img,.home-scrolltest .test-grid .cover img{transition:transform 1.1s cubic-bezier(.22,1,.36,1),filter .7s}
+.home-scrolltest .garuss-parallax__canvas{transition:opacity 1.4s cubic-bezier(.22,1,.36,1)}
+.home-scrolltest .lamp-lit{opacity:var(--lamp-power,0);filter:url('#studio-selective-color') brightness(1.6);pointer-events:none}
+.lamp-lit--room{mask-image:radial-gradient(ellipse 19% 16% at 63.2% 31%,#000 0%,transparent 100%),radial-gradient(ellipse 24% 24% at 65% 60%,#000 0%,transparent 100%)}
+.lamp-lit--front{mask-image:radial-gradient(ellipse 27% 24% at 68% 70%,#000 0%,transparent 100%)}
+.lamp-interaction{position:absolute;inset:0;width:100%;height:100%;z-index:6;pointer-events:none;transform:translate3d(calc(var(--px)*.40),calc(var(--py)*.40 - var(--scene-scroll,0px)*.35),0) scale(1.005)}
+.lamp-warmth{opacity:var(--lamp-power,0);mix-blend-mode:screen}
+.lamp-meter{opacity:calc(.35 + var(--lamp-power,0)*.65)}
+.lamp-meter path{fill:none;stroke-width:2;stroke-linecap:round}
+.lamp-meter-track{stroke:rgba(255,232,199,.3)}
+.lamp-meter-fill{stroke:#ffe1ac;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--lamp-power,0));filter:drop-shadow(0 0 3px rgba(255,216,156,.45))}
+@media(max-width:650px){
+ .home-scrolltest .hero-copy p{max-width:290px;line-height:1.6}
+ .home-scrolltest .featured-stage{padding-top:92px}
+ .home-scrolltest .featured-image{height:49svh}
+ .home-scrolltest .featured-card>div:last-child{padding-top:16px;gap:8px}
+ .home-scrolltest .featured-card h3{font-size:25px}
+ .home-scrolltest .test-catalog{padding-top:62px;padding-bottom:64px}
+ .home-scrolltest .test-catalog-heading p{font-size:15px;max-width:310px!important}
+ .home-scrolltest .test-grid{row-gap:34px}
+ .home-scrolltest .test-footer{align-items:flex-start;gap:14px}
+}
+@media(hover:none),(pointer:coarse){.lamp-meter{display:none}}
+@media(prefers-reduced-motion:reduce){.lamp-interaction{transform:none}.lamp-lit{transform:none!important}.home-scrolltest .garuss-parallax__canvas{transition:none}}
