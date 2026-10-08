@@ -14,7 +14,7 @@ const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>n*n*(3-2*n);
 const follow=(dt,ms)=>1-Math.exp(-dt/ms);
 let cursor=null,mx=.5,my=.45,tx=.5,ty=.45,x=0,y=0,lampPower=0,cityPower=0,railProgress=0,heroProgress=0,lastFrame=0;
-let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,copyBottom=0,maxScroll=0;
+let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,copyBottom=0,firstCopyBottom=0,maxScroll=0;
 let wheelActive=false,wheelTarget=scrollY,wheelY=scrollY,rafId=0,dead=false;
 const lastValues=new Map();
 const copyParagraph=heroCopy.querySelector('p');
@@ -57,6 +57,7 @@ function measure(){
  railTravel=Math.max(1,featuredAct.offsetHeight-viewHeight);
  heroTravel=Math.max(1,heroAct.offsetHeight-viewHeight);
  copyBottom=heroCopy.getBoundingClientRect().bottom;
+ firstCopyBottom=heroCopy.getBoundingClientRect().top+heroCopy.querySelector(".hero-line").offsetHeight;
  maxScroll=Math.max(0,document.documentElement.scrollHeight-viewHeight);
 }
 addEventListener('resize',()=>{sc.layout();measure()},{passive:true});
@@ -112,10 +113,11 @@ function frame(now){
  if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
  const displayedProgress=reduce?clamp(featuredRail.scrollLeft/Math.max(1,railDistance)):railProgress;
  prop(featuredProgress,'transform','scaleX('+displayedProgress.toFixed(4)+')');
- const rowDuration=100;
- const firstStart=Math.min(viewHeight*.96,copyBottom+44+rowDuration+(copyRows.length-1)*40);
- const lastEnd=Math.min(firstStart-rowDuration,copyBottom+44);
- const rowStep=Math.max(0,(firstStart-lastEnd-rowDuration)/Math.max(1,copyRows.length-1));
+ const rowDuration=110;
+ const rowPause=10;
+ const lastEnd=firstCopyBottom+36;
+ const rowStep=rowDuration+rowPause;
+ const firstStart=lastEnd+rowDuration+(copyRows.length-1)*rowStep;
  heroCopy.style.opacity='1';
  copyRows.forEach((row,index)=>{
   const order=copyRows.length-1-index;
@@ -261,8 +263,9 @@ featuredRail.addEventListener('focusin',e=>{
   const side=24,cols=Math.ceil(width/side),rows=Math.ceil(height/side);
   tiles=[];
   for(let row=0;row<rows;row++)for(let col=0;col<cols;col++){
-   const delay=Math.random()*320;
-   const duration=240+Math.random()*150;
+   const fromBottom=1-row/Math.max(1,rows-1);
+   const delay=fromBottom*420+Math.random()*340;
+   const duration=420+Math.random()*160;
    tiles.push({x:col*side,y:row*side,side,delay,duration});
   }
   ctx.fillStyle='#BE1622';ctx.fillRect(0,0,width,height);
@@ -299,7 +302,7 @@ featuredRail.addEventListener('focusin',e=>{
      const size=tile.side*(1-ease(progress));
      if(size>.1)ctx.fillRect(tile.x+(tile.side-size)/2,tile.y+(tile.side-size)/2,size,size);
     }
-    if(elapsed<720)requestAnimationFrame(dissolve);else resolve();
+    if(elapsed<1360)requestAnimationFrame(dissolve);else resolve();
    }
    requestAnimationFrame(dissolve);
   });
