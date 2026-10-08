@@ -509,8 +509,6 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 .home-scrolltest .featured-stage{padding-top:112px;grid-template-rows:auto 1fr}
 .home-scrolltest .featured-head{padding-bottom:26px}
 .home-scrolltest .featured-image{height:min(57vh,600px)}
-.home-scrolltest .featured-act::before{content:"";position:absolute;left:0;right:0;top:-56px;height:57px;z-index:4;pointer-events:none;background:linear-gradient(0deg,#BE1622,rgba(190,22,34,.55) 36%,rgba(190,22,34,0))}
-.home-scrolltest .featured-act::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:88px;z-index:4;pointer-events:none;background:linear-gradient(0deg,#343132,rgba(52,49,50,.6) 28%,rgba(52,49,50,0))}
 .home-scrolltest .test-catalog{padding-top:82px;padding-bottom:90px}
 .home-scrolltest .categories{justify-content:flex-start;gap:12px 26px;margin-bottom:36px}
 .home-scrolltest .test-grid{column-gap:28px;row-gap:46px}
@@ -542,3 +540,14 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 }
 @media(hover:none),(pointer:coarse){.lamp-meter{display:none}}
 @media(prefers-reduced-motion:reduce){.lamp-interaction{transform:none}.lamp-lit{transform:none!important}.home-scrolltest .garuss-parallax__canvas{transition:none}}
+
+/* v17: crisp section edges; city light registered to the skyline. */
+.home-scrolltest .featured-act::before,.home-scrolltest .featured-act::after{content:none}
+.home-scrolltest .garuss-parallax__sky-track{top:-28%;height:106%}
+.city-sky-glow{
+ position:absolute;inset:0;z-index:1;pointer-events:none;
+ background:radial-gradient(ellipse 70% 12% at 50% 43%,rgba(239,184,115,.38),rgba(226,170,106,.15) 46%,rgba(226,170,106,0) 82%);
+ mix-blend-mode:screen;
+ transform:translate3d(calc(var(--px)*.15),calc(var(--py)*.15 - var(--scene-scroll,0px)*.14),0) scale(1.005);
+}
+@media(prefers-reduced-motion:reduce){.city-sky-glow{transform:none}}
