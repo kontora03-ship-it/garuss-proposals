@@ -664,3 +664,9 @@ html.intro-pending{overflow:hidden}
 }
 .page-intro-center{width:clamp(230px,30vw,449px)}
 .page-intro-center>img,.page-intro-progress{width:100%}
+
+/* v29: skyline haze follows the lamp, and stays off at rest. */
+.home-scrolltest .city-sky-glow{
+ opacity:var(--city-power,0)!important;
+ background:radial-gradient(ellipse 72% 15% at 50% 43%,rgba(239,180,105,.46),rgba(225,156,79,.19) 46%,rgba(225,156,79,0) 84%);
+}
