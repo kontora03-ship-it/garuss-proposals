@@ -629,3 +629,30 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
  transform:scaleX(0);transform-origin:left center;will-change:transform;
 }
 @media(max-width:650px){.featured-scroll-progress{bottom:24px;height:2px}}
+
+/* v27: asset-gated intro. Only the test page uses this loader. */
+html{scrollbar-gutter:stable}
+html.intro-pending{overflow:hidden}
+.page-intro{
+ display:none;position:fixed;inset:0;z-index:10000;background:#BE1622;
+ align-items:center;justify-items:center;overflow:hidden;
+}
+.intro-pending .page-intro{display:grid}
+.page-intro-tiles{position:absolute;inset:0;width:100%;height:100%}
+.page-intro-center{position:relative;z-index:1;display:grid;justify-items:center;gap:32px;transition:opacity .22s ease}
+.page-intro-center>img{width:clamp(230px,30vw,449px);height:auto;filter:brightness(0) invert(1)}
+.page-intro-progress{width:clamp(220px,25vw,330px);height:2px;background:rgba(255,255,255,.22);overflow:hidden}
+.page-intro-progress>i{display:block;width:100%;height:100%;background:#fff;transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+.page-intro.is-dissolving{background:transparent}
+.page-intro.is-dissolving .page-intro-center{opacity:0}
+.home-scrolltest>.test-main-header,.home-scrolltest>#scroll-root,.home-scrolltest>.test-footer{transition:opacity .55s ease}
+.intro-pending:not(.intro-revealing) .home-scrolltest>.test-main-header,
+.intro-pending:not(.intro-revealing) .home-scrolltest>#scroll-root,
+.intro-pending:not(.intro-revealing) .home-scrolltest>.test-footer{opacity:0}
+.intro-pending #hero-title>.hero-line,
+.intro-pending .home-scrolltest .hero-copy p,
+.intro-pending .home-scrolltest .hero-project-link{animation:none!important;opacity:0!important}
+@media(prefers-reduced-motion:reduce){
+ .page-intro-progress>i,.page-intro-center,
+ .home-scrolltest>.test-main-header,.home-scrolltest>#scroll-root,.home-scrolltest>.test-footer{transition:none}
+}

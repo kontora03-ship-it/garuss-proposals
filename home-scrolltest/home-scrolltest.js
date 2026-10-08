@@ -76,6 +76,7 @@ addEventListener('pointerdown',cancelWheel,{passive:true});
 addEventListener('touchstart',cancelWheel,{passive:true});
 addEventListener('keydown',cancelWheel,{passive:true});
 addEventListener('wheel',e=>{
+ if(document.documentElement.classList.contains('intro-pending')){e.preventDefault();return;}
  if(reduce||!finePointer.matches||e.ctrlKey||e.metaKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
  // Keep scrolling within any independently scrollable control native.
  for(let el=e.target instanceof Element?e.target:null;el&&el!==document.body;el=el.parentElement){
@@ -202,7 +203,7 @@ addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
 
 
 /* Register all raster layers in the same source-coordinate canvas. */
-(()=>{
+const sceneAssetsReady=(()=>{
   const scene=document.getElementById('garuss-parallax');
   const canvas=scene?.querySelector('.garuss-parallax__canvas');
   if(!scene||!canvas)return;
@@ -215,7 +216,7 @@ addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
   new ResizeObserver(fit).observe(scene);fit();
   // Decode the actual displayed layers; no obsolete photographic placeholder.
   const layers=[...canvas.querySelectorAll('img')];
-  Promise.all(layers.map(img=>img.decode())).then(()=>{
+  return Promise.all(layers.map(img=>img.decode())).then(()=>{
     scene.classList.add('scene-ready');
   }).catch(()=>{
     scene.classList.add('scene-fallback');
@@ -238,3 +239,73 @@ featuredRail.addEventListener('focusin',e=>{
  const targetY=featuredAct.getBoundingClientRect().top+scrollY+(.06+fraction*.88)*railTravel;
  cancelWheel();window.scrollTo({top:targetY,behavior:'smooth'});
 });
+
+/* Load the page before revealing the scene and restarting copy entrances. */
+(async()=>{
+ const overlay=document.getElementById('page-intro');
+ if(!overlay)return;
+ const html=document.documentElement;
+ const protectedContent=[document.querySelector('.test-main-header'),root,document.querySelector('.test-footer')];
+ protectedContent.forEach(el=>el.inert=true);
+ const meter=overlay.querySelector('.page-intro-progress');
+ const fill=meter.querySelector('i');
+ const tileCanvas=overlay.querySelector('canvas');
+ const ctx=tileCanvas.getContext('2d');
+ const began=performance.now();
+ let width=0,height=0,tiles=[];
+ function prepareTiles(){
+  width=innerWidth;height=innerHeight;
+  const dpr=Math.min(devicePixelRatio||1,1.5);
+  tileCanvas.width=Math.round(width*dpr);tileCanvas.height=Math.round(height*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const side=24,cols=Math.ceil(width/side),rows=Math.ceil(height/side);
+  tiles=[];
+  for(let row=0;row<rows;row++)for(let col=0;col<cols;col++){
+   const delay=((col*73+row*151+col*row*19)%997)/997*300;
+   tiles.push({x:col*side,y:row*side,side,delay});
+  }
+  ctx.fillStyle='#BE1622';ctx.fillRect(0,0,width,height);
+ }
+ prepareTiles();
+ addEventListener('resize',prepareTiles,{passive:true});
+ const images=[...document.images];
+ images.forEach(img=>{img.loading='eager'});
+ const fontTask=Promise.all([
+  document.fonts.load('700 100px "Halvar"'),
+  document.fonts.load('400 17px "CoFo Sans"')
+ ]).then(()=>document.fonts.ready);
+ const loadTask=document.readyState==='complete'?Promise.resolve():new Promise(resolve=>addEventListener('load',resolve,{once:true}));
+ const tasks=[...images.map(img=>img.decode()),fontTask,loadTask,sceneAssetsReady];
+ let completed=0;
+ await Promise.allSettled(tasks.map(task=>Promise.resolve(task).finally(()=>{
+  completed++;
+  const progress=completed/tasks.length;
+  fill.style.transform='scaleX('+progress+')';
+  meter.setAttribute('aria-valuenow',String(Math.round(progress*100)));
+ })));
+ // Let the completed white line settle; cached visits still get a short intro.
+ await new Promise(resolve=>setTimeout(resolve,Math.max(320,900-(performance.now()-began))));
+ html.classList.add('intro-revealing');
+ overlay.classList.add('is-dissolving');
+ if(!reduce){
+  await new Promise(resolve=>{
+   const started=performance.now();
+   function dissolve(now){
+    const elapsed=now-started;
+    ctx.clearRect(0,0,width,height);ctx.fillStyle='#BE1622';
+    for(const tile of tiles){
+     const progress=clamp((elapsed-tile.delay)/360);
+     const size=tile.side*(1-ease(progress));
+     if(size>.1)ctx.fillRect(tile.x+(tile.side-size)/2,tile.y+(tile.side-size)/2,size,size);
+    }
+    if(elapsed<680)requestAnimationFrame(dissolve);else resolve();
+   }
+   requestAnimationFrame(dissolve);
+  });
+ }
+ removeEventListener('resize',prepareTiles);
+ overlay.remove();
+ html.classList.remove('intro-pending','intro-revealing');
+ protectedContent.forEach(el=>el.inert=false);
+ sc.layout();arrangeCopyRows(true);measure();cancelWheel();
+})();
