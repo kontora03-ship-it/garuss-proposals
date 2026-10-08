@@ -108,8 +108,8 @@ function frame(now){
  mx+=(tx-mx)*follow(dt,180);my+=(ty-my)*follow(dt,180);
  x+=(((mx-.5)*26)-x)*follow(dt,100);
  y+=(((my-.5)*18)-y)*follow(dt,100);
- heroProgress+=(rawHero-heroProgress)*follow(dt,100);
- railProgress+=(targetRail-railProgress)*follow(dt,150);
+ heroProgress+=(rawHero-heroProgress)*follow(dt,120);
+ railProgress+=(targetRail-railProgress)*follow(dt,175);
  if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
  const displayedProgress=reduce?clamp(featuredRail.scrollLeft/Math.max(1,railDistance)):railProgress;
  prop(featuredProgress,'transform','scaleX('+displayedProgress.toFixed(4)+')');
@@ -148,7 +148,7 @@ function frame(now){
  if(Math.abs(lampPower-cityPower)<.001)cityPower=lampPower;
  prop(scene,'--city-power',cityPower.toFixed(4));
  if(wheelActive){
-  wheelY+=(wheelTarget-wheelY)*follow(dt,105);
+  wheelY+=(wheelTarget-wheelY)*follow(dt,135);
   if(Math.abs(wheelTarget-wheelY)<.4){wheelY=wheelTarget;wheelActive=false;}
   window.scrollTo({top:wheelY,behavior:'instant'});
  }
