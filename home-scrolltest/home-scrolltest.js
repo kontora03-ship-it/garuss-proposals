@@ -84,7 +84,7 @@ addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
 
 /* Enable studio only when all 4 images are hosted and loaded. */
 (()=>{const stage=document.querySelector('.hero-stage'),scene=document.getElementById('garuss-parallax');if(!stage||!scene)return;
-const assets=['city.png','room.png','front.png','sky-seamless.png'];
+const assets=['city.svg','room.svg','front.svg','sky-seamless.svg'];
 Promise.all(assets.map(name=>new Promise((resolve,reject)=>{const i=new Image();i.onload=resolve;i.onerror=reject;i.src='/garuss-proposals/home-scrolltest/parallax-assets/'+name;})))
 .then(()=>scene.classList.add('scene-ready')).catch(()=>{});
 let targetX=0,targetY=0,x=0,y=0;
