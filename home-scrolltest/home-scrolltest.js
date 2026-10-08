@@ -264,9 +264,8 @@ featuredRail.addEventListener('focusin',e=>{
   tiles=[];
   for(let row=0;row<rows;row++)for(let col=0;col<cols;col++){
    const fromBottom=1-row/Math.max(1,rows-1);
-   const delay=fromBottom*420+Math.random()*340;
-   const duration=420+Math.random()*160;
-   tiles.push({x:col*side,y:row*side,side,delay,duration});
+   const delay=fromBottom*640+Math.random()*680;
+   tiles.push({x:col*side,y:row*side,side,delay});
   }
   ctx.fillStyle='#BE1622';ctx.fillRect(0,0,width,height);
  }
@@ -298,9 +297,7 @@ featuredRail.addEventListener('focusin',e=>{
     const elapsed=now-started;
     ctx.clearRect(0,0,width,height);ctx.fillStyle='#BE1622';
     for(const tile of tiles){
-     const progress=clamp((elapsed-tile.delay)/tile.duration);
-     const size=tile.side*(1-ease(progress));
-     if(size>.1)ctx.fillRect(tile.x+(tile.side-size)/2,tile.y+(tile.side-size)/2,size,size);
+     if(elapsed<tile.delay)ctx.fillRect(tile.x,tile.y,tile.side,tile.side);
     }
     if(elapsed<1360)requestAnimationFrame(dissolve);else resolve();
    }
