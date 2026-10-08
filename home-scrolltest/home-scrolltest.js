@@ -2,79 +2,115 @@ const root=document.querySelector('#scroll-root');
 const heroAct=document.querySelector('.hero-act');
 const heroStage=document.querySelector('.hero-stage');
 const heroCopy=document.querySelector('.hero-copy');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const sc=window.ScrollCraft.mount(root,{lerp:.12});
-
-/* Hero progress + pointer depth */
-let mx=.5,my=.45,tx=.5,ty=.45;
-let lampCursor=null,lampPower=0,lastFrame=0;
-const lampAnchor=document.querySelector('.lamp-breathe--one ellipse');
 const scene=document.querySelector('#garuss-parallax');
 const featuredAct=document.querySelector('.featured-act');
 const featuredRail=featuredAct.querySelector('.featured-rail');
-let railProgress=0;
-heroStage.addEventListener('pointermove',e=>{
- if(e.pointerType==='mouse')lampCursor={x:e.clientX,y:e.clientY};
-},{passive:true});
-heroStage.addEventListener('pointerleave',()=>{lampCursor=null},{passive:true});
-addEventListener('blur',()=>{lampCursor=null});
-heroStage.addEventListener('pointermove',e=>{
-  if(reduce||e.pointerType!=='mouse')return;
-  const r=heroStage.getBoundingClientRect();
-  tx=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width));
-  ty=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));
-},{passive:true});
-heroStage.addEventListener('pointerleave',()=>{tx=.5;ty=.45},{passive:true});
-
-function frame(now){
-  const dt=Math.min(64,now-(lastFrame||now));lastFrame=now;
-  mx+=(tx-mx)*.07;my+=(ty-my)*.07;
-  heroStage.style.setProperty('--mx',mx.toFixed(3));
-  heroStage.style.setProperty('--my',my.toFixed(3));
-
-  const p=Math.max(0,Math.min(1,parseFloat(getComputedStyle(heroAct).getPropertyValue('--sc-p'))||0));
-  heroStage.style.setProperty('--hero-p',p.toFixed(4));
-  heroStage.style.setProperty('--process-progress',reduce?'1':Math.min(1,p*3.5).toFixed(3));
-  heroStage.style.setProperty('--scene-scroll',reduce?'0px':(p*28).toFixed(2)+'px');
-  heroStage.style.setProperty('--draw-progress',reduce?'1':Math.min(1,.18+p*2.2).toFixed(3));
-  // Copy holds its exact size and position, then fades as the red section approaches, even after the stage releases.
-  const nextTop=featuredAct.getBoundingClientRect().top;
-  const copyBottom=heroCopy.getBoundingClientRect().bottom;
-  const fadeStart=Math.min(innerHeight*.92,copyBottom+260);
-  const fadeEnd=Math.min(fadeStart-180,copyBottom+60);
-  const fade=Math.max(0,Math.min(1,(fadeStart-nextTop)/(fadeStart-fadeEnd)));
-  const eased=fade*fade*(3-2*fade);
-  heroCopy.style.opacity=(1-eased).toFixed(3);
-  heroCopy.style.pointerEvents=fade>=.98?'none':'';
-  heroCopy.inert=fade>=.98;
-  // Gentle, frame-rate-independent rail movement with brief holds at both ends.
-  if(!reduce){
-    const b=featuredAct.getBoundingClientRect();
-    const travel=Math.max(1,featuredAct.offsetHeight-innerHeight);
-    const raw=Math.max(0,Math.min(1,-b.top/travel));
-    const target=Math.max(0,Math.min(1,(raw-.06)/.88));
-    railProgress+=(target-railProgress)*(1-Math.exp(-dt/180));
-    if(Math.abs(target-railProgress)<.0001)railProgress=target;
-    const distance=Math.max(0,featuredRail.scrollWidth-document.documentElement.clientWidth);
-    featuredRail.style.transform='translate3d('+(-distance*railProgress).toFixed(2)+'px,0,0)';
-  }
-  // Anchor follows the registered room layer, including parallax and stage release.
-  let targetLight=0;
-  if(lampCursor&&scene.classList.contains('scene-ready')){
-    const b=lampAnchor.getBoundingClientRect();
-    const distance=Math.hypot(lampCursor.x-(b.left+b.width/2),lampCursor.y-(b.top+b.height/2));
-    const radius=Math.min(300,Math.max(170,innerWidth*.20));
-    const proximity=Math.max(0,Math.min(1,1-distance/radius));
-    targetLight=proximity*proximity*(3-2*proximity);
-  }
-  lampPower+=(targetLight-lampPower)*(1-Math.exp(-dt/240));
-  if(Math.abs(targetLight-lampPower)<.001)lampPower=targetLight;
-  scene.style.setProperty('--lamp-power',lampPower.toFixed(4));
-  requestAnimationFrame(frame);
+const lampAnchor=document.querySelector('.lamp-breathe--one ellipse');
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer=matchMedia('(hover:hover) and (pointer:fine)');
+const sc=window.ScrollCraft.mount(root,{lerp:.12});
+const clamp=n=>Math.max(0,Math.min(1,n));
+const ease=n=>n*n*(3-2*n);
+const follow=(dt,ms)=>1-Math.exp(-dt/ms);
+let cursor=null,mx=.5,my=.45,tx=.5,ty=.45,x=0,y=0,lampPower=0,railProgress=0,heroProgress=0,lastFrame=0;
+let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,copyBottom=0,maxScroll=0;
+let wheelActive=false,wheelTarget=scrollY,wheelY=scrollY,rafId=0,dead=false;
+const lastValues=new Map();
+function prop(el,key,value){
+ const id=el.className+'|'+key;
+ if(lastValues.get(id)===value)return;
+ lastValues.set(id,value);el.style.setProperty(key,value);
 }
-requestAnimationFrame(frame);
-
+function measure(){
+ viewWidth=document.documentElement.clientWidth;viewHeight=innerHeight;
+ railDistance=Math.max(0,featuredRail.scrollWidth-viewWidth);
+ railTravel=Math.max(1,featuredAct.offsetHeight-viewHeight);
+ heroTravel=Math.max(1,heroAct.offsetHeight-viewHeight);
+ copyBottom=heroCopy.getBoundingClientRect().bottom;
+ maxScroll=Math.max(0,document.documentElement.scrollHeight-viewHeight);
+}
+addEventListener('resize',()=>{sc.layout();measure()},{passive:true});
+document.fonts.ready.then(measure);
+new ResizeObserver(measure).observe(featuredRail);
+measure();
+heroStage.addEventListener('pointermove',e=>{
+ if(e.pointerType!=='mouse')return;
+ cursor={x:e.clientX,y:e.clientY};
+ const b=heroStage.getBoundingClientRect();
+ tx=clamp((e.clientX-b.left)/b.width);ty=clamp((e.clientY-b.top)/b.height);
+},{passive:true});
+heroStage.addEventListener('pointerleave',()=>{cursor=null;tx=.5;ty=.45},{passive:true});
+addEventListener('blur',()=>{cursor=null;wheelActive=false});
+function cancelWheel(){wheelActive=false;wheelY=wheelTarget=scrollY;}
+addEventListener('pointerdown',cancelWheel,{passive:true});
+addEventListener('touchstart',cancelWheel,{passive:true});
+addEventListener('keydown',cancelWheel,{passive:true});
+addEventListener('wheel',e=>{
+ if(reduce||!finePointer.matches||e.ctrlKey||e.metaKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+ // Keep scrolling within any independently scrollable control native.
+ for(let el=e.target instanceof Element?e.target:null;el&&el!==document.body;el=el.parentElement){
+  const s=getComputedStyle(el);
+  if(/auto|scroll/.test(s.overflowY)&&el.scrollHeight>el.clientHeight+1)return;
+ }
+ const unit=e.deltaMode===1?32:e.deltaMode===2?viewHeight:1;
+ const delta=e.deltaY*unit;
+ if(!delta)return;
+ if(!wheelActive){wheelY=wheelTarget=scrollY;}
+ const target=Math.max(0,Math.min(maxScroll,wheelTarget+delta));
+ if(target===wheelTarget&&(target===0||target===maxScroll))return;
+ e.preventDefault();wheelTarget=target;wheelActive=true;
+},{passive:false});
+function frame(now){
+ if(dead)return;
+ const dt=Math.min(50,Math.max(1,now-(lastFrame||now-16.67)));lastFrame=now;
+ if(document.hidden){rafId=requestAnimationFrame(frame);return;}
+ // Read geometry before writing transforms. One owner drives the rail and scene.
+ const redTop=featuredAct.getBoundingClientRect().top;
+ const heroTop=heroAct.getBoundingClientRect().top;
+ const heroVisible=heroTop<viewHeight&&heroTop+heroAct.offsetHeight>0;
+ let lampBox=null;
+ if(cursor&&heroVisible&&scene.classList.contains('scene-ready'))lampBox=lampAnchor.getBoundingClientRect();
+ heroAct.classList.toggle('scene-paused',!heroVisible);
+ const rawHero=clamp(-heroTop/heroTravel);
+ const targetRail=clamp((clamp(-redTop/railTravel)-.06)/.88);
+ mx+=(tx-mx)*follow(dt,180);my+=(ty-my)*follow(dt,180);
+ x+=(((mx-.5)*26)-x)*follow(dt,100);
+ y+=(((my-.5)*18)-y)*follow(dt,100);
+ heroProgress+=(rawHero-heroProgress)*follow(dt,100);
+ railProgress+=(targetRail-railProgress)*follow(dt,150);
+ if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
+ const fadeStart=Math.min(viewHeight*.92,copyBottom+260);
+ const fadeEnd=Math.min(fadeStart-180,copyBottom+60);
+ const fade=clamp((fadeStart-redTop)/(fadeStart-fadeEnd));
+ const opacity=(1-ease(fade)).toFixed(3);
+ if(heroCopy.style.opacity!==opacity)heroCopy.style.opacity=opacity;
+ const inactive=fade>=.98;
+ if(heroCopy.inert!==inactive){heroCopy.inert=inactive;heroCopy.style.pointerEvents=inactive?'none':'';}
+ if(!reduce){
+  prop(featuredRail,'transform','translate3d('+(-railDistance*railProgress).toFixed(2)+'px,0,0)');
+  if(heroVisible){
+   prop(heroStage,'--scene-scroll',(heroProgress*28).toFixed(2)+'px');
+   prop(heroStage,'--ruler-shift',((mx-.5)*180).toFixed(2)+'px');
+   prop(scene,'--px',x.toFixed(2)+'px');prop(scene,'--py',y.toFixed(2)+'px');
+  }
+ }
+ let targetLight=0;
+ if(lampBox){
+  const distance=Math.hypot(cursor.x-(lampBox.left+lampBox.width/2),cursor.y-(lampBox.top+lampBox.height/2));
+  targetLight=ease(clamp(1-distance/Math.min(300,Math.max(170,viewWidth*.20))));
+ }
+ lampPower+=(targetLight-lampPower)*follow(dt,240);
+ if(Math.abs(targetLight-lampPower)<.001)lampPower=targetLight;
+ prop(scene,'--lamp-power',lampPower.toFixed(4));
+ if(wheelActive){
+  wheelY+=(wheelTarget-wheelY)*follow(dt,105);
+  if(Math.abs(wheelTarget-wheelY)<.4){wheelY=wheelTarget;wheelActive=false;}
+  window.scrollTo({top:wheelY,behavior:'instant'});
+ }
+ rafId=requestAnimationFrame(frame);
+}
+rafId=requestAnimationFrame(frame);
+addEventListener('pagehide',()=>{dead=true;cancelAnimationFrame(rafId)},{once:true});
 /* Card reveal */
 const cards=[...document.querySelectorAll('.test-grid .presentation-card')];
 if('IntersectionObserver' in window&&!reduce){
@@ -144,31 +180,21 @@ addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
   }))).then(()=>scene.classList.add('scene-ready')).catch(()=>{
     scene.classList.add('scene-fallback');
   });
-  let targetX=0,targetY=0,x=0,y=0;
-  heroStage.addEventListener('pointermove',e=>{
-    if(reduce||e.pointerType!=='mouse')return;
-    const b=heroStage.getBoundingClientRect();
-    targetX=((e.clientX-b.left)/b.width-.5)*26;
-    targetY=((e.clientY-b.top)/b.height-.5)*18;
-  },{passive:true});
-  heroStage.addEventListener('pointerleave',()=>{targetX=0;targetY=0},{passive:true});
-  if(reduce)return;
-  function tick(){
-    if(!document.hidden){
-      x+=(targetX-x)*.055;y+=(targetY-y)*.055;
-      scene.style.setProperty('--px',x.toFixed(2)+'px');
-      scene.style.setProperty('--py',y.toFixed(2)+'px');
-    }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
 })();
-
-/* Smooth anchor navigation without changing the scroll-driven scene timing. */
+/* Native smooth anchor navigation; wheel input can interrupt it immediately. */
 document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',e=>{
  const target=document.querySelector(link.getAttribute('href'));
  if(!target)return;
- e.preventDefault();
+ e.preventDefault();cancelWheel();
  target.scrollIntoView({behavior:reduce?'instant':'smooth',block:'start'});
  history.replaceState(null,'',link.getAttribute('href'));
 }));
+/* Keep focused cards visible now that the page owns horizontal rail motion. */
+featuredRail.addEventListener('focusin',e=>{
+ const card=e.target.closest('.featured-card');if(!card||reduce)return;
+ const index=[...featuredRail.children].indexOf(card);
+ const gap=parseFloat(getComputedStyle(featuredRail).gap)||0;
+ const fraction=clamp(index*(card.offsetWidth+gap)/Math.max(1,railDistance));
+ const targetY=featuredAct.getBoundingClientRect().top+scrollY+(.06+fraction*.88)*railTravel;
+ cancelWheel();window.scrollTo({top:targetY,behavior:'smooth'});
+});

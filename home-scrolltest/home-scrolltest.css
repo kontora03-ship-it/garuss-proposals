@@ -551,3 +551,15 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
  transform:translate3d(calc(var(--px)*.15),calc(var(--py)*.15 - var(--scene-scroll,0px)*.14),0) scale(1.005);
 }
 @media(prefers-reduced-motion:reduce){.city-sky-glow{transform:none}}
+
+/* v19: one compositor path per moving surface; graphic editor ruler. */
+.studio-ruler{position:absolute;left:0;right:0;bottom:0;height:38px;z-index:12;overflow:hidden;pointer-events:none;border-top:1px solid rgba(255,255,255,.17);background:rgba(12,13,15,.82);contain:paint}
+.studio-ruler-track{position:absolute;left:calc(50% + 40px);top:0;width:3280px;height:100%;display:flex;transform:translate3d(calc(-50% + var(--ruler-shift,0px)),0,0);will-change:transform;background:repeating-linear-gradient(90deg,rgba(232,228,221,.32) 0 1px,transparent 1px 8px) top left / 100% 6px no-repeat,repeating-linear-gradient(90deg,rgba(232,228,221,.68) 0 1px,transparent 1px 80px) top left / 100% 12px no-repeat}
+.studio-ruler-track span{flex:0 0 80px;padding-top:17px;transform:translateX(-50%);text-align:center;font:400 9px/1 "CoFo Sans",Arial,sans-serif;color:rgba(238,234,228,.66);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.studio-ruler>i{position:absolute;top:0;left:50%;width:1px;height:14px;background:#BE1622}
+.studio-ruler>i::before{content:"";position:absolute;top:0;left:-3px;border-left:3px solid transparent;border-right:3px solid transparent;border-top:5px solid #BE1622}
+.home-scrolltest .featured-rail{transition:none!important;backface-visibility:hidden}
+.lamp-meter{opacity:calc(.42 + var(--lamp-power,0)*.58)}
+@media(prefers-reduced-motion:reduce){.studio-ruler-track{transform:translate3d(-50%,0,0);will-change:auto}}
+
+.hero-act.scene-paused .night-sky-strip,.hero-act.scene-paused .lamp-breathe{animation-play-state:paused}
