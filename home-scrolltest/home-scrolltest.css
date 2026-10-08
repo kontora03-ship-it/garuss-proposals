@@ -382,3 +382,12 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
  .studio-graphics{opacity:.65}
 }
 @media(prefers-reduced-motion:reduce){.studio-square-back,.studio-square-near,.studio-process,.studio-process>span{transform:none!important;transition:none}.studio-process>span{opacity:1}}
+
+/* Moving typography outside the studio, occluded by the room and foreground. */
+.window-type{position:absolute;inset:14% 0 auto;height:32%;z-index:2;overflow:hidden;pointer-events:none;transform:translate3d(calc(var(--px)*.12),calc(var(--py)*.12 - var(--scene-scroll,0px)*.15),0)}
+.window-type__track{display:flex;width:max-content;animation:windowTypeTravel 110s linear infinite;will-change:transform}
+.window-type__track>span{flex:none;white-space:nowrap;font:700 clamp(100px,13vw,250px)/1.15 "Halvar",Arial,sans-serif;letter-spacing:-.035em;color:rgba(255,255,255,.3)}
+.window-type b{font-weight:inherit;padding:0 .22em;color:rgba(190,22,34,.45)}
+@keyframes windowTypeTravel{from{transform:translateX(-12%)}to{transform:translateX(-62%)}}
+@media(max-width:650px){.window-type{top:18%;height:24%}.window-type__track>span{font-size:120px}}
+@media(prefers-reduced-motion:reduce){.window-type__track{animation:none;transform:translateX(-12%)}.window-type{transform:none}}
