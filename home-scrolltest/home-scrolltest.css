@@ -589,3 +589,29 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 .home-scrolltest .copy-fade-line{display:block;will-change:opacity}
 .home-scrolltest .copy-link-fade{width:max-content}
 .home-scrolltest .hero-copy p{ text-wrap:wrap }
+
+/* v24: reveal the source photograph, without synthetic light or brightening. */
+.home-scrolltest .city-lit{
+ filter:none;mix-blend-mode:normal;opacity:var(--city-power,0);
+ mask-image:url('parallax-assets/night-v13/city.webp');
+ mask-size:100% 100%;mask-repeat:no-repeat;mask-mode:alpha;
+}
+.home-scrolltest .lamp-lit{
+ filter:none;mix-blend-mode:normal;opacity:var(--lamp-power,0);
+ mask-size:100% 100%;mask-repeat:no-repeat;mask-mode:alpha;
+ mask-composite:intersect;
+}
+.home-scrolltest .lamp-lit--room{
+ mask-image:url('parallax-assets/night-v13/room.webp'),
+ radial-gradient(ellipse 37% 44% at 65% 49%,#000 15%,rgba(0,0,0,.85) 46%,transparent 100%);
+}
+.home-scrolltest .lamp-lit--front{
+ mask-image:url('parallax-assets/night-v13/front.webp'),
+ radial-gradient(ellipse 46% 35% at 65% 73%,#000 20%,rgba(0,0,0,.8) 48%,transparent 100%);
+}
+.home-scrolltest .sky-original{
+ opacity:var(--city-power,0);
+ mask-image:radial-gradient(ellipse 85% 42% at 50% 72%,#000 20%,transparent 100%);
+}
+.home-scrolltest .sky-original .night-sky-strip{filter:none}
+.city-sky-glow,.lamp-warmth,.studio-light-glow{opacity:0!important}

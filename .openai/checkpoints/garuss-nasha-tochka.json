@@ -1,0 +1,10 @@
+{
+  "label": "Наша точка",
+  "request": "Вернись к нашей точке",
+  "date": "2026-10-09",
+  "branch": "checkpoint/nasha-tochka-2026-10-09",
+  "commit": "2c8b0be174fe14221c3f0f848ac726fd797e300a",
+  "scope": "home-scrolltest only",
+  "restore": "Restore the home-scrolltest files from this commit into the current main branch; preserve unrelated later changes.",
+  "description": "v23: proximity lighting with synthetic warm glow; bulb indicator; hero copy fades bottom to top."
+}
