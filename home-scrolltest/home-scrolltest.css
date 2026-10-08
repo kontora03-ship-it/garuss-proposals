@@ -277,3 +277,19 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 .home-scrolltest .hero-stage>.hero-copy,
 .home-scrolltest .hero-stage>.hero-index,
 .home-scrolltest .hero-stage>.hero-scroll-line{position:relative;z-index:5}
+
+
+/* Fix: restore the progress ruler and footer index absolute layout. */
+.home-scrolltest .hero-stage > .hero-index{
+  position:absolute !important;
+  left:6%;right:6%;bottom:26px;
+  z-index:6;
+}
+.home-scrolltest .hero-stage > .hero-scroll-line{
+  position:absolute !important;
+  top:25%;right:5%;
+  height:50%;width:1px;z-index:6;
+}
+.home-scrolltest .hero-stage > .hero-scroll-line i{
+  display:block;width:1px;height:32%;
+}
