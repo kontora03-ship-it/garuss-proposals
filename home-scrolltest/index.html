@@ -9,7 +9,9 @@
 <link rel="icon" href="/garuss-proposals/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/garuss-proposals/style.css?v=20261007-clean">
 <link rel="stylesheet" href="/garuss-proposals/vendor/scrollcraft/scrollcraft.css?v=030">
-<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=12">
+<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=13">
+<link rel="preload" as="image" href="parallax-assets/night-v13/room.webp">
+<link rel="preload" as="image" href="parallax-assets/night-v13/front.webp">
 </head>
 <body class="home-scrolltest">
 
@@ -23,12 +25,15 @@
     <div class="hero-stage" data-sc-stage>
       
       <div class="garuss-parallax" id="garuss-parallax" aria-hidden="true">
-        <div class="garuss-parallax__sky-track"></div>
-        <img class="garuss-parallax__layer garuss-parallax__city" src="/garuss-proposals/home-scrolltest/parallax-assets/city.svg" alt="">
-        <div class="window-type" aria-hidden="true"><div class="window-type__track"><span>ИДЕЯ <b>·</b> ДИЗАЙН <b>·</b> ПРОИЗВОДСТВО <b>·</b> </span><span>ИДЕЯ <b>·</b> ДИЗАЙН <b>·</b> ПРОИЗВОДСТВО <b>·</b> </span></div></div>
-        <img class="garuss-parallax__layer garuss-parallax__room" src="/garuss-proposals/home-scrolltest/parallax-assets/room.svg" alt="">
-        
-        <img class="garuss-parallax__layer garuss-parallax__front" src="/garuss-proposals/home-scrolltest/parallax-assets/front.svg" alt="">
+        <div class="garuss-parallax__canvas">
+          <div class="garuss-parallax__sky-track"><div class="night-sky-strip">
+            <img src="parallax-assets/night-v13/sky.webp" alt=""><img src="parallax-assets/night-v13/sky.webp" alt="">
+            <img src="parallax-assets/night-v13/sky.webp" alt=""><img src="parallax-assets/night-v13/sky.webp" alt="">
+          </div></div>
+          <img class="garuss-parallax__layer garuss-parallax__city" src="parallax-assets/night-v13/city.webp" width="1672" height="941" alt="" decoding="async">
+          <img class="garuss-parallax__layer garuss-parallax__room" src="parallax-assets/night-v13/room.webp" width="1672" height="941" alt="" decoding="async">
+          <img class="garuss-parallax__layer garuss-parallax__front" src="parallax-assets/night-v13/front.webp" width="1672" height="941" alt="" decoding="async">
+        </div>
         <div class="garuss-parallax__shade"></div>
       </div>
       <div class="hero-grid-plane" data-sc-parallax="-0.05" aria-hidden="true"></div>
@@ -116,6 +121,6 @@
 </footer>
 
 <script src="/garuss-proposals/vendor/scrollcraft/scrollcraft.js?v=030"></script>
-<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=6"></script>
+<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=13"></script>
 </body>
 </html>

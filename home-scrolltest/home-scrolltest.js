@@ -86,14 +86,43 @@ buttons.forEach(button=>button.addEventListener('click',()=>{
 addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
 
 
-/* Enable studio only when all 4 images are hosted and loaded. */
-(()=>{const stage=document.querySelector('.hero-stage'),scene=document.getElementById('garuss-parallax');if(!stage||!scene)return;
-const assets=['city.svg','room.svg','front.svg','sky-seamless.svg'];
-Promise.all(assets.map(name=>new Promise((resolve,reject)=>{const i=new Image();i.onload=resolve;i.onerror=reject;i.src='/garuss-proposals/home-scrolltest/parallax-assets/'+name;})))
-.then(()=>scene.classList.add('scene-ready')).catch(()=>{});
-let targetX=0,targetY=0,x=0,y=0;
-stage.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=stage.getBoundingClientRect();targetX=((e.clientX-r.left)/r.width-.5)*40;targetY=((e.clientY-r.top)/r.height-.5)*26},{passive:true});
-stage.addEventListener('pointerleave',()=>{targetX=0;targetY=0});
-if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-function tick(){x+=(targetX-x)*.065;y+=(targetY-y)*.065;scene.style.setProperty('--px',x.toFixed(2)+'px');scene.style.setProperty('--py',y.toFixed(2)+'px');requestAnimationFrame(tick)}requestAnimationFrame(tick);
+/* Register all raster layers in the same source-coordinate canvas. */
+(()=>{
+  const scene=document.getElementById('garuss-parallax');
+  const canvas=scene?.querySelector('.garuss-parallax__canvas');
+  if(!scene||!canvas)return;
+  function fit(){
+    const bounds=scene.getBoundingClientRect();
+    const scale=Math.max(bounds.width/1672,bounds.height/941)*1.026;
+    scene.style.setProperty('--scene-width',(1672*scale).toFixed(2)+'px');
+    scene.style.setProperty('--scene-height',(941*scale).toFixed(2)+'px');
+  }
+  new ResizeObserver(fit).observe(scene);fit();
+  const names=['city','room','front','sky'];
+  Promise.all(names.map(name=>new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.onload=()=>img.decode().then(resolve,reject);
+    img.onerror=reject;
+    img.src=new URL('parallax-assets/night-v13/'+name+'.webp',location.href).href;
+  }))).then(()=>scene.classList.add('scene-ready')).catch(()=>{
+    scene.classList.add('scene-fallback');
+  });
+  let targetX=0,targetY=0,x=0,y=0;
+  heroStage.addEventListener('pointermove',e=>{
+    if(reduce||e.pointerType!=='mouse')return;
+    const b=heroStage.getBoundingClientRect();
+    targetX=((e.clientX-b.left)/b.width-.5)*26;
+    targetY=((e.clientY-b.top)/b.height-.5)*18;
+  },{passive:true});
+  heroStage.addEventListener('pointerleave',()=>{targetX=0;targetY=0},{passive:true});
+  if(reduce)return;
+  function tick(){
+    if(!document.hidden){
+      x+=(targetX-x)*.055;y+=(targetY-y)*.055;
+      scene.style.setProperty('--px',x.toFixed(2)+'px');
+      scene.style.setProperty('--py',y.toFixed(2)+'px');
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
 })();
