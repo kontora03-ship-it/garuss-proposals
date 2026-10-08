@@ -563,3 +563,8 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 @media(prefers-reduced-motion:reduce){.studio-ruler-track{transform:translate3d(-50%,0,0);will-change:auto}}
 
 .hero-act.scene-paused .night-sky-strip,.hero-act.scene-paused .lamp-breathe{animation-play-state:paused}
+
+/* v20: lighter ruler and city illumination linked to the lamp. */
+.studio-ruler{opacity:.70;background:rgba(12,13,15,.55)}
+.home-scrolltest .city-lit{filter:url('#city-window-light');mix-blend-mode:screen;opacity:calc(var(--lamp-power,0)*.72)}
+.city-sky-glow{opacity:calc(.8 + var(--lamp-power,0)*.55)}

@@ -79,8 +79,8 @@ function frame(now){
  heroProgress+=(rawHero-heroProgress)*follow(dt,100);
  railProgress+=(targetRail-railProgress)*follow(dt,150);
  if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
- const fadeStart=Math.min(viewHeight*.92,copyBottom+260);
- const fadeEnd=Math.min(fadeStart-180,copyBottom+60);
+ const fadeStart=Math.min(viewHeight*.94,copyBottom+150);
+ const fadeEnd=Math.min(fadeStart-120,copyBottom+8);
  const fade=clamp((fadeStart-redTop)/(fadeStart-fadeEnd));
  const opacity=(1-ease(fade)).toFixed(3);
  if(heroCopy.style.opacity!==opacity)heroCopy.style.opacity=opacity;
