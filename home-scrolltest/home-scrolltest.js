@@ -114,7 +114,8 @@ function frame(now){
  const rowStep=Math.max(0,(firstStart-lastEnd-rowDuration)/Math.max(1,copyRows.length-1));
  heroCopy.style.opacity='1';
  copyRows.forEach((row,index)=>{
-  const start=firstStart-index*rowStep;
+  const order=copyRows.length-1-index;
+  const start=firstStart-order*rowStep;
   const progress=clamp((start-redTop)/rowDuration);
   const opacity=(1-ease(progress)).toFixed(3);
   if(row.style.opacity!==opacity)row.style.opacity=opacity;
