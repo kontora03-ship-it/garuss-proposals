@@ -12,6 +12,8 @@ let lampCursor=null,lampPower=0,lastFrame=0;
 const lampAnchor=document.querySelector('.lamp-breathe--one ellipse');
 const scene=document.querySelector('#garuss-parallax');
 const featuredAct=document.querySelector('.featured-act');
+const featuredRail=featuredAct.querySelector('.featured-rail');
+let railProgress=0;
 heroStage.addEventListener('pointermove',e=>{
  if(e.pointerType==='mouse')lampCursor={x:e.clientX,y:e.clientY};
 },{passive:true});
@@ -46,6 +48,17 @@ function frame(now){
   heroCopy.style.opacity=(1-eased).toFixed(3);
   heroCopy.style.pointerEvents=fade>=.98?'none':'';
   heroCopy.inert=fade>=.98;
+  // Gentle, frame-rate-independent rail movement with brief holds at both ends.
+  if(!reduce){
+    const b=featuredAct.getBoundingClientRect();
+    const travel=Math.max(1,featuredAct.offsetHeight-innerHeight);
+    const raw=Math.max(0,Math.min(1,-b.top/travel));
+    const target=Math.max(0,Math.min(1,(raw-.06)/.88));
+    railProgress+=(target-railProgress)*(1-Math.exp(-dt/180));
+    if(Math.abs(target-railProgress)<.0001)railProgress=target;
+    const distance=Math.max(0,featuredRail.scrollWidth-document.documentElement.clientWidth);
+    featuredRail.style.transform='translate3d('+(-distance*railProgress).toFixed(2)+'px,0,0)';
+  }
   // Anchor follows the registered room layer, including parallax and stage release.
   let targetLight=0;
   if(lampCursor&&scene.classList.contains('scene-ready')){
