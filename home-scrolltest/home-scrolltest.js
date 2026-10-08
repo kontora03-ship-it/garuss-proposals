@@ -23,6 +23,7 @@ function frame(){
 
   const p=Math.max(0,Math.min(1,parseFloat(getComputedStyle(heroAct).getPropertyValue('--sc-p'))||0));
   heroStage.style.setProperty('--hero-p',p.toFixed(4));
+  heroStage.style.setProperty('--process-progress',reduce?'1':Math.min(1,p*3.5).toFixed(3));
   heroStage.style.setProperty('--scene-scroll',reduce?'0px':(p*28).toFixed(2)+'px');
   heroStage.style.setProperty('--draw-progress',reduce?'1':Math.min(1,.18+p*2.2).toFixed(3));
   if(!reduce){
