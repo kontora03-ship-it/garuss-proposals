@@ -439,3 +439,35 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
   .home-scrolltest .garuss-parallax__sky-track,.home-scrolltest .garuss-parallax__layer{transform:none!important}
   .garuss-parallax__canvas{transition:none}
 }
+
+/* v14: quieter lighting, stationary copy and compact reading rhythm. */
+.scene-color-filters{position:absolute;overflow:hidden;pointer-events:none}
+.home-scrolltest .garuss-parallax__canvas{filter:brightness(.96)}
+.home-scrolltest .garuss-parallax__layer{filter:url('#studio-selective-color')}
+.home-scrolltest .night-sky-strip{filter:url('#night-sky-color') brightness(.87) contrast(.83)}
+.home-scrolltest .garuss-parallax__shade{
+ background:
+  linear-gradient(180deg,rgba(6,8,12,.70),rgba(6,8,12,.16) 22%,transparent 39%),
+  linear-gradient(0deg,rgba(6,8,12,.68),rgba(6,8,12,.19) 23%,transparent 44%),
+  linear-gradient(90deg,rgba(6,8,12,.79),rgba(6,8,12,.66) 23%,rgba(6,8,12,.26) 44%,transparent 68%);
+}
+.home-scrolltest .hero-stage{padding-top:clamp(160px,23vh,245px)}
+.home-scrolltest .hero-copy{transform:none!important;will-change:opacity}
+.home-scrolltest .hero-copy p{max-width:410px;margin:28px 0 0;line-height:1.5}
+.home-scrolltest .hero-project-link{margin-top:16px;padding:8px 0;gap:22px}
+#hero-title>.hero-line{animation-duration:.9s;transform:translate3d(0,18px,0)}
+#hero-title>.hero-line:nth-child(2){animation-delay:.24s}
+.home-scrolltest .hero-project-link{opacity:0;animation:heroTitleArrive .8s .40s forwards}
+@media(max-width:650px){
+ .home-scrolltest .hero-stage{padding-top:clamp(140px,21svh,175px)}
+ .home-scrolltest .hero-copy p{max-width:290px;margin-top:24px}
+ .home-scrolltest .garuss-parallax__shade{
+  background:
+   linear-gradient(180deg,rgba(6,8,12,.65),transparent 37%),
+   linear-gradient(0deg,rgba(6,8,12,.64),transparent 42%),
+   linear-gradient(90deg,rgba(6,8,12,.78),rgba(6,8,12,.44) 60%,rgba(6,8,12,.12));
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .home-scrolltest .hero-project-link{opacity:1;animation:none}
+}

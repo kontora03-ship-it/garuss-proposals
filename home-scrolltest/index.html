@@ -9,11 +9,24 @@
 <link rel="icon" href="/garuss-proposals/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/garuss-proposals/style.css?v=20261007-clean">
 <link rel="stylesheet" href="/garuss-proposals/vendor/scrollcraft/scrollcraft.css?v=030">
-<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=13">
+<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=14">
 <link rel="preload" as="image" href="parallax-assets/night-v13/room.webp">
 <link rel="preload" as="image" href="parallax-assets/night-v13/front.webp">
 </head>
 <body class="home-scrolltest">
+<svg class="scene-color-filters" aria-hidden="true" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <filter id="studio-selective-color" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+   <feColorMatrix in="SourceGraphic" type="saturate" values=".46" result="muted"/>
+   <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3 -6 3 0 -.2" result="red-mask"/>
+   <feComposite in="SourceGraphic" in2="red-mask" operator="in" result="red"/>
+   <feMerge><feMergeNode in="muted"/><feMergeNode in="red"/></feMerge>
+  </filter>
+  <filter id="night-sky-color" color-interpolation-filters="sRGB">
+   <feColorMatrix type="matrix" values=".18 .55 .07 0 .018  .20 .61 .08 0 .030  .23 .68 .09 0 .055  0 0 0 1 0"/>
+  </filter>
+ </defs>
+</svg>
 
 <header class="test-main-header">
   <a class="test-brand" href="#scroll-root" aria-label="Garuss — начало"><img src="/garuss-proposals/logo.svg" width="449" height="62" alt="GARUSS"></a>
@@ -21,7 +34,7 @@
 </header>
 
 <main id="scroll-root">
-  <section class="hero-act" data-sc-act="pin" data-sc-span="1.9" data-sc-drift="#343132">
+  <section class="hero-act" data-sc-act="pin" data-sc-span="1.45" data-sc-drift="#343132">
     <div class="hero-stage" data-sc-stage>
       
       <div class="garuss-parallax" id="garuss-parallax" aria-hidden="true">
@@ -41,26 +54,18 @@
       <div class="hero-squares-plane hero-squares-front" data-sc-parallax="0.07" aria-hidden="true"></div>
 
       <div class="hero-copy">
-        <span class="hero-kicker">ДИЗАЙН / ПРОИЗВОДСТВО / GARUSS</span>
         <h1 id="hero-title"><span class="hero-line">Каталог</span><span class="hero-line">проектов<span class="hero-dot">.</span></span></h1>
-        <p>Корпоративные подарки, мерч, награды и упаковка.</p>
-        <a class="hero-project-link" href="#catalog">Смотреть проекты <span aria-hidden="true">↓</span></a>
+        <p>Разрабатываем и производим корпоративные подарки, мерч, награды и упаковку.</p>
+        <a class="hero-project-link" href="#catalog">К проектам <span aria-hidden="true">↓</span></a>
       </div>
-
-      
-      <div class="hero-index" aria-hidden="true">
-        <span>2002—2026</span>
-        <span>DESIGN / PRODUCTION</span>
-      </div>
-      <div class="hero-scroll-line" aria-hidden="true"><i></i></div>
     </div>
   </section>
 
-  <section class="featured-act" data-sc-act="pan" data-sc-span="2.25" data-sc-drift="#BE1622">
+  <section class="featured-act" data-sc-act="pan" data-sc-span="1.65" data-sc-drift="#BE1622">
     <div class="featured-stage" data-sc-stage>
       <div class="featured-head">
         <span>ИЗБРАННЫЕ ПРОЕКТЫ</span>
-        <strong>Вертикальный скролл → горизонтальная лента</strong>
+        
       </div>
       <div class="featured-rail" data-sc-pan="0.08">
         <a class="featured-card" href="/garuss-proposals/cases/burservice-gifts/">
@@ -121,6 +126,6 @@
 </footer>
 
 <script src="/garuss-proposals/vendor/scrollcraft/scrollcraft.js?v=030"></script>
-<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=13"></script>
+<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=14"></script>
 </body>
 </html>

@@ -26,14 +26,12 @@ function frame(){
   heroStage.style.setProperty('--process-progress',reduce?'1':Math.min(1,p*3.5).toFixed(3));
   heroStage.style.setProperty('--scene-scroll',reduce?'0px':(p*28).toFixed(2)+'px');
   heroStage.style.setProperty('--draw-progress',reduce?'1':Math.min(1,.18+p*2.2).toFixed(3));
-  if(!reduce){
-    const scale=1-p*.055;
-    const y=-p*34+(my-.45)*7;
-    const x=(mx-.5)*10;
-    const opacity=1-Math.max(0,(p-.60)/.40)*.72;
-    heroCopy.style.transform=`translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) scale(${scale.toFixed(4)})`;
-    heroCopy.style.opacity=opacity.toFixed(3);
-  }
+  // Copy holds its exact size and position, then fades before the stage releases.
+  const fade=Math.max(0,Math.min(1,(p-.46)/.46));
+  const eased=fade*fade*(3-2*fade);
+  heroCopy.style.opacity=(1-eased).toFixed(3);
+  heroCopy.style.pointerEvents=fade>=.98?'none':'';
+  heroCopy.inert=fade>=.98;
   requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
