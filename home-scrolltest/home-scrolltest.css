@@ -656,3 +656,11 @@ html.intro-pending{overflow:hidden}
  .page-intro-progress>i,.page-intro-center,
  .home-scrolltest>.test-main-header,.home-scrolltest>#scroll-root,.home-scrolltest>.test-footer{transition:none}
 }
+
+/* v28: same source pixels for the foreground before and after reveal. */
+.home-scrolltest .front-source-base{
+ mask-image:url('parallax-assets/night-v13/front.webp');
+ mask-size:100% 100%;mask-repeat:no-repeat;mask-mode:alpha;
+}
+.page-intro-center{width:clamp(230px,30vw,449px)}
+.page-intro-center>img,.page-intro-progress{width:100%}

@@ -261,8 +261,9 @@ featuredRail.addEventListener('focusin',e=>{
   const side=24,cols=Math.ceil(width/side),rows=Math.ceil(height/side);
   tiles=[];
   for(let row=0;row<rows;row++)for(let col=0;col<cols;col++){
-   const delay=((col*73+row*151+col*row*19)%997)/997*300;
-   tiles.push({x:col*side,y:row*side,side,delay});
+   const delay=Math.random()*320;
+   const duration=240+Math.random()*150;
+   tiles.push({x:col*side,y:row*side,side,delay,duration});
   }
   ctx.fillStyle='#BE1622';ctx.fillRect(0,0,width,height);
  }
@@ -294,11 +295,11 @@ featuredRail.addEventListener('focusin',e=>{
     const elapsed=now-started;
     ctx.clearRect(0,0,width,height);ctx.fillStyle='#BE1622';
     for(const tile of tiles){
-     const progress=clamp((elapsed-tile.delay)/360);
+     const progress=clamp((elapsed-tile.delay)/tile.duration);
      const size=tile.side*(1-ease(progress));
      if(size>.1)ctx.fillRect(tile.x+(tile.side-size)/2,tile.y+(tile.side-size)/2,size,size);
     }
-    if(elapsed<680)requestAnimationFrame(dissolve);else resolve();
+    if(elapsed<720)requestAnimationFrame(dissolve);else resolve();
    }
    requestAnimationFrame(dissolve);
   });
