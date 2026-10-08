@@ -68,15 +68,6 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 .hero-scroll-line{position:absolute;right:5%;top:25%;height:50%;width:1px;background:#5b5557;z-index:5}
 .hero-scroll-line i{display:block;width:1px;height:32%;background:#BE1622;transform:translateY(calc(var(--hero-p,0)*210%));will-change:transform}
 
-/* BRIDGE */
-.bridge-section{min-height:72vh;display:flex;align-items:center;padding:100px 6%}
-.bridge-inner{max-width:1280px;margin:auto;width:100%;display:grid;grid-template-columns:220px 1fr;gap:45px;align-items:start}
-.bridge-inner>span{font-size:11px;letter-spacing:.15em;color:#9e9698;padding-top:13px}
-.bridge-inner h2{
-  margin:0;font-family:"Halvar",Arial,sans-serif;
-  font-size:clamp(38px,5.2vw,82px);line-height:.98;letter-spacing:-.045em;max-width:1050px;
-}
-
 /* FEATURED HORIZONTAL */
 .featured-act{position:relative;background:#BE1622}
 .featured-stage{
