@@ -59,7 +59,8 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
   margin:0;font-family:"Halvar",Arial,sans-serif;font-weight:700;
   font-size:clamp(76px,11vw,178px);line-height:.80;letter-spacing:-.065em;text-transform:uppercase;
 }
-.hero-copy .hero-line{display:block;color:#fff}\n.hero-copy .hero-dot{display:inline;color:#BE1622}
+.hero-copy .hero-line{display:block;color:#fff}
+.hero-copy .hero-dot{display:inline;color:#BE1622}
 .hero-copy p{max-width:470px;margin:34px 0 0;font-size:17px;line-height:1.5;color:#ddd7d9}
 .hero-index{
   position:absolute;left:6%;right:6%;bottom:26px;z-index:5;
@@ -313,3 +314,42 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 .home-scrolltest .hero-stage>.hero-copy{position:relative;z-index:9}
 .home-scrolltest .hero-stage:has(.garuss-parallax.scene-ready)::after{opacity:0}
 @media(prefers-reduced-motion:reduce){.garuss-parallax__sky-track{animation:none}.garuss-parallax__layer{transform:none!important}}
+
+/* Quiet studio composition, test page only. */
+.home-scrolltest .test-main-header{height:72px;display:flex;justify-content:space-between;padding:0 6%;background:rgba(13,13,15,.78);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
+.home-scrolltest .test-main-header .test-brand img{width:210px;filter:brightness(0) saturate(100%) invert(17%) sepia(90%) saturate(3300%) hue-rotate(341deg) brightness(83%) contrast(104%)}
+.test-navigation{display:flex;gap:36px;align-items:center}
+.test-navigation a{font:400 13px/1.4 "CoFo Sans",Arial,sans-serif;color:#ddd;transition:color .25s;padding:12px 0}
+.test-navigation a:hover,.test-navigation a:focus-visible{color:#BE1622}
+.home-scrolltest .hero-stage{align-items:flex-start;padding:clamp(150px,23vh,240px) 6% 60px}
+.home-scrolltest .hero-copy{max-width:620px}
+.home-scrolltest #hero-title{width:auto;font-size:clamp(68px,7.25vw,116px);line-height:.94;letter-spacing:-.045em}
+.home-scrolltest #hero-title>.hero-line:nth-child(2){color:#BE1622!important}
+.home-scrolltest .hero-kicker{margin-bottom:26px;color:#c1bcbd;font-size:10px}
+.home-scrolltest .hero-copy p{max-width:370px;margin-top:28px;color:#e0dcdd;font-size:17px;line-height:1.55;opacity:0;animation:heroTitleArrive .8s .3s forwards}
+.home-scrolltest .garuss-parallax__shade{background:linear-gradient(90deg,rgba(9,9,10,.84),rgba(9,9,10,.69) 22%,rgba(9,9,10,.29) 47%,rgba(9,9,10,.06) 72%,transparent)}
+.home-scrolltest .garuss-parallax:after{background:rgba(18,15,15,.08)}
+.studio-graphics{position:absolute;inset:0;z-index:3;pointer-events:none;transform:translate3d(calc(var(--px)*.65),calc(var(--py)*.65 + var(--scene-scroll,0px)*.5),0);opacity:.72}
+.studio-graphics svg{width:100%;height:100%;fill:#BE1622;stroke:#BE1622;stroke-width:1.25}
+.studio-frame,.studio-measure,.studio-mark,.studio-outline{fill:none}
+.studio-frame{opacity:.6}
+.studio-measure{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--draw-progress,0));opacity:.8}
+.studio-mark{stroke:#e4dddd;opacity:.55}
+.home-scrolltest .garuss-parallax__city{transform:translate3d(calc(var(--px)*.16),calc(var(--py)*.16 - var(--scene-scroll,0px)*.2),0) scale(1.025)}
+.home-scrolltest .garuss-parallax__room{transform:translate3d(calc(var(--px)*.45),calc(var(--py)*.45 - var(--scene-scroll,0px)*.5),0) scale(1.035)}
+.home-scrolltest .garuss-parallax__front{transform:translate3d(var(--px),calc(var(--py) + var(--scene-scroll,0px)*.35),0) scale(1.045)}
+@media(max-width:650px){
+ .home-scrolltest .test-main-header{height:64px;padding:0 5%}
+ .home-scrolltest .test-main-header .test-brand img{width:124px}
+ .test-navigation{gap:18px}.test-navigation a{font-size:11px}
+ .home-scrolltest .hero-stage{padding:155px 5% 50px}
+ .home-scrolltest #hero-title{font-size:clamp(48px,12vw,72px)}
+ .home-scrolltest #hero-title>.hero-line{white-space:nowrap!important}
+ .home-scrolltest .hero-copy p{font-size:15px;max-width:280px}
+ .home-scrolltest .hero-kicker{font-size:8px;letter-spacing:.12em}
+ .studio-graphics{opacity:.4}
+}
+@media(prefers-reduced-motion:reduce){
+ .home-scrolltest .hero-copy p{opacity:1;animation:none}
+ .studio-graphics{transform:none}.studio-measure{stroke-dashoffset:0}
+}
