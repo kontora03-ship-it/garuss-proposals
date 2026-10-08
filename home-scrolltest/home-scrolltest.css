@@ -584,3 +584,8 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
  opacity:calc(.45 + var(--lamp-power,0)*.55);
 }
 .scene-fallback .garuss-parallax__canvas{opacity:1}
+
+/* v22: fade each visible text row in sequence, before the red section arrives. */
+.home-scrolltest .copy-fade-line{display:block;will-change:opacity}
+.home-scrolltest .copy-link-fade{width:max-content}
+.home-scrolltest .hero-copy p{ text-wrap:wrap }

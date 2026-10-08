@@ -16,12 +16,41 @@ let cursor=null,mx=.5,my=.45,tx=.5,ty=.45,x=0,y=0,lampPower=0,cityPower=0,railPr
 let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,copyBottom=0,maxScroll=0;
 let wheelActive=false,wheelTarget=scrollY,wheelY=scrollY,rafId=0,dead=false;
 const lastValues=new Map();
+const copyParagraph=heroCopy.querySelector('p');
+const paragraphText=copyParagraph.textContent.trim();
+let copyRows=[],paragraphWidth=-1;
+function arrangeCopyRows(force=false){
+ const width=copyParagraph.clientWidth;
+ if(!force&&width===paragraphWidth)return;
+ paragraphWidth=width;
+ copyParagraph.textContent=paragraphText;
+ const node=copyParagraph.firstChild;
+ const range=document.createRange();
+ const lines=[];
+ for(const match of paragraphText.matchAll(/\S+/g)){
+  range.setStart(node,match.index);range.setEnd(node,match.index+match[0].length);
+  const top=range.getBoundingClientRect().top;
+  const previous=lines[lines.length-1];
+  if(previous&&Math.abs(previous.top-top)<2)previous.words.push(match[0]);
+  else lines.push({top,words:[match[0]]});
+ }
+ const fragment=document.createDocumentFragment();
+ lines.forEach((line,index)=>{
+  const span=document.createElement('span');
+  span.className='copy-fade-line';
+  span.textContent=line.words.join(' ')+(index<lines.length-1?' ':'');
+  fragment.append(span);
+ });
+ copyParagraph.replaceChildren(fragment);
+ copyRows=[...heroCopy.querySelectorAll('.copy-fade-line')];
+}
 function prop(el,key,value){
  const id=el.className+'|'+key;
  if(lastValues.get(id)===value)return;
  lastValues.set(id,value);el.style.setProperty(key,value);
 }
 function measure(){
+ arrangeCopyRows();
  viewWidth=document.documentElement.clientWidth;viewHeight=innerHeight;
  railDistance=Math.max(0,featuredRail.scrollWidth-viewWidth);
  railTravel=Math.max(1,featuredAct.offsetHeight-viewHeight);
@@ -30,7 +59,7 @@ function measure(){
  maxScroll=Math.max(0,document.documentElement.scrollHeight-viewHeight);
 }
 addEventListener('resize',()=>{sc.layout();measure()},{passive:true});
-document.fonts.ready.then(measure);
+document.fonts.ready.then(()=>{arrangeCopyRows(true);measure()});
 new ResizeObserver(measure).observe(featuredRail);
 measure();
 heroStage.addEventListener('pointermove',e=>{
@@ -79,12 +108,18 @@ function frame(now){
  heroProgress+=(rawHero-heroProgress)*follow(dt,100);
  railProgress+=(targetRail-railProgress)*follow(dt,150);
  if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
- const fadeStart=Math.min(viewHeight*.94,copyBottom+150);
- const fadeEnd=Math.min(fadeStart-120,copyBottom+8);
- const fade=clamp((fadeStart-redTop)/(fadeStart-fadeEnd));
- const opacity=(1-ease(fade)).toFixed(3);
- if(heroCopy.style.opacity!==opacity)heroCopy.style.opacity=opacity;
- const inactive=fade>=.98;
+ const rowDuration=100;
+ const firstStart=Math.min(viewHeight*.96,copyBottom+44+rowDuration+(copyRows.length-1)*40);
+ const lastEnd=Math.min(firstStart-rowDuration,copyBottom+44);
+ const rowStep=Math.max(0,(firstStart-lastEnd-rowDuration)/Math.max(1,copyRows.length-1));
+ heroCopy.style.opacity='1';
+ copyRows.forEach((row,index)=>{
+  const start=firstStart-index*rowStep;
+  const progress=clamp((start-redTop)/rowDuration);
+  const opacity=(1-ease(progress)).toFixed(3);
+  if(row.style.opacity!==opacity)row.style.opacity=opacity;
+ });
+ const inactive=redTop<=lastEnd;
  if(heroCopy.inert!==inactive){heroCopy.inert=inactive;heroCopy.style.pointerEvents=inactive?'none':'';}
  if(!reduce){
   prop(featuredRail,'transform','translate3d('+(-railDistance*railProgress).toFixed(2)+'px,0,0)');
