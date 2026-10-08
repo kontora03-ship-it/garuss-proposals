@@ -138,20 +138,6 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
   max-width:none;
   text-align:right;
 }
-.featured-end{
-  width:36vw;
-  flex:0 0 36vw;
-  min-width:420px;
-  height:min(62vh,650px);
-  margin:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  padding:45px;
-  border-left:1px solid #ffffff55;
-}
-.featured-end span{font-size:11px;letter-spacing:.18em}
-.featured-end strong{margin-top:14px;font:700 clamp(38px,5vw,74px)/.95 "Halvar",Arial,sans-serif}
 
 /* CATALOG */
 .test-catalog{padding-top:96px}
@@ -268,8 +254,7 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 }
 
 /* Featured rail alignment lock — all artwork tops and caption rows share one baseline. */
-.featured-rail > .featured-card,
-.featured-rail > .featured-end{
+.featured-rail > .featured-card{
   align-self:flex-start;
 }
 @media(max-width:900px){
