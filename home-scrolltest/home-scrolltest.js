@@ -80,3 +80,16 @@ buttons.forEach(button=>button.addEventListener('click',()=>{
 }));
 
 addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
+
+
+/* Enable studio only when all 4 images are hosted and loaded. */
+(()=>{const stage=document.querySelector('.hero-stage'),scene=document.getElementById('garuss-parallax');if(!stage||!scene)return;
+const assets=['city.png','room.png','front.png','sky-seamless.png'];
+Promise.all(assets.map(name=>new Promise((resolve,reject)=>{const i=new Image();i.onload=resolve;i.onerror=reject;i.src='/garuss-proposals/home-scrolltest/parallax-assets/'+name;})))
+.then(()=>scene.classList.add('scene-ready')).catch(()=>{});
+let targetX=0,targetY=0,x=0,y=0;
+stage.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=stage.getBoundingClientRect();targetX=((e.clientX-r.left)/r.width-.5)*40;targetY=((e.clientY-r.top)/r.height-.5)*26},{passive:true});
+stage.addEventListener('pointerleave',()=>{targetX=0;targetY=0});
+if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+function tick(){x+=(targetX-x)*.065;y+=(targetY-y)*.065;scene.style.setProperty('--px',x.toFixed(2)+'px');scene.style.setProperty('--py',y.toFixed(2)+'px');requestAnimationFrame(tick)}requestAnimationFrame(tick);
+})();
