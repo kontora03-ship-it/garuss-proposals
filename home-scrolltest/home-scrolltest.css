@@ -302,7 +302,7 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 .garuss-parallax__city{z-index:2;transform:translate3d(calc(var(--px)*.16),calc(var(--py)*.16),0) scale(1.012)}
 .garuss-parallax__room{z-index:3;transform:translate3d(calc(var(--px)*.45),calc(var(--py)*.45),0) scale(1.018)}
 .garuss-parallax__front{z-index:4;transform:translate3d(var(--px),var(--py),0) scale(1.025)}
-.garuss-parallax__sky-track{position:absolute;top:-14%;left:-20%;right:-20%;height:68%;z-index:1;background-image:url('/garuss-proposals/home-scrolltest/parallax-assets/sky-seamless.png');background-size:auto 100%;background-repeat:repeat-x;animation:garuss-clouds 220s linear infinite}
+.garuss-parallax__sky-track{position:absolute;top:-14%;left:-20%;right:-20%;height:68%;z-index:1;background-image:url('/garuss-proposals/home-scrolltest/parallax-assets/sky-seamless.svg');background-size:auto 100%;background-repeat:repeat-x;animation:garuss-clouds 220s linear infinite}
 @keyframes garuss-clouds{to{background-position-x:-1180px}}
 .garuss-parallax__shade{position:absolute;inset:0;z-index:5;background:linear-gradient(90deg,rgba(9,9,10,.88),rgba(9,9,10,.79) 18%,rgba(9,9,10,.56) 38%,rgba(9,9,10,.31) 59%,rgba(9,9,10,.13) 79%,rgba(9,9,10,.05) 100%)}
 .garuss-parallax:after{content:'';position:absolute;inset:0;z-index:6;background:rgba(18,15,15,.20);pointer-events:none}
