@@ -12,7 +12,7 @@ const sc=window.ScrollCraft.mount(root,{lerp:.12});
 const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>n*n*(3-2*n);
 const follow=(dt,ms)=>1-Math.exp(-dt/ms);
-let cursor=null,mx=.5,my=.45,tx=.5,ty=.45,x=0,y=0,lampPower=0,railProgress=0,heroProgress=0,lastFrame=0;
+let cursor=null,mx=.5,my=.45,tx=.5,ty=.45,x=0,y=0,lampPower=0,cityPower=0,railProgress=0,heroProgress=0,lastFrame=0;
 let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,copyBottom=0,maxScroll=0;
 let wheelActive=false,wheelTarget=scrollY,wheelY=scrollY,rafId=0,dead=false;
 const lastValues=new Map();
@@ -102,6 +102,9 @@ function frame(now){
  lampPower+=(targetLight-lampPower)*follow(dt,240);
  if(Math.abs(targetLight-lampPower)<.001)lampPower=targetLight;
  prop(scene,'--lamp-power',lampPower.toFixed(4));
+ cityPower+=(lampPower-cityPower)*follow(dt,420);
+ if(Math.abs(lampPower-cityPower)<.001)cityPower=lampPower;
+ prop(scene,'--city-power',cityPower.toFixed(4));
  if(wheelActive){
   wheelY+=(wheelTarget-wheelY)*follow(dt,105);
   if(Math.abs(wheelTarget-wheelY)<.4){wheelY=wheelTarget;wheelActive=false;}
@@ -171,13 +174,11 @@ addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
     scene.style.setProperty('--scene-height',(941*scale).toFixed(2)+'px');
   }
   new ResizeObserver(fit).observe(scene);fit();
-  const names=['city','room','front','sky'];
-  Promise.all(names.map(name=>new Promise((resolve,reject)=>{
-    const img=new Image();
-    img.onload=()=>img.decode().then(resolve,reject);
-    img.onerror=reject;
-    img.src=new URL('parallax-assets/'+(name==='sky'?'night-v15/':'night-v13/')+name+'.webp',location.href).href;
-  }))).then(()=>scene.classList.add('scene-ready')).catch(()=>{
+  // Decode the actual displayed layers; no obsolete photographic placeholder.
+  const layers=[...canvas.querySelectorAll('img')];
+  Promise.all(layers.map(img=>img.decode())).then(()=>{
+    scene.classList.add('scene-ready');
+  }).catch(()=>{
     scene.classList.add('scene-fallback');
   });
 })();

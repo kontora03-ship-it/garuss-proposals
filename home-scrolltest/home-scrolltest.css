@@ -386,7 +386,7 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 
 /* Night studio, aligned full-canvas layers. Test page only. */
 .home-scrolltest .garuss-parallax{
-  opacity:1;background:#181719 url('parallax-assets/night-v13/fallback.webp') center / cover no-repeat;
+  opacity:1;background:#181719;
 }
 .garuss-parallax__canvas{
   position:absolute;left:50%;top:50%;
@@ -568,3 +568,19 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 .studio-ruler{opacity:.70;background:rgba(12,13,15,.55)}
 .home-scrolltest .city-lit{filter:url('#city-window-light');mix-blend-mode:screen;opacity:calc(var(--lamp-power,0)*.72)}
 .city-sky-glow{opacity:calc(.8 + var(--lamp-power,0)*.55)}
+
+/* v21: illumination is revealed only by lamp proximity. */
+.home-scrolltest .lamp-lit{filter:url('#studio-selective-color') brightness(1.9)}
+.lamp-lit--front{mask-image:radial-gradient(ellipse 38% 30% at 68% 70%,#000 0%,rgba(0,0,0,.72) 40%,transparent 100%)}
+.home-scrolltest .city-lit{opacity:calc(var(--city-power,0)*.92)}
+.city-sky-glow{
+ opacity:var(--city-power,0);
+ background:radial-gradient(ellipse 70% 15% at 50% 43%,rgba(239,184,115,.52),rgba(226,170,106,.23) 46%,rgba(226,170,106,0) 82%);
+}
+.studio-light-glow{opacity:var(--lamp-power,0)}
+.lamp-breathe{animation:none;opacity:.45}
+.lamp-meter .lamp-meter-bulb{
+ fill:#ffe1ac;stroke:none;
+ opacity:calc(.45 + var(--lamp-power,0)*.55);
+}
+.scene-fallback .garuss-parallax__canvas{opacity:1}
