@@ -5,6 +5,7 @@ const heroCopy=document.querySelector('.hero-copy');
 const scene=document.querySelector('#garuss-parallax');
 const featuredAct=document.querySelector('.featured-act');
 const featuredRail=featuredAct.querySelector('.featured-rail');
+const featuredProgress=document.querySelector('.featured-scroll-progress>i');
 const lampAnchor=document.querySelector('.lamp-breathe--one ellipse');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer=matchMedia('(hover:hover) and (pointer:fine)');
@@ -108,6 +109,8 @@ function frame(now){
  heroProgress+=(rawHero-heroProgress)*follow(dt,100);
  railProgress+=(targetRail-railProgress)*follow(dt,150);
  if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
+ const displayedProgress=reduce?clamp(featuredRail.scrollLeft/Math.max(1,railDistance)):railProgress;
+ prop(featuredProgress,'transform','scaleX('+displayedProgress.toFixed(4)+')');
  const rowDuration=100;
  const firstStart=Math.min(viewHeight*.96,copyBottom+44+rowDuration+(copyRows.length-1)*40);
  const lastEnd=Math.min(firstStart-rowDuration,copyBottom+44);
