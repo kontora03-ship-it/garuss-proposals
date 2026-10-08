@@ -9,7 +9,7 @@
 <link rel="icon" href="/garuss-proposals/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/garuss-proposals/style.css?v=20261007-clean">
 <link rel="stylesheet" href="/garuss-proposals/vendor/scrollcraft/scrollcraft.css?v=030">
-<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=14">
+<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=15">
 <link rel="preload" as="image" href="parallax-assets/night-v13/room.webp">
 <link rel="preload" as="image" href="parallax-assets/night-v13/front.webp">
 </head>
@@ -17,7 +17,7 @@
 <svg class="scene-color-filters" aria-hidden="true" width="0" height="0" xmlns="http://www.w3.org/2000/svg">
  <defs>
   <filter id="studio-selective-color" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
-   <feColorMatrix in="SourceGraphic" type="saturate" values=".46" result="muted"/>
+   <feColorMatrix in="SourceGraphic" type="saturate" values=".24" result="muted"/>
    <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  3 -6 3 0 -.2" result="red-mask"/>
    <feComposite in="SourceGraphic" in2="red-mask" operator="in" result="red"/>
    <feMerge><feMergeNode in="muted"/><feMergeNode in="red"/></feMerge>
@@ -40,12 +40,20 @@
       <div class="garuss-parallax" id="garuss-parallax" aria-hidden="true">
         <div class="garuss-parallax__canvas">
           <div class="garuss-parallax__sky-track"><div class="night-sky-strip">
-            <img src="parallax-assets/night-v13/sky.webp" alt=""><img src="parallax-assets/night-v13/sky.webp" alt="">
-            <img src="parallax-assets/night-v13/sky.webp" alt=""><img src="parallax-assets/night-v13/sky.webp" alt="">
+            <img src="parallax-assets/night-v15/sky.webp" alt=""><img src="parallax-assets/night-v15/sky.webp" alt="">
+            <img src="parallax-assets/night-v15/sky.webp" alt=""><img src="parallax-assets/night-v15/sky.webp" alt="">
           </div></div>
           <img class="garuss-parallax__layer garuss-parallax__city" src="parallax-assets/night-v13/city.webp" width="1672" height="941" alt="" decoding="async">
           <img class="garuss-parallax__layer garuss-parallax__room" src="parallax-assets/night-v13/room.webp" width="1672" height="941" alt="" decoding="async">
           <img class="garuss-parallax__layer garuss-parallax__front" src="parallax-assets/night-v13/front.webp" width="1672" height="941" alt="" decoding="async">
+          <svg class="studio-light-glow" viewBox="0 0 1672 941" aria-hidden="true">
+            <defs>
+              <radialGradient id="lamp-halo"><stop offset="0" stop-color="#ffe3b6" stop-opacity=".8"/><stop offset=".35" stop-color="#e6ad64" stop-opacity=".35"/><stop offset="1" stop-color="#d99954" stop-opacity="0"/></radialGradient>
+            </defs>
+            <g class="lamp-breathe lamp-breathe--one"><ellipse cx="1056" cy="284" rx="93" ry="24" fill="url(#lamp-halo)"/><ellipse cx="1020" cy="620" rx="210" ry="78" fill="url(#lamp-halo)" opacity=".18"/></g>
+            <g class="lamp-breathe lamp-breathe--two"><ellipse cx="958" cy="329" rx="61" ry="18" fill="url(#lamp-halo)"/></g>
+            <g class="lamp-breathe lamp-breathe--three"><ellipse cx="1178" cy="367" rx="66" ry="18" fill="url(#lamp-halo)"/></g>
+          </svg>
         </div>
         <div class="garuss-parallax__shade"></div>
       </div>
@@ -53,12 +61,13 @@
       <div class="hero-squares-plane hero-squares-back" data-sc-parallax="-0.11" aria-hidden="true"></div>
       <div class="hero-squares-plane hero-squares-front" data-sc-parallax="0.07" aria-hidden="true"></div>
 
+
+    </div>
       <div class="hero-copy">
         <h1 id="hero-title"><span class="hero-line">Каталог</span><span class="hero-line">проектов<span class="hero-dot">.</span></span></h1>
         <p>Разрабатываем и производим корпоративные подарки, мерч, награды и упаковку.</p>
         <a class="hero-project-link" href="#catalog">К проектам <span aria-hidden="true">↓</span></a>
       </div>
-    </div>
   </section>
 
   <section class="featured-act" data-sc-act="pan" data-sc-span="1.65" data-sc-drift="#BE1622">
@@ -126,6 +135,6 @@
 </footer>
 
 <script src="/garuss-proposals/vendor/scrollcraft/scrollcraft.js?v=030"></script>
-<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=14"></script>
+<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=15"></script>
 </body>
 </html>

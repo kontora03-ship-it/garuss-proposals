@@ -26,8 +26,12 @@ function frame(){
   heroStage.style.setProperty('--process-progress',reduce?'1':Math.min(1,p*3.5).toFixed(3));
   heroStage.style.setProperty('--scene-scroll',reduce?'0px':(p*28).toFixed(2)+'px');
   heroStage.style.setProperty('--draw-progress',reduce?'1':Math.min(1,.18+p*2.2).toFixed(3));
-  // Copy holds its exact size and position, then fades before the stage releases.
-  const fade=Math.max(0,Math.min(1,(p-.46)/.46));
+  // Copy holds its exact size and position, then fades as the red section approaches, even after the stage releases.
+  const nextTop=document.querySelector('.featured-act').getBoundingClientRect().top;
+  const copyBottom=heroCopy.getBoundingClientRect().bottom;
+  const fadeStart=Math.min(innerHeight*.88,copyBottom+200);
+  const fadeEnd=Math.min(fadeStart-100,copyBottom+60);
+  const fade=Math.max(0,Math.min(1,(fadeStart-nextTop)/(fadeStart-fadeEnd)));
   const eased=fade*fade*(3-2*fade);
   heroCopy.style.opacity=(1-eased).toFixed(3);
   heroCopy.style.pointerEvents=fade>=.98?'none':'';
@@ -101,7 +105,7 @@ addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
     const img=new Image();
     img.onload=()=>img.decode().then(resolve,reject);
     img.onerror=reject;
-    img.src=new URL('parallax-assets/night-v13/'+name+'.webp',location.href).href;
+    img.src=new URL('parallax-assets/'+(name==='sky'?'night-v15/':'night-v13/')+name+'.webp',location.href).href;
   }))).then(()=>scene.classList.add('scene-ready')).catch(()=>{
     scene.classList.add('scene-fallback');
   });

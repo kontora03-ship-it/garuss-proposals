@@ -471,3 +471,29 @@ body.home-scrolltest{background:#343132;color:#fff;overflow-x:clip}
 @media(prefers-reduced-motion:reduce){
  .home-scrolltest .hero-project-link{opacity:1;animation:none}
 }
+
+/* v15: copy persists after the photograph starts leaving the viewport. */
+.home-scrolltest{--page-gutter:6vw}
+.home-scrolltest .hero-act>.hero-copy{
+ position:fixed;top:clamp(160px,23vh,245px);left:var(--page-gutter);z-index:20;
+ width:calc(100vw - var(--page-gutter)*2);max-width:690px;
+ margin:0;padding:0;opacity:0;transform:none!important;text-align:left;
+}
+.home-scrolltest .hero-copy p,.home-scrolltest .hero-copy a{margin-left:0;padding-left:0;text-indent:0;text-align:left}
+.home-scrolltest #hero-title{margin-left:-.045em;padding-left:0;text-align:left}
+.home-scrolltest .test-catalog{padding-left:var(--page-gutter);padding-right:var(--page-gutter)}
+.home-scrolltest .featured-head{padding-left:var(--page-gutter);padding-right:var(--page-gutter)}
+.home-scrolltest .featured-rail{padding-left:var(--page-gutter);padding-right:var(--page-gutter)}
+.home-scrolltest .test-footer{padding-left:var(--page-gutter);padding-right:var(--page-gutter)}
+.home-scrolltest .garuss-parallax__sky-track{top:-17%;bottom:auto;height:106%}
+.home-scrolltest .night-sky-strip{filter:saturate(.65) brightness(.91) contrast(.84)}
+.studio-light-glow{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none;mix-blend-mode:screen;transform:translate3d(calc(var(--px)*.40),calc(var(--py)*.40 - var(--scene-scroll,0px)*.35),0) scale(1.005)}
+.lamp-breathe{opacity:.24;animation:lampBreathe 11s ease-in-out infinite}
+.lamp-breathe--two{animation-duration:13s;animation-delay:-4s}
+.lamp-breathe--three{animation-duration:9s;animation-delay:-2s}
+@keyframes lampBreathe{0%,100%{opacity:.12}50%{opacity:.38}}
+@media(max-width:650px){
+ .home-scrolltest{--page-gutter:5vw}
+ .home-scrolltest .hero-act>.hero-copy{top:clamp(140px,21svh,175px);max-width:90vw}
+}
+@media(prefers-reduced-motion:reduce){.lamp-breathe{animation:none;opacity:.2}.studio-light-glow{transform:none}}
