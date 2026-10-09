@@ -773,3 +773,8 @@ html.intro-pending{overflow:hidden}
 .city-beacons circle{animation-timing-function:steps(1,end);filter:drop-shadow(0 0 2px rgba(255,70,48,.85))}
 @keyframes cityBeacon{0%,10%,25%,100%{opacity:.10}13%,20%{opacity:1}}
 @media(prefers-reduced-motion:reduce){.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:none}.city-window-activity rect{opacity:.18}}
+
+/* v42: lift the light control into the gap above the city and clarify its resting state. */
+.lamp-meter{opacity:calc(.48 + var(--local-power,0)*.42)}
+.lamp-meter-track{stroke:rgba(255,232,199,.62)}
+.lamp-meter .lamp-meter-bulb{opacity:calc(.72 + var(--local-power,0)*.28)}
