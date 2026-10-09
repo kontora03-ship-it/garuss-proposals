@@ -64,8 +64,10 @@ const paragraphText=copyParagraph.textContent.trim();
 let copyRows=[],paragraphWidth=-1;
 function arrangeCopyRows(force=false){
  const width=copyParagraph.clientWidth;
- if(!force&&width===paragraphWidth)return;
- paragraphWidth=width;
+ const style=getComputedStyle(copyParagraph);
+ const layoutKey=[width,style.fontFamily,style.fontSize,style.lineHeight,style.letterSpacing].join('|');
+ if(!force&&layoutKey===paragraphWidth)return;
+ paragraphWidth=layoutKey;
  copyParagraph.textContent=paragraphText;
  const node=copyParagraph.firstChild;
  const range=document.createRange();

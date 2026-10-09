@@ -23,3 +23,17 @@
 
 .case-return-link{display:inline-block;margin-bottom:28px;font-size:13px;color:#b8b1b3}
 @media(min-width:761px) and (max-width:1000px){.home-scrolltest .test-main-header{gap:24px}.home-scrolltest .test-main-header .test-brand img{width:170px}.permanent-search,.permanent-search.is-open{width:220px}.test-navigation{gap:18px}}
+
+/* Keep mobile browser text autosizing inside the authored responsive layout. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+@media(max-width:760px){
+ .home-scrolltest .hero-act>.hero-copy{width:90%;max-width:90%;min-width:0}
+ .home-scrolltest .hero-copy p{width:100%;max-width:min(285px,100%)}
+ .home-scrolltest .hero-copy .copy-fade-line{max-width:100%;overflow-wrap:anywhere}
+ .home-scrolltest .catalog-heading>div,.home-scrolltest .catalog-heading p,
+ .home-scrolltest .featured-card>div,.case-page .case-intro{min-width:0;max-width:100%}
+ .home-scrolltest .presentation-card h2,.home-scrolltest .featured-card h3,
+ .home-scrolltest .search-page-title,.case-page .case-intro h1,
+ .case-page .next-case strong{overflow-wrap:anywhere}
+ .home-scrolltest .card-meta span{white-space:normal}
+}
