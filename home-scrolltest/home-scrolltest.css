@@ -916,3 +916,17 @@ html.intro-pending{overflow:hidden}
  .home-scrolltest .garuss-parallax__layer,.home-scrolltest .city-life,.home-scrolltest .garuss-parallax__sky-track{transform:none!important}
  .home-scrolltest .night-sky-strip{animation:none}
 }
+
+
+/* Mobile v58: gently scroll the photograph; retain only the base scene. */
+@media(max-width:650px){
+ .home-scrolltest .city-traffic{display:none!important}
+ .home-scrolltest .garuss-parallax__canvas{
+  transform:translate(-50%,calc(-50% + var(--scene-pan,0px)))
+ }
+ .home-scrolltest #hero-title{font-family:"Halvar","Halvar Bold",Arial,sans-serif;font-weight:700}
+ .home-scrolltest .hero-copy p{font-family:"CoFo Sans",Arial,sans-serif;font-weight:400}
+}
+@media(max-width:650px) and (prefers-reduced-motion:reduce){
+ .home-scrolltest .garuss-parallax__canvas{transform:translate(-50%,-50%)}
+}
