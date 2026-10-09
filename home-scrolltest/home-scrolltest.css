@@ -881,3 +881,5 @@ html.intro-pending{overflow:hidden}
  .search-page .search-page-title{margin:20px 0 24px}
  .search-page .catalog-query input{font-size:16px}
 }
+
+.search-page .catalog-query button{flex:none;white-space:nowrap}

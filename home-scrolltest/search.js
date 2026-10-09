@@ -32,6 +32,7 @@
   empty.hidden=found.size!==0;
   categoryButtons.forEach(b=>{const active=b.dataset.category===category;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
   if(pageClear)pageClear.hidden=!pageInput.value;
+  clear.hidden=!input.value;
   updateURL();
   requestAnimationFrame(()=>{if(typeof sc!=='undefined')sc.layout();if(typeof measure==='function')measure();});
  }
