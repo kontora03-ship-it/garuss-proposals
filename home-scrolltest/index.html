@@ -10,12 +10,15 @@
 <link rel="icon" href="/garuss-proposals/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/garuss-proposals/style.css?v=20261007-clean">
 <link rel="stylesheet" href="/garuss-proposals/vendor/scrollcraft/scrollcraft.css?v=030">
-<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=33">
-<link rel="preload" as="image" href="parallax-assets/night-v13/room.webp">
-<link rel="preload" as="image" href="parallax-assets/night-v13/front.webp">
-<link rel="preload" as="image" href="parallax-assets/night-v13/city.webp">
-<link rel="preload" as="image" href="parallax-assets/night-v15/sky.webp">
-<link rel="preload" as="image" href="parallax-assets/night-v24/original-studio.webp">
+<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=34">
+<link rel="preload" as="image" href="parallax-assets/v34/studio.webp">
+<link rel="preload" as="image" href="parallax-assets/v34/room-mask.webp">
+<link rel="preload" as="image" href="parallax-assets/v34/outdoor-mask.webp">
+<link rel="preload" as="image" href="parallax-assets/v34/city-backdrop.webp">
+<link rel="preload" as="image" href="parallax-assets/v34/sky.webp">
+<link rel="preload" as="image" href="parallax-assets/v34/room-backfill.webp">
+<link rel="preload" as="image" href="parallax-assets/v34/front-mask.webp">
+<link rel="preload" as="image" href="parallax-assets/v34/room-visible-mask.webp">
 </head>
 <body class="home-scrolltest">
 <div class="page-intro" id="page-intro" aria-label="Загрузка страницы">
@@ -54,38 +57,39 @@
       
       <div class="garuss-parallax" id="garuss-parallax" aria-hidden="true">
         <div class="garuss-parallax__canvas">
-          <div class="garuss-parallax__sky-track"><div class="night-sky-strip">
-            <img src="parallax-assets/night-v15/sky.webp" alt=""><img src="parallax-assets/night-v15/sky.webp" alt="">
-            <img src="parallax-assets/night-v15/sky.webp" alt=""><img src="parallax-assets/night-v15/sky.webp" alt="">
-          </div></div>
-          <div class="garuss-parallax__sky-track sky-original"><div class="night-sky-strip">
-            <img src="parallax-assets/night-v15/sky.webp" alt=""><img src="parallax-assets/night-v15/sky.webp" alt="">
-            <img src="parallax-assets/night-v15/sky.webp" alt=""><img src="parallax-assets/night-v15/sky.webp" alt="">
-          </div></div>
+          <div class="garuss-parallax__sky-track"><div class="night-sky-strip"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"></div></div>
+          <div class="garuss-parallax__sky-track sky-original"><div class="night-sky-strip"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"><img src="parallax-assets/v34/sky.webp" alt="" width="1672" height="941"></div></div>
           <div class="city-sky-glow" aria-hidden="true"></div>
-          <img class="garuss-parallax__layer garuss-parallax__city" src="parallax-assets/night-v13/city.webp" width="1672" height="941" alt="" decoding="async">
-          <img class="garuss-parallax__layer garuss-parallax__city city-lit" src="parallax-assets/night-v13/city.webp" width="1672" height="941" alt="">
-          <img class="garuss-parallax__layer garuss-parallax__room" src="parallax-assets/night-v13/room.webp" width="1672" height="941" alt="" decoding="async">
-          <img class="garuss-parallax__layer garuss-parallax__front front-source-base" src="parallax-assets/night-v24/original-studio.webp" width="1672" height="941" alt="" decoding="async">
-          <img class="garuss-parallax__layer garuss-parallax__room lamp-lit lamp-lit--room" src="parallax-assets/night-v13/room.webp" width="1672" height="941" alt="">
-          <img class="garuss-parallax__layer garuss-parallax__front lamp-lit lamp-lit--front" src="parallax-assets/night-v24/original-studio.webp" width="1672" height="941" alt="">
-          <svg class="lamp-interaction" viewBox="0 0 1672 941" aria-hidden="true">
-            <defs><radialGradient id="interactive-warmth"><stop stop-color="#ffdfad" stop-opacity=".48"/><stop offset=".45" stop-color="#eeba78" stop-opacity=".16"/><stop offset="1" stop-color="#eeba78" stop-opacity="0"/></radialGradient></defs>
-            <g class="lamp-warmth"><ellipse cx="1056" cy="292" rx="160" ry="58" fill="url(#interactive-warmth)"/><ellipse cx="1120" cy="625" rx="285" ry="180" fill="url(#interactive-warmth)"/></g>
-            <g class="lamp-meter">
-              <path class="lamp-meter-track" d="M1056 325 A22 22 0 1 1 1056 369 A22 22 0 1 1 1056 325 Z" pathLength="1"/>
-              <path class="lamp-meter-fill" d="M1056 325 A22 22 0 1 1 1056 369 A22 22 0 1 1 1056 325 Z" pathLength="1"/>
-              <path class="lamp-meter-bulb" d="M1056 334 C1050.5 334 1047 338 1047 342.5 C1047 347 1051 348.5 1052 352 L1060 352 C1061 348.5 1065 347 1065 342.5 C1065 338 1061.5 334 1056 334 Z M1052 354 H1060 V357 H1052 Z M1054 359 H1058 V360 H1054 Z"/>
-            </g>
-          </svg>
-          <svg class="studio-light-glow" viewBox="0 0 1672 941" aria-hidden="true">
+          <img class="garuss-parallax__layer garuss-parallax__city city-backdrop" src="parallax-assets/v34/city-backdrop.webp" width="1672" height="941" alt="">
+          <img class="garuss-parallax__layer garuss-parallax__city city-source" src="parallax-assets/v34/studio.webp" width="2048" height="1152" alt="">
+          <img class="garuss-parallax__layer garuss-parallax__city city-source city-lit" src="parallax-assets/v34/studio.webp" width="2048" height="1152" alt="">
+          <svg class="city-life" viewBox="0 0 1672 941" aria-hidden="true">
             <defs>
-              <radialGradient id="lamp-halo"><stop offset="0" stop-color="#ffe3b6" stop-opacity=".8"/><stop offset=".35" stop-color="#e6ad64" stop-opacity=".35"/><stop offset="1" stop-color="#d99954" stop-opacity="0"/></radialGradient>
+              <path id="city-road-one" d="M574 617 C578 604 595 591 588 574 C582 558 580 541 578 522"/>
+              <path id="city-road-two" d="M579 523 C582 542 585 561 592 576 C600 592 582 609 578 619"/>
+              <filter id="traffic-glow" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="1.3"/></filter>
             </defs>
-            <g class="lamp-breathe lamp-breathe--one"><ellipse cx="1056" cy="284" rx="93" ry="24" fill="url(#lamp-halo)"/><ellipse cx="1020" cy="620" rx="210" ry="78" fill="url(#lamp-halo)" opacity=".18"/></g>
-            <g class="lamp-breathe lamp-breathe--two"><ellipse cx="958" cy="329" rx="61" ry="18" fill="url(#lamp-halo)"/></g>
-            <g class="lamp-breathe lamp-breathe--three"><ellipse cx="1178" cy="367" rx="66" ry="18" fill="url(#lamp-halo)"/></g>
+            <g class="city-traffic">
+              <g class="city-car" data-route="city-road-one" data-speed="17000" data-phase=".06"><circle r="2.1" fill="#ffe7bb" filter="url(#traffic-glow)"/><circle r=".7" fill="#fff4dc"/><circle cx="1.7" r=".6" fill="#fff4dc"/></g>
+              <g class="city-car" data-route="city-road-one" data-speed="21000" data-phase=".58"><circle r="1.8" fill="#ffe7bb" filter="url(#traffic-glow)"/><circle r=".7" fill="#fff4dc"/></g>
+              <g class="city-car" data-route="city-road-two" data-speed="19000" data-phase=".27"><circle r="1.8" fill="#f6553e" filter="url(#traffic-glow)"/><circle r=".75" fill="#ef7359"/></g>
+              <g class="city-car" data-route="city-road-two" data-speed="24000" data-phase=".78"><circle r="1.7" fill="#f6553e" filter="url(#traffic-glow)"/><circle r=".65" fill="#ef7359"/></g>
+            </g>
+            <g class="city-beacons"><circle cx="369" cy="332" r="1.2"/><circle cx="634" cy="329" r="1.1"/><circle cx="720" cy="338" r="1"/></g>
+            <g class="city-window-activity"><rect x="374" y="366" width="2" height="3"/><rect x="424" y="475" width="3" height="3"/><rect x="630" y="378" width="2" height="3"/></g>
           </svg>
+          <div class="glass-reflections" aria-hidden="true"><i class="glass-reflection glass-reflection--one"></i><i class="glass-reflection glass-reflection--two"></i><i class="glass-reflection glass-reflection--three"></i></div>
+          <img class="garuss-parallax__layer garuss-parallax__room room-backfill" src="parallax-assets/v34/room-backfill.webp" width="1672" height="941" alt="">
+          <img class="garuss-parallax__layer garuss-parallax__room" src="parallax-assets/v34/studio.webp" width="2048" height="1152" alt="" decoding="async">
+          <img class="garuss-parallax__layer garuss-parallax__front front-source-base" src="parallax-assets/v34/studio.webp" width="2048" height="1152" alt="">
+          <img class="garuss-parallax__layer garuss-parallax__room lamp-lit lamp-lit--room" src="parallax-assets/v34/studio.webp" width="2048" height="1152" alt="">
+          <img class="garuss-parallax__layer garuss-parallax__front lamp-lit lamp-lit--front" src="parallax-assets/v34/studio.webp" width="2048" height="1152" alt="">
+          <svg class="lamp-interaction" viewBox="0 0 2048 1152" aria-hidden="true">
+            <g class="lamp-meter" style="--meter-index:0" transform="translate(1290 381)"><circle class="lamp-meter-track" r="26" pathLength="1"/><circle class="lamp-meter-fill" r="26" pathLength="1"/><path class="lamp-meter-bulb" d="M0 -14 C-7 -14 -11 -9 -11 -3 C-11 3 -6 5 -5 10 H5 C6 5 11 3 11 -3 C11 -9 7 -14 0 -14 Z M-5 13 H5 V17 H-5 Z M-3 20 H3"/></g>
+            <g class="lamp-meter" style="--meter-index:1" transform="translate(1165 447)"><circle class="lamp-meter-track" r="22" pathLength="1"/><circle class="lamp-meter-fill" r="22" pathLength="1"/><path class="lamp-meter-bulb" d="M0 -12 C-6 -12 -9 -8 -9 -3 C-9 2 -5 4 -4 8 H4 C5 4 9 2 9 -3 C9 -8 6 -12 0 -12 Z M-4 11 H4 V15 H-4 Z M-2 18 H2"/></g>
+            <g class="lamp-meter" style="--meter-index:2" transform="translate(1440 493)"><circle class="lamp-meter-track" r="22" pathLength="1"/><circle class="lamp-meter-fill" r="22" pathLength="1"/><path class="lamp-meter-bulb" d="M0 -12 C-6 -12 -9 -8 -9 -3 C-9 2 -5 4 -4 8 H4 C5 4 9 2 9 -3 C9 -8 6 -12 0 -12 Z M-4 11 H4 V15 H-4 Z M-2 18 H2"/></g>
+          </svg>
+          <svg class="studio-light-glow" viewBox="0 0 2048 1152" aria-hidden="true"><g class="lamp-breathe--one"><ellipse data-lamp-anchor cx="1290" cy="320" rx="100" ry="22"/></g><ellipse data-lamp-anchor cx="1165" cy="387" rx="65" ry="18"/><ellipse data-lamp-anchor cx="1440" cy="432" rx="65" ry="18"/></svg>
         </div>
         <div class="garuss-parallax__shade"></div>
       </div>
@@ -169,6 +173,6 @@
 </footer>
 
 <script src="/garuss-proposals/vendor/scrollcraft/scrollcraft.js?v=030"></script>
-<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=32"></script>
+<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=34"></script>
 </body>
 </html>

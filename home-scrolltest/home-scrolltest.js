@@ -6,7 +6,11 @@ const scene=document.querySelector('#garuss-parallax');
 const featuredAct=document.querySelector('.featured-act');
 const featuredRail=featuredAct.querySelector('.featured-rail');
 const featuredProgress=document.querySelector('.featured-scroll-progress>i');
-const lampAnchor=document.querySelector('.lamp-breathe--one ellipse');
+const lampAnchors=[...document.querySelectorAll('[data-lamp-anchor]')];
+const lampMeters=[...document.querySelectorAll('.lamp-meter')];
+const lampPowers=[0,0,0];
+const traffic=[...document.querySelectorAll('.city-car')].map(el=>({el,path:document.getElementById(el.dataset.route),length:document.getElementById(el.dataset.route).getTotalLength(),duration:+el.dataset.speed,phase:+el.dataset.phase}));
+let cityClock=0;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer=matchMedia('(hover:hover) and (pointer:fine)');
 const sc=window.ScrollCraft.mount(root,{lerp:.12});
@@ -100,8 +104,8 @@ function frame(now){
  const redTop=featuredAct.getBoundingClientRect().top;
  const heroTop=heroAct.getBoundingClientRect().top;
  const heroVisible=heroTop<viewHeight&&heroTop+heroAct.offsetHeight>0;
- let lampBox=null;
- if(cursor&&heroVisible&&scene.classList.contains('scene-ready'))lampBox=lampAnchor.getBoundingClientRect();
+ let lampBoxes=[];
+ if(cursor&&heroVisible&&scene.classList.contains('scene-ready'))lampBoxes=lampAnchors.map(el=>el.getBoundingClientRect());
  heroAct.classList.toggle('scene-paused',!heroVisible);
  const rawHero=clamp(-heroTop/heroTravel);
  const targetRail=clamp((clamp(-redTop/railTravel)-.06)/.88);
@@ -137,16 +141,30 @@ function frame(now){
   }
  }
  let targetLight=0;
- if(lampBox){
-  const distance=Math.hypot(cursor.x-(lampBox.left+lampBox.width/2),cursor.y-(lampBox.top+lampBox.height/2));
-  targetLight=ease(clamp(1-distance/Math.min(300,Math.max(170,viewWidth*.20))));
- }
- lampPower+=(targetLight-lampPower)*follow(dt,240);
- if(Math.abs(targetLight-lampPower)<.001)lampPower=targetLight;
+ lampPowers.forEach((power,index)=>{
+  const box=lampBoxes[index];
+  const distance=box?Math.hypot(cursor.x-(box.left+box.width/2),cursor.y-(box.top+box.height/2)):Infinity;
+  const target=ease(clamp(1-distance/Math.min(245,Math.max(145,viewWidth*.16))));
+  lampPowers[index]=power+(target-power)*follow(dt,240);
+  if(Math.abs(target-lampPowers[index])<.001)lampPowers[index]=target;
+  scene.style.setProperty('--lamp-'+index,lampPowers[index].toFixed(4));
+  lampMeters[index].style.setProperty('--local-power',lampPowers[index].toFixed(4));
+  targetLight=Math.max(targetLight,lampPowers[index]);
+ });
+ lampPower=targetLight;
  prop(scene,'--lamp-power',lampPower.toFixed(4));
  cityPower+=(lampPower-cityPower)*follow(dt,420);
  if(Math.abs(lampPower-cityPower)<.001)cityPower=lampPower;
  prop(scene,'--city-power',cityPower.toFixed(4));
+ if(heroVisible&&!reduce){
+  cityClock+=dt;
+  traffic.forEach(car=>{
+   const progress=(cityClock/car.duration+car.phase)%1;
+   const point=car.path.getPointAtLength(progress*car.length);
+   car.el.setAttribute('transform','translate('+point.x.toFixed(2)+' '+point.y.toFixed(2)+')');
+   car.el.style.opacity=(Math.min(1,progress*12,(1-progress)*12)*.68).toFixed(3);
+  });
+ }
  if(wheelActive){
   wheelY+=(wheelTarget-wheelY)*follow(dt,135);
   if(Math.abs(wheelTarget-wheelY)<.4){wheelY=wheelTarget;wheelActive=false;}
@@ -211,14 +229,15 @@ const sceneAssetsReady=(()=>{
   if(!scene||!canvas)return;
   function fit(){
     const bounds=scene.getBoundingClientRect();
-    const scale=Math.max(bounds.width/1672,bounds.height/941)*1.026;
-    scene.style.setProperty('--scene-width',(1672*scale).toFixed(2)+'px');
-    scene.style.setProperty('--scene-height',(941*scale).toFixed(2)+'px');
+    const scale=Math.max(bounds.width/2048,bounds.height/1152)*1.026;
+    scene.style.setProperty('--scene-width',(2048*scale).toFixed(2)+'px');
+    scene.style.setProperty('--scene-height',(1152*scale).toFixed(2)+'px');
   }
   new ResizeObserver(fit).observe(scene);fit();
   // Decode the actual displayed layers; no obsolete photographic placeholder.
   const layers=[...canvas.querySelectorAll('img')];
-  return Promise.all(layers.map(img=>img.decode())).then(()=>{
+  const masks=["room-mask.webp","outdoor-mask.webp","front-mask.webp","room-visible-mask.webp","city-mask.svg"].map(name=>{const img=new Image();img.src="parallax-assets/v34/"+name;return img.decode()});
+  return Promise.all([...layers.map(img=>img.decode()),...masks]).then(()=>{
     scene.classList.add('scene-ready');
   }).catch(()=>{
     scene.classList.add('scene-fallback');
@@ -310,3 +329,4 @@ featuredRail.addEventListener('focusin',e=>{
  protectedContent.forEach(el=>el.inert=false);
  sc.layout();arrangeCopyRows(true);measure();cancelWheel();
 })();
+
