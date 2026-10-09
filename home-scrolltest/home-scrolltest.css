@@ -670,3 +670,6 @@ html.intro-pending{overflow:hidden}
  opacity:var(--city-power,0)!important;
  background:radial-gradient(ellipse 72% 15% at 50% 43%,rgba(239,180,105,.46),rgba(225,156,79,.19) 46%,rgba(225,156,79,0) 84%);
 }
+
+/* v33: the city reveal contains city pixels only, never interior objects. */
+.home-scrolltest .city-lit{mask-image:none}
