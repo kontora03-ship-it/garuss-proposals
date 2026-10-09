@@ -778,3 +778,8 @@ html.intro-pending{overflow:hidden}
 .lamp-meter{opacity:calc(.48 + var(--local-power,0)*.42)}
 .lamp-meter-track{stroke:rgba(255,232,199,.62)}
 .lamp-meter .lamp-meter-bulb{opacity:calc(.72 + var(--local-power,0)*.28)}
+
+/* v43: slightly stronger near-plane motion, quieter office motion. */
+.home-scrolltest .garuss-parallax__room,.home-scrolltest .lamp-interaction,.home-scrolltest .studio-light-glow,.home-scrolltest .glass-reflections{transform:translate3d(calc(var(--px)*.32),calc(var(--py)*.32 - var(--scene-scroll,0px)*.35),0) scale(1.005)}
+.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:translate3d(var(--px),calc(var(--py) + var(--scene-scroll,0px)*.20),0) scale(1.005)}
+@media(prefers-reduced-motion:reduce){.home-scrolltest .garuss-parallax__room,.home-scrolltest .lamp-interaction,.home-scrolltest .studio-light-glow,.home-scrolltest .glass-reflections,.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:none!important}}
