@@ -783,3 +783,17 @@ html.intro-pending{overflow:hidden}
 .home-scrolltest .garuss-parallax__room,.home-scrolltest .lamp-interaction,.home-scrolltest .studio-light-glow,.home-scrolltest .glass-reflections{transform:translate3d(calc(var(--px)*.32),calc(var(--py)*.32 - var(--scene-scroll,0px)*.35),0) scale(1.005)}
 .home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:translate3d(var(--px),calc(var(--py) + var(--scene-scroll,0px)*.20),0) scale(1.005)}
 @media(prefers-reduced-motion:reduce){.home-scrolltest .garuss-parallax__room,.home-scrolltest .lamp-interaction,.home-scrolltest .studio-light-glow,.home-scrolltest .glass-reflections,.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:none!important}}
+
+/* v44: the office has an empty background behind the separately moving bouquet. */
+.home-scrolltest .garuss-parallax__room:not(.room-backfill):not(.lamp-lit):not(.office-clean){
+ mask-image:url('parallax-assets/v44/office-original-mask.webp')
+}
+.home-scrolltest .garuss-parallax__room.office-clean{
+ mask-image:url('parallax-assets/v44/office-clean-mask.webp')
+}
+.home-scrolltest .lamp-lit--room:not(.office-clean-lit){
+ mask-image:url('parallax-assets/v44/office-original-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)
+}
+.home-scrolltest .lamp-lit--room.office-clean-lit{
+ mask-image:url('parallax-assets/v44/office-clean-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)
+}

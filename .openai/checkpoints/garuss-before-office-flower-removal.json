@@ -1,0 +1,8 @@
+{
+  "name": "Точка перед удалением цветка из слоя офиса",
+  "created": "2026-10-09",
+  "branch": "checkpoint/before-office-flower-removal-2026-10-09",
+  "commit": "7ebe67f8998dde7923e0a7eae62c15ba9bedcc34",
+  "scope": "home-scrolltest/",
+  "restore_instruction": "Restore only home-scrolltest files from checkpoint; preserve main catalog and other routes."
+}

@@ -251,7 +251,7 @@ const sceneAssetsReady=(()=>{
   new ResizeObserver(fit).observe(scene);fit();
   // Decode the actual displayed layers; no obsolete photographic placeholder.
   const layers=[...canvas.querySelectorAll('img')];
-  const masks=["v34/room-mask.webp","v34/outdoor-mask.webp","v40/front-mask.webp","v40/room-visible-mask.webp","v34/city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/"+name;return img.decode()});
+  const masks=["v44/office-clean-mask.webp","v44/office-original-mask.webp","v34/room-mask.webp","v34/outdoor-mask.webp","v40/front-mask.webp","v40/room-visible-mask.webp","v34/city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/"+name;return img.decode()});
   return Promise.all([...layers.map(img=>img.decode()),...masks]).then(()=>{
     scene.classList.add('scene-ready');
   }).catch(()=>{
