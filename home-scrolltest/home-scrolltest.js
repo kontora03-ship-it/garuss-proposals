@@ -25,6 +25,14 @@ function stableLampTarget(distance,radius){
  const fullRadius=Math.min(56,Math.max(28,radius*.18));
  return ease(clamp(1-(distance-fullRadius)/(radius-fullRadius)));
 }
+const mobileView=matchMedia('(max-width:650px)');
+function mobileEffects(){
+ const mobile=mobileView.matches;
+ document.querySelectorAll('.city-car').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&Math.floor(i/2)%3!==0));
+ document.querySelectorAll('.city-window-activity rect').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&i%3!==0));
+ document.querySelectorAll('.city-beacons circle').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&i%3!==0));
+}
+mobileEffects();mobileView.addEventListener('change',mobileEffects);
 const traffic=[...document.querySelectorAll('.city-car')].map(el=>({el,path:document.getElementById(el.dataset.route),length:document.getElementById(el.dataset.route).getTotalLength(),duration:+el.dataset.speed,phase:+el.dataset.phase}));
 let cityClock=0;
 // Random dwell times replace periodic CSS patterns. Each old cycle had eight switches.
@@ -93,7 +101,7 @@ document.fonts.ready.then(()=>{arrangeCopyRows(true);measure()});
 new ResizeObserver(measure).observe(featuredRail);
 measure();
 heroStage.addEventListener('pointermove',e=>{
- if(e.pointerType!=='mouse')return;
+ if(mobileView.matches||e.pointerType!=='mouse')return;
  cursor={x:e.clientX,y:e.clientY};
  const b=heroStage.getBoundingClientRect();
  tx=clamp((e.clientX-b.left)/b.width);ty=clamp((e.clientY-b.top)/b.height);
@@ -129,7 +137,7 @@ function frame(now){
  const heroTop=heroAct.getBoundingClientRect().top;
  const heroVisible=heroTop<viewHeight&&heroTop+heroAct.offsetHeight>0;
  // Hit testing uses the unanimated canvas, never the moving/parallax SVG.
- const lampBounds=cursor&&heroVisible&&scene.classList.contains('scene-ready')
+ const lampBounds=!mobileView.matches&&cursor&&heroVisible&&scene.classList.contains('scene-ready')
   ?lampCanvas.getBoundingClientRect():null;
  heroAct.classList.toggle('scene-paused',!heroVisible);
  const rawHero=clamp(-heroTop/heroTravel);
@@ -160,11 +168,12 @@ function frame(now){
  if(!reduce){
   prop(featuredRail,'transform','translate3d('+(-railDistance*railProgress).toFixed(2)+'px,0,0)');
   if(heroVisible){
-   prop(heroStage,'--scene-scroll',(heroProgress*28).toFixed(2)+'px');
-   prop(heroStage,'--ruler-shift',((mx-.5)*180).toFixed(2)+'px');
+   prop(heroStage,'--scene-scroll',(heroProgress*(mobileView.matches?96:28)).toFixed(2)+'px');
+   if(!mobileView.matches)prop(heroStage,'--ruler-shift',((mx-.5)*180).toFixed(2)+'px');
    prop(scene,'--px',x.toFixed(2)+'px');prop(scene,'--py',y.toFixed(2)+'px');
   }
  }
+ if(!mobileView.matches){
  let targetLight=0;
  lampPowers.forEach((power,index)=>{
   const center=lampBounds?fixedLampCenter(lampPoints[index],lampBounds):null;
@@ -188,14 +197,17 @@ function frame(now){
  cityPower+=(lampPower-cityPower)*follow(dt,420);
  if(Math.abs(lampPower-cityPower)<.001)cityPower=lampPower;
  prop(scene,'--city-power',cityPower.toFixed(4));
+ }
  if(heroVisible&&!reduce){
   cityClock+=dt;
   cityWindows.forEach(win=>{
+   if(win.el.classList.contains('mobile-effect-hidden'))return;
    if(cityClock<win.next)return;
    win.on=!win.on;win.el.style.opacity=win.on?'.82':'0';
    win.next=cityClock+win.dwell*(.35+Math.random()*1.3);
   });
   traffic.forEach(car=>{
+   if(car.el.classList.contains('mobile-effect-hidden'))return;
    const progress=(cityClock/car.duration+car.phase)%1;
    const point=car.path.getPointAtLength(progress*car.length);
    car.el.setAttribute('transform','translate('+point.x.toFixed(2)+' '+point.y.toFixed(2)+')');
@@ -316,14 +328,16 @@ featuredRail.addEventListener('focusin',e=>{
  }
  prepareTiles();
  addEventListener('resize',prepareTiles,{passive:true});
- const images=[...document.images];
+ const images=mobileView.matches
+  ?[...document.querySelectorAll('.garuss-parallax__canvas img,.test-brand img,#page-intro img')]
+  :[...document.images];
  images.forEach(img=>{img.loading='eager'});
  const fontTask=Promise.all([
   document.fonts.load('700 100px "Halvar"'),
   document.fonts.load('400 17px "CoFo Sans"')
  ]).then(()=>document.fonts.ready);
  const loadTask=document.readyState==='complete'?Promise.resolve():new Promise(resolve=>addEventListener('load',resolve,{once:true}));
- const tasks=[...images.map(img=>img.decode()),fontTask,loadTask,sceneAssetsReady];
+ const tasks=[...images.map(img=>img.decode()),fontTask,...(mobileView.matches?[]:[loadTask]),sceneAssetsReady];
  let completed=0;
  await Promise.allSettled(tasks.map(task=>Promise.resolve(task).finally(()=>{
   completed++;
@@ -355,6 +369,7 @@ featuredRail.addEventListener('focusin',e=>{
  protectedContent.forEach(el=>el.inert=false);
  sc.layout();arrangeCopyRows(true);measure();cancelWheel();
 })();
+
 
 
 
