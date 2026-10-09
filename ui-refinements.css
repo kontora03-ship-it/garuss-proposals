@@ -1,0 +1,17 @@
+/* Common navigation, rhythm and keyboard focus for the test site and its cases. */
+.home-scrolltest{--page-gutter:6%;--red:#BE1622;--graphite:#343132;--muted:#b8b1b3}
+.home-scrolltest .test-main-header{z-index:50}
+.home-scrolltest .categories{position:static;background:none}
+.home-scrolltest .test-footer,.home-scrolltest .test-footer a{font-size:12px;letter-spacing:.04em;line-height:1.5}
+.home-scrolltest a:focus-visible,.home-scrolltest button:focus-visible,.home-scrolltest .gallery-image:focus-visible{outline:2px solid #BE1622;outline-offset:5px}
+.home-scrolltest .test-footer a:focus-visible{outline-color:white}
+.home-scrolltest .search-result:hover{background:#ffffff05}
+.home-scrolltest .search-field:focus-within{border-bottom-color:#BE1622}
+.home-scrolltest .search-field input:focus-visible{outline:0}
+.home-scrolltest .search-page-back,.case-page .back-link{transition:color .3s}
+.home-scrolltest .search-page-back:hover,.case-page .back-link:hover{color:white}
+.home-scrolltest .test-grid .presentation-card h2{max-width:100%}
+.home-scrolltest .test-grid .presentation-link{padding-bottom:18px}
+.home-scrolltest .test-grid .presentation-link:before{height:2px}
+.home-scrolltest .search-page-title{letter-spacing:-.035em}
+@media(max-width:760px){.home-scrolltest{--page-gutter:5%}.home-scrolltest .test-footer{display:flex;flex-wrap:wrap;gap:10px 20px}.home-scrolltest .test-footer span:nth-of-type(2){justify-self:start}}

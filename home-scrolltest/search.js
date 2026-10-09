@@ -12,20 +12,20 @@
  const aliases=[['nordgold','нордголд норд голд'],['malltech','моллтех маллтех молл тех'],['бурсервис','burservice bursservice бур сервис'],['акку','akku vertrieb фертриб'],['земский','zemsky zemskij']];
  function normalize(value){return value.toLocaleLowerCase('ru').replace(/ё/g,'е').replace(/[^a-zа-я0-9]+/g,' ').trim();}
  function tokens(value){return normalize(value).split(/\s+/).filter(Boolean).map(word=>word.replace(/^подар(?:ок|ки|ков|ка|ку|ками|ках)$/,'подар').replace(/^наград[а-я]*$/,'наград').replace(/^упаков[а-я]*$/,'упаков').replace(/^игр(?:а|ы|у|е|ой|ами|ах)$/,'игр'));}
- const entries=[...document.querySelectorAll('.test-grid .presentation-card')].map(card=>{
-  const client=card.querySelector('.card-meta').textContent.trim();
-  const title=card.querySelector('h2').textContent.trim();
-  let text=normalize(client+' '+title+' '+card.dataset.categories);
+ const cards=[...document.querySelectorAll('.test-grid .presentation-card')];
+ const entries=(window.GARUSS_CATALOG||[]).map(entry=>{
+  let text=normalize(entry.client+' '+entry.title+' '+entry.categories.join(' '));
   aliases.forEach(([name,variants])=>{if(text.includes(name))text+=' '+normalize(variants);});
-  return {card,client,title,text,href:card.querySelector('a').getAttribute('href'),image:card.querySelector('img').getAttribute('src'),categories:card.dataset.categories.split('|')};
+  return {...entry,text,card:cards.find(card=>card.querySelector('a').getAttribute('href')===entry.href)};
  });
-
  let category='Все кейсы';
  const params=new URLSearchParams(location.search);
+ if(!pageInput&&params.has('resume')){try{const state=JSON.parse(sessionStorage.getItem('garuss-case-return')||'null');if(categoryButtons.some(b=>b.dataset.category===state?.category))category=state.category;}catch{}}
  if(pageInput){pageInput.value=params.get('q')||'';input.value=pageInput.value;const requested=params.get('category');if(categoryButtons.some(b=>b.dataset.category===requested))category=requested;}
  function match(query,section='Все кейсы'){const terms=tokens(query);return entries.filter(e=>(section==='Все кейсы'||e.categories.includes(section))&&terms.every(term=>e.text.includes(term)));}
  function updateURL(){if(!pageInput)return;const url=new URL(location.href);url.searchParams.delete('q');url.searchParams.delete('category');if(pageInput.value.trim())url.searchParams.set('q',pageInput.value.trim());if(category!=='Все кейсы')url.searchParams.set('category',category);history.replaceState(null,'',url);}
  function renderCatalog(){
+  if(!empty)return;
   const found=new Set(match(pageInput?pageInput.value:'',category));
   entries.forEach(e=>e.card.hidden=!found.has(e));
   document.querySelector('#result-count').textContent=found.size;
@@ -61,7 +61,7 @@
  document.addEventListener('pointerdown',event=>{if(!host.contains(event.target))close();});
  host.addEventListener('focusout',event=>{if(event.relatedTarget&&!host.contains(event.relatedTarget))close();});
  categoryButtons.forEach(button=>button.addEventListener('click',()=>{category=button.dataset.category;renderCatalog();}));
- empty.querySelector('button').addEventListener('click',()=>{category='Все кейсы';if(pageInput){pageInput.value='';input.value='';}renderCatalog();});
+ empty?.querySelector('button').addEventListener('click',()=>{category='Все кейсы';if(pageInput){pageInput.value='';input.value='';}renderCatalog();});
  if(pageInput){
   pageInput.addEventListener('input',()=>{input.value=pageInput.value;clear.hidden=!input.value;close();renderCatalog();});
   pageClear.addEventListener('click',()=>{pageInput.value='';input.value='';clear.hidden=true;renderCatalog();pageInput.focus();});

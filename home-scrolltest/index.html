@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<script>document.documentElement.classList.add("intro-pending")</script>
+<script>if(!new URLSearchParams(location.search).has("resume"))document.documentElement.classList.add("intro-pending")</script>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Garuss — тест эффектов главной</title>
 <meta name="description" content="Черновая тестовая версия главной Garuss со scroll-эффектами.">
@@ -21,7 +21,7 @@
 <link rel="preload" as="image" href="parallax-assets/v34/outdoor-mask.webp">
 <link rel="preload" as="image" href="parallax-assets/v34/city-backdrop.webp">
 <link rel="preload" as="image" href="parallax-assets/v34/sky.webp">
-</head>
+<link rel="stylesheet" href="/garuss-proposals/ui-refinements.css?v=53"></head>
 <body class="home-scrolltest">
 <div class="page-intro" id="page-intro" aria-label="Загрузка страницы">
  <canvas class="page-intro-tiles" aria-hidden="true"></canvas>
@@ -173,9 +173,9 @@
 </footer>
 
 <script src="/garuss-proposals/vendor/scrollcraft/scrollcraft.js?v=030"></script>
-<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=49"></script>
-<script src="/garuss-proposals/home-scrolltest/search.js?v=52"></script>
-</body>
+<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=53"></script>
+<script src="/garuss-proposals/catalog-data.js?v=53"></script><script src="/garuss-proposals/home-scrolltest/search.js?v=53"></script>
+<script src="/garuss-proposals/ui-refinements.js?v=53"></script></body>
 </html>
 
 

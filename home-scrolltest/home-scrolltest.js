@@ -290,6 +290,7 @@ featuredRail.addEventListener('focusin',e=>{
 (async()=>{
  const overlay=document.getElementById('page-intro');
  if(!overlay)return;
+ if(new URLSearchParams(location.search).has('resume')){overlay.remove();await sceneAssetsReady;sc.layout();arrangeCopyRows(true);measure();return;}
  const html=document.documentElement;
  const protectedContent=[document.querySelector('.test-main-header'),root,document.querySelector('.test-footer')];
  protectedContent.forEach(el=>el.inert=true);
@@ -354,6 +355,7 @@ featuredRail.addEventListener('focusin',e=>{
  protectedContent.forEach(el=>el.inert=false);
  sc.layout();arrangeCopyRows(true);measure();cancelWheel();
 })();
+
 
 
 
