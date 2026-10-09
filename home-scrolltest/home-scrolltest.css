@@ -883,3 +883,36 @@ html.intro-pending{overflow:hidden}
 }
 
 .search-page .catalog-query button{flex:none;white-space:nowrap}
+
+
+/* Mobile studio: three readable depths, no cursor lighting or glass overlays. */
+@media(max-width:650px){
+ .home-scrolltest .hero-stage{height:100svh}
+ .home-scrolltest .hero-act>.hero-copy{top:clamp(160px,22svh,188px);max-width:90vw}
+ .home-scrolltest #hero-title{font-size:clamp(44px,14.7vw,82px);line-height:.94;letter-spacing:-.05em}
+ .home-scrolltest .hero-copy p{margin-top:clamp(44px,7svh,62px);max-width:285px;font-size:15px;line-height:1.6}
+ .home-scrolltest .hero-project-link{margin-top:22px}
+ .home-scrolltest .garuss-parallax__canvas{left:52%}
+ .home-scrolltest .lamp-lit,.home-scrolltest .city-lit,.home-scrolltest .sky-original,
+ .home-scrolltest .lamp-interaction,.home-scrolltest .studio-light-glow,
+ .home-scrolltest .glass-reflections,.home-scrolltest .city-sky-glow{display:none!important}
+ .home-scrolltest .garuss-parallax__city,.home-scrolltest .city-life{
+  transform:translate3d(0,calc(var(--scene-scroll,0px)*-.03),0) scale(1.005)
+ }
+ .home-scrolltest .garuss-parallax__room{transform:translate3d(0,calc(var(--scene-scroll,0px)*-.10),0) scale(1.005)}
+ .home-scrolltest .front-source-base{transform:translate3d(0,calc(var(--scene-scroll,0px)*.32),0) scale(1.005)}
+ .home-scrolltest .garuss-parallax__sky-track{transform:translate3d(0,calc(var(--scene-scroll,0px)*-.02),0)}
+ .home-scrolltest .night-sky-strip{animation-duration:680s}
+ .home-scrolltest .studio-ruler-track{transform:none!important;will-change:auto}
+ .home-scrolltest .mobile-effect-hidden{display:none!important}
+ .home-scrolltest .city-beacons circle,.home-scrolltest .city-window-activity rect{filter:none}
+}
+@media(max-width:650px) and (max-height:640px){
+ .home-scrolltest .hero-act>.hero-copy{top:142px}
+ .home-scrolltest .hero-copy p{margin-top:28px;font-size:14px;line-height:1.45}
+ .home-scrolltest .hero-project-link{margin-top:12px}
+}
+@media(max-width:650px) and (prefers-reduced-motion:reduce){
+ .home-scrolltest .garuss-parallax__layer,.home-scrolltest .city-life,.home-scrolltest .garuss-parallax__sky-track{transform:none!important}
+ .home-scrolltest .night-sky-strip{animation:none}
+}
