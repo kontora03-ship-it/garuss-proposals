@@ -15,3 +15,6 @@
 .home-scrolltest .test-grid .presentation-link:before{height:2px}
 .home-scrolltest .search-page-title{letter-spacing:-.035em}
 @media(max-width:760px){.home-scrolltest{--page-gutter:5%}.home-scrolltest .test-footer{display:flex;flex-wrap:wrap;gap:10px 20px}.home-scrolltest .test-footer span:nth-of-type(2){justify-self:start}}
+
+.case-return-link{display:inline-block;margin-bottom:28px;font-size:13px;color:#b8b1b3}
+@media(min-width:761px) and (max-width:1000px){.home-scrolltest .test-main-header{gap:24px}.home-scrolltest .test-main-header .test-brand img{width:170px}.permanent-search,.permanent-search.is-open{width:220px}.test-navigation{gap:18px}}

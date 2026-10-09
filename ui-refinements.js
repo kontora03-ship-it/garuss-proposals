@@ -17,6 +17,8 @@
    if(context&&url.pathname.endsWith('/search.html'))link.textContent='← К результатам поиска';
   });
   const intro=document.querySelector('.case-intro');
+  const back=document.querySelector('.case-bottom>.back-link');
+  if(intro&&back){const topBack=back.cloneNode(true);topBack.classList.add('case-return-link');intro.before(topBack);}
   const entry=(window.GARUSS_CATALOG||[]).find(e=>e.href===location.pathname);
   if(entry&&intro){
    const meta=document.createElement('div');meta.className='case-meta';
