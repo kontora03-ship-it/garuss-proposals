@@ -758,7 +758,7 @@ html.intro-pending{overflow:hidden}
 .home-scrolltest .lamp-lit--room{mask-image:url('parallax-assets/v40/room-visible-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)}
 .home-scrolltest .lamp-lit--front{mask-image:url('parallax-assets/v40/front-mask.webp'),radial-gradient(ellipse 50% 30% at 68% 82%,#000 12%,rgba(0,0,0,.75) 52%,transparent 100%);transform:translate3d(calc(var(--px)*.85),calc(var(--py)*.85 + var(--scene-scroll,0px)*.20),0) scale(1.005)}
 .home-scrolltest .front-source-base{transform:translate3d(calc(var(--px)*.85),calc(var(--py)*.85 + var(--scene-scroll,0px)*.20),0) scale(1.005)}
-.home-scrolltest .garuss-parallax__sky-track{top:-14%;height:58%}
+.home-scrolltest .garuss-parallax__sky-track{top:-18%;height:68%}
 .home-scrolltest .night-sky-strip{filter:saturate(.58) brightness(.76) contrast(.92)}
 .home-scrolltest .sky-original{opacity:calc(var(--city-power,0)*.30)}
 .home-scrolltest .sky-original .night-sky-strip{filter:saturate(.68) brightness(.91)}
