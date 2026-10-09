@@ -177,10 +177,10 @@ function frame(now){
   const target=lampTargets[index];
   lampPowers[index]=power+(target-power)*follow(dt,300);
   if(Math.abs(target-lampPowers[index])<.001)lampPowers[index]=target;
-  scene.style.setProperty('--lamp-'+index,lampPowers[index].toFixed(4));
-  lampMeters[index].style.setProperty('--local-power',lampPowers[index].toFixed(4));
-  scene.style.setProperty('--lamp-1',lampPowers[index].toFixed(4));
-  scene.style.setProperty('--lamp-2',lampPowers[index].toFixed(4));
+  prop(scene,'--lamp-'+index,lampPowers[index].toFixed(4));
+  prop(lampMeters[index],'--local-power',lampPowers[index].toFixed(4));
+  prop(scene,'--lamp-1',lampPowers[index].toFixed(4));
+  prop(scene,'--lamp-2',lampPowers[index].toFixed(4));
   targetLight=Math.max(targetLight,lampPowers[index]);
  });
  lampPower=targetLight;
@@ -273,7 +273,7 @@ const sceneAssetsReady=(()=>{
   new ResizeObserver(fit).observe(scene);fit();
   // Decode the actual displayed layers; no obsolete photographic placeholder.
   const layers=[...canvas.querySelectorAll('img')];
-  const masks=["v44/office-clean-lit-mask.webp","v44/office-clean-mask.webp","v44/office-original-mask.webp","v34/room-mask.webp","v34/outdoor-mask.webp","v40/front-mask.webp","v40/room-visible-mask.webp","v34/city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/"+name;return img.decode()});
+  const masks=["v34/outdoor-mask.webp","v34/city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/"+name;return img.decode()});
   return Promise.all([...layers.map(img=>img.decode()),...masks]).then(()=>{
     scene.classList.add('scene-ready');
   }).catch(()=>{

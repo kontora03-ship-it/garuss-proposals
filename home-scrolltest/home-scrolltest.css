@@ -797,3 +797,14 @@ html.intro-pending{overflow:hidden}
 .home-scrolltest .lamp-lit--room.office-clean-lit{
  mask-image:url('parallax-assets/v44/office-clean-lit-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)
 }
+
+/* v48: prepared RGBA planes avoid live mask intersections and SVG colour filters. */
+.home-scrolltest .garuss-parallax__canvas{filter:none;isolation:isolate}
+.home-scrolltest .garuss-parallax__layer.prepared-plane{
+ mask-image:none!important;mask-composite:add!important;filter:none!important;
+ mix-blend-mode:normal;backface-visibility:hidden;will-change:transform,opacity
+}
+.home-scrolltest .garuss-parallax__city:not(.prepared-plane){filter:saturate(.46) brightness(.6912)}
+.home-scrolltest .night-sky-strip{filter:saturate(.58) brightness(.7296) contrast(.92)}
+.home-scrolltest .sky-original .night-sky-strip{filter:saturate(.68) brightness(.8736)}
+.city-car,.city-car circle{filter:none!important}
