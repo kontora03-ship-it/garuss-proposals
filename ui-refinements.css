@@ -37,3 +37,5 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
  .case-page .next-case strong{overflow-wrap:anywhere}
  .home-scrolltest .card-meta span{white-space:normal}
 }
+
+@media(max-width:650px){.home-scrolltest #catalog-title{font-size:clamp(44px,17vw,62px);line-height:1;max-width:100%}}
