@@ -780,3 +780,7 @@ html.intro-pending{overflow:hidden}
 .city-car[data-route="city-road-two"] circle:nth-child(2){r:1px}
 .city-car[data-route="city-road-two"] circle:nth-child(3){r:.9px}
 @media(prefers-reduced-motion:reduce){.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front,.home-scrolltest .flower-source-patch,.home-scrolltest .flower-lit-patch{transform:none}}
+
+/* Fill only the background holes between branches, aligned with the office. */
+.home-scrolltest .flower-source-patch,.home-scrolltest .flower-lit-patch{transform:translate3d(calc(var(--px)*.40),calc(var(--py)*.40 - var(--scene-scroll,0px)*.35),0) scale(1.005);mask-image:radial-gradient(ellipse 13% 18% at 75% 55%,#000 62%,transparent 100%),url('parallax-assets/v34/front-mask.webp');mask-composite:subtract;mask-size:100% 100%;mask-repeat:no-repeat}
+@media(prefers-reduced-motion:reduce){.home-scrolltest .flower-source-patch,.home-scrolltest .flower-lit-patch{transform:none}}
