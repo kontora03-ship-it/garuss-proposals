@@ -26,9 +26,15 @@ function stableLampTarget(distance,radius){
  return ease(clamp(1-(distance-fullRadius)/(radius-fullRadius)));
 }
 const mobileView=matchMedia('(max-width:650px)');
+// Keep desktop nodes for viewport changes, but detach unused mobile lighting.
+const mobileLighting=[...scene.querySelectorAll('.lamp-lit,.city-lit,.sky-original,.city-sky-glow,.glass-reflections,.lamp-interaction,.studio-light-glow')].map(el=>({node:el.closest('picture')||el,anchor:document.createComment('desktop scene effect')}));
 function mobileEffects(){
  const mobile=mobileView.matches;
- document.querySelectorAll('.city-car').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&Math.floor(i/2)%3!==0));
+ mobileLighting.forEach(({node,anchor})=>{
+  if(mobile&&node.isConnected)node.replaceWith(anchor);
+  else if(!mobile&&anchor.isConnected)anchor.replaceWith(node);
+ });
+ document.querySelectorAll('.city-car').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile));
  document.querySelectorAll('.city-window-activity rect').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&i%3!==0));
  document.querySelectorAll('.city-beacons circle').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&i%3!==0));
 }
@@ -169,6 +175,7 @@ function frame(now){
   prop(featuredRail,'transform','translate3d('+(-railDistance*railProgress).toFixed(2)+'px,0,0)');
   if(heroVisible){
    prop(heroStage,'--scene-scroll',(heroProgress*(mobileView.matches?96:28)).toFixed(2)+'px');
+   prop(heroStage,'--scene-pan',(mobileView.matches?-heroProgress*46:0).toFixed(2)+'px');
    if(!mobileView.matches)prop(heroStage,'--ruler-shift',((mx-.5)*180).toFixed(2)+'px');
    prop(scene,'--px',x.toFixed(2)+'px');prop(scene,'--py',y.toFixed(2)+'px');
   }
@@ -206,7 +213,7 @@ function frame(now){
    win.on=!win.on;win.el.style.opacity=win.on?'.82':'0';
    win.next=cityClock+win.dwell*(.35+Math.random()*1.3);
   });
-  traffic.forEach(car=>{
+  if(!mobileView.matches)traffic.forEach(car=>{
    if(car.el.classList.contains('mobile-effect-hidden'))return;
    const progress=(cityClock/car.duration+car.phase)%1;
    const point=car.path.getPointAtLength(progress*car.length);
@@ -266,7 +273,8 @@ const sceneAssetsReady=(()=>{
   if(!scene||!canvas)return;
   function fit(){
     const bounds=scene.getBoundingClientRect();
-    const scale=Math.max(bounds.width/2048,bounds.height/1152)*1.026;
+    const extraHeight=mobileView.matches?96:0;
+    const scale=Math.max(bounds.width/2048,(bounds.height+extraHeight)/1152)*1.026;
     scene.style.setProperty('--scene-width',(2048*scale).toFixed(2)+'px');
     scene.style.setProperty('--scene-height',(1152*scale).toFixed(2)+'px');
   }
@@ -369,6 +377,7 @@ featuredRail.addEventListener('focusin',e=>{
  protectedContent.forEach(el=>el.inert=false);
  sc.layout();arrangeCopyRows(true);measure();cancelWheel();
 })();
+
 
 
 
