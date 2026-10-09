@@ -8,7 +8,7 @@ const featuredRail=featuredAct.querySelector('.featured-rail');
 const featuredProgress=document.querySelector('.featured-scroll-progress>i');
 const lampAnchors=[...document.querySelectorAll('[data-lamp-anchor]')];
 const lampMeters=[...document.querySelectorAll('.lamp-meter')];
-const lampPowers=[0,0,0];
+const lampPowers=[0];
 const traffic=[...document.querySelectorAll('.city-car')].map(el=>({el,path:document.getElementById(el.dataset.route),length:document.getElementById(el.dataset.route).getTotalLength(),duration:+el.dataset.speed,phase:+el.dataset.phase}));
 let cityClock=0;
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -149,6 +149,8 @@ function frame(now){
   if(Math.abs(target-lampPowers[index])<.001)lampPowers[index]=target;
   scene.style.setProperty('--lamp-'+index,lampPowers[index].toFixed(4));
   lampMeters[index].style.setProperty('--local-power',lampPowers[index].toFixed(4));
+  scene.style.setProperty('--lamp-1',lampPowers[index].toFixed(4));
+  scene.style.setProperty('--lamp-2',lampPowers[index].toFixed(4));
   targetLight=Math.max(targetLight,lampPowers[index]);
  });
  lampPower=targetLight;
@@ -162,7 +164,7 @@ function frame(now){
    const progress=(cityClock/car.duration+car.phase)%1;
    const point=car.path.getPointAtLength(progress*car.length);
    car.el.setAttribute('transform','translate('+point.x.toFixed(2)+' '+point.y.toFixed(2)+')');
-   car.el.style.opacity=(Math.min(1,progress*12,(1-progress)*12)*.68).toFixed(3);
+   car.el.style.opacity=(Math.min(1,progress*12,(1-progress)*12)*.86).toFixed(3);
   });
  }
  if(wheelActive){
@@ -236,7 +238,7 @@ const sceneAssetsReady=(()=>{
   new ResizeObserver(fit).observe(scene);fit();
   // Decode the actual displayed layers; no obsolete photographic placeholder.
   const layers=[...canvas.querySelectorAll('img')];
-  const masks=["room-mask.webp","outdoor-mask.webp","front-mask.webp","room-visible-mask.webp","city-mask.svg"].map(name=>{const img=new Image();img.src="parallax-assets/v34/"+name;return img.decode()});
+  const masks=["room-mask.webp","outdoor-mask.webp","front-mask.webp","room-visible-mask.webp","city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/v34/"+name;return img.decode()});
   return Promise.all([...layers.map(img=>img.decode()),...masks]).then(()=>{
     scene.classList.add('scene-ready');
   }).catch(()=>{
@@ -329,4 +331,5 @@ featuredRail.addEventListener('focusin',e=>{
  protectedContent.forEach(el=>el.inert=false);
  sc.layout();arrangeCopyRows(true);measure();cancelWheel();
 })();
+
 

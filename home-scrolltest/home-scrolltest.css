@@ -680,8 +680,8 @@ html.intro-pending{overflow:hidden}
 .home-scrolltest .night-sky-strip{filter:saturate(.58) brightness(.72) contrast(.92);animation-duration:560s}
 .home-scrolltest .sky-original{mask-image:linear-gradient(transparent 25%,#000 76%);opacity:calc(var(--city-power,0)*.48)}
 .home-scrolltest .sky-original .night-sky-strip{filter:saturate(.72) brightness(.91)}
-.home-scrolltest .garuss-parallax__city{z-index:2;mask-image:url('parallax-assets/v34/city-mask.svg');mask-size:100% 100%;mask-repeat:no-repeat;mask-mode:alpha;filter:saturate(.46) brightness(.72)}
-.home-scrolltest .city-source{mask-image:url('parallax-assets/v34/outdoor-mask.webp'),url('parallax-assets/v34/city-mask.svg');mask-composite:intersect}
+.home-scrolltest .garuss-parallax__city{z-index:2;mask-image:url('parallax-assets/v34/city-mask-v37.svg');mask-size:100% 100%;mask-repeat:no-repeat;mask-mode:alpha;filter:saturate(.46) brightness(.72)}
+.home-scrolltest .city-source{mask-image:url('parallax-assets/v34/outdoor-mask.webp'),url('parallax-assets/v34/city-mask-v37.svg');mask-composite:intersect}
 .home-scrolltest .city-source.city-lit{filter:saturate(.78) brightness(1.08);opacity:var(--city-power,0);mix-blend-mode:normal}
 .home-scrolltest .garuss-parallax__room{z-index:4;mask-image:url('parallax-assets/v34/room-mask.webp');mask-size:100% 100%;mask-repeat:no-repeat;mask-mode:alpha;filter:url('#studio-selective-color') brightness(.84)}
 .home-scrolltest .lamp-lit--room{z-index:5;mask-image:url('parallax-assets/v34/room-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%);mask-composite:intersect;filter:brightness(1.06)}
@@ -749,3 +749,22 @@ html.intro-pending{overflow:hidden}
 .glass-reflection--one{opacity:calc(.10 + var(--lamp-0,0)*.30)}
 .glass-reflection--two{opacity:calc(.08 + var(--lamp-1,0)*.24)}
 .glass-reflection--three{opacity:calc(.08 + var(--lamp-2,0)*.24)}
+
+
+/* v37: one light control; clean registration behind the foreground branches. */
+.home-scrolltest .garuss-parallax__room:not(.room-backfill):not(.lamp-lit){mask-image:url('parallax-assets/v34/room-mask.webp')}
+.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:translate3d(calc(var(--px)*.40),calc(var(--py)*.40 - var(--scene-scroll,0px)*.35),0) scale(1.005)}
+.home-scrolltest .lamp-lit--room{mask-image:url('parallax-assets/v34/room-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)}
+.home-scrolltest .city-sky-glow{z-index:3;background:radial-gradient(ellipse 62% 16% at 48% 34%,rgba(255,197,123,.44),rgba(237,157,79,.24) 38%,rgba(220,137,67,.07) 65%,transparent 90%);mask-image:url('parallax-assets/v34/outdoor-mask.webp');mask-size:100% 100%;mix-blend-mode:screen;transform:translate3d(calc(var(--px)*.15),calc(var(--py)*.15 - var(--scene-scroll,0px)*.14),0) scale(1.005);opacity:var(--city-power,0)!important}
+.home-scrolltest .sky-original{opacity:calc(var(--city-power,0)*.65)}
+.city-car circle:first-child{r:2.1px}
+.city-car circle:nth-child(2){r:.7px}
+.city-car circle:nth-child(3){r:.6px}
+.city-window-activity rect{filter:drop-shadow(0 0 .6px rgba(255,214,154,.35))}
+@keyframes cityWindow0{0%,21%,57%,82%{opacity:0}9%,35%,68%,94%{opacity:.88}}
+@keyframes cityWindow1{0%,28%,49%,74%{opacity:.84}12%,38%,61%,91%{opacity:0}}
+@keyframes cityWindow2{0%,17%,48%,79%{opacity:0}7%,31%,64%,88%{opacity:.78}}
+@keyframes cityWindow3{0%,34%,62%,93%{opacity:.9}19%,46%,77%,100%{opacity:0}}
+@keyframes cityBeacon{0%,10%,25%,100%{opacity:.10}13%,20%{opacity:1}}
+.city-beacons circle{animation-timing-function:steps(1,end);filter:drop-shadow(0 0 2px rgba(255,70,48,.85))}
+@media(prefers-reduced-motion:reduce){.city-window-activity rect,.city-beacons circle{animation:none!important;opacity:.18}.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:none}}
