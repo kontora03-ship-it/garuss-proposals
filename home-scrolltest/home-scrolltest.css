@@ -795,5 +795,5 @@ html.intro-pending{overflow:hidden}
  mask-image:url('parallax-assets/v44/office-original-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)
 }
 .home-scrolltest .lamp-lit--room.office-clean-lit{
- mask-image:url('parallax-assets/v44/office-clean-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)
+ mask-image:url('parallax-assets/v44/office-clean-lit-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)
 }
