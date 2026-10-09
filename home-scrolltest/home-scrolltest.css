@@ -849,3 +849,35 @@ html.intro-pending{overflow:hidden}
  .test-navigation>a{font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.header-search{transition:none}}
+
+
+/* Always visible search; no filtering of the home catalog by its query. */
+.permanent-search,.permanent-search.is-open{width:300px;transition:none}
+.permanent-search .search-field{position:static;background:none;padding:0;height:40px;border-color:#ffffff38}
+.permanent-search .search-field:focus-within{border-color:#BE1622}
+.permanent-search .search-submit{width:36px;min-height:40px;display:grid;place-items:center;flex:none}
+.search-all{display:block!important;border:0!important;margin-top:12px;color:#eee!important}
+.permanent-search .search-results{top:calc(100% + 14px)}
+.search-page main{max-width:1440px;margin:0 auto;padding:150px 6% 90px;min-height:90svh}
+.search-page .search-page-title{font:700 clamp(40px,6vw,72px)/1.05 "Halvar", "Halvar Bold",Arial,sans-serif;margin:22px 0 36px;text-align:left}
+.search-page .search-page-back{color:#aaa;font-size:13px}
+.search-page .catalog-query{display:flex;align-items:center;border-bottom:1px solid #BE1622;max-width:760px;margin-bottom:36px}
+.search-page .catalog-query input{width:100%;min-width:0;background:transparent;color:white;border:0;outline:none;font:400 20px/1.5 "CoFo Sans",Arial,sans-serif;padding:16px 0}
+.search-page .catalog-query button{background:none;color:#fff;border:0;padding:16px;cursor:pointer;font:400 14px "CoFo Sans",Arial,sans-serif}
+.search-page .catalog-query button:focus-visible{outline:2px solid #BE1622}
+.search-page .catalog-query [hidden]{display:none}
+.search-page .search-count{color:#aaa;margin:24px 0 32px;font-size:14px}
+.search-page .test-grid .presentation-card{opacity:1;transform:none}
+.presentation-card[hidden]{display:none!important}
+@media(max-width:1000px){.permanent-search,.permanent-search.is-open{width:250px}}
+@media(max-width:760px){
+ .home-scrolltest .test-main-header{height:116px;align-items:flex-start;padding-top:18px}
+ .home-scrolltest .test-main-header .test-brand img{width:130px}
+ .test-navigation{height:28px;gap:20px}
+ .permanent-search,.permanent-search.is-open{position:absolute;left:5%;right:5%;top:64px;width:auto}
+ .permanent-search .search-results{position:absolute;top:48px;left:0;right:0;width:auto}
+ .permanent-search input{font-size:16px}
+ .search-page main{padding:152px 5% 60px}
+ .search-page .search-page-title{margin:20px 0 24px}
+ .search-page .catalog-query input{font-size:16px}
+}
