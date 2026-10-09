@@ -768,3 +768,15 @@ html.intro-pending{overflow:hidden}
 @keyframes cityBeacon{0%,10%,25%,100%{opacity:.10}13%,20%{opacity:1}}
 .city-beacons circle{animation-timing-function:steps(1,end);filter:drop-shadow(0 0 2px rgba(255,70,48,.85))}
 @media(prefers-reduced-motion:reduce){.city-window-activity rect,.city-beacons circle{animation:none!important;opacity:.18}.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front{transform:none}}
+
+
+/* v38: restore foreground depth; only repair the background inside the branches. */
+.home-scrolltest .garuss-parallax__room:not(.room-backfill):not(.lamp-lit){mask-image:url('parallax-assets/v34/room-visible-mask.webp')}
+.home-scrolltest .lamp-lit--room{mask-image:url('parallax-assets/v34/room-visible-mask.webp'),radial-gradient(ellipse 43% 48% at 65% 46%,#000 12%,rgba(0,0,0,.8) 47%,transparent 100%)}
+.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front,.home-scrolltest .flower-source-patch,.home-scrolltest .flower-lit-patch{transform:translate3d(calc(var(--px)*.85),calc(var(--py)*.85 + var(--scene-scroll,0px)*.20),0) scale(1.005)}
+.home-scrolltest .flower-source-patch,.home-scrolltest .flower-lit-patch{mask-image:radial-gradient(ellipse 13% 18% at 75% 55%,#000 62%,transparent 100%);mask-size:100% 100%;mask-repeat:no-repeat;mask-mode:alpha;z-index:4;filter:url('#studio-selective-color') brightness(.84)}
+.home-scrolltest .flower-lit-patch{z-index:5;filter:brightness(1.06);opacity:var(--lamp-power,0)}
+.city-car[data-route="city-road-two"] circle:first-child{r:2.5px}
+.city-car[data-route="city-road-two"] circle:nth-child(2){r:1px}
+.city-car[data-route="city-road-two"] circle:nth-child(3){r:.9px}
+@media(prefers-reduced-motion:reduce){.home-scrolltest .front-source-base,.home-scrolltest .lamp-lit--front,.home-scrolltest .flower-source-patch,.home-scrolltest .flower-lit-patch{transform:none}}
