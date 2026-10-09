@@ -50,7 +50,7 @@
   if(event.key==='ArrowUp'&&event.target===list.querySelector('a')){event.preventDefault();input.focus();}
  });
  document.addEventListener('pointerdown',event=>{if(host.classList.contains('is-open')&&!host.contains(event.target))close(false);});
- host.addEventListener('focusout',()=>{queueMicrotask(()=>{if(!host.contains(document.activeElement))close(false);});});
+ host.addEventListener('focusout',event=>{if(event.relatedTarget&&!host.contains(event.relatedTarget))close(false);});
  categoryButtons.forEach(button=>button.addEventListener('click',()=>{category=button.dataset.category;categoryButtons.forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});render();}));
  empty.querySelector('button').addEventListener('click',resetAll);
  render();
