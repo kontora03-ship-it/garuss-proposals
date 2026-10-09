@@ -788,7 +788,7 @@ html.intro-pending{overflow:hidden}
 .home-scrolltest .garuss-parallax__room:not(.room-backfill):not(.lamp-lit):not(.office-clean){
  mask-image:url('parallax-assets/v44/office-original-mask.webp')
 }
-.home-scrolltest .garuss-parallax__room.office-clean{
+.home-scrolltest .garuss-parallax__room.office-clean:not(.room-backfill):not(.lamp-lit){
  mask-image:url('parallax-assets/v44/office-clean-mask.webp')
 }
 .home-scrolltest .lamp-lit--room:not(.office-clean-lit){
