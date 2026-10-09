@@ -808,3 +808,44 @@ html.intro-pending{overflow:hidden}
 .home-scrolltest .night-sky-strip{filter:saturate(.58) brightness(.7296) contrast(.92)}
 .home-scrolltest .sky-original .night-sky-strip{filter:saturate(.68) brightness(.8736)}
 .city-car,.city-car circle{filter:none!important}
+
+/* v49: quiet header search, with an inline field and case previews. */
+.header-search{position:relative;display:flex;align-items:center;gap:6px;width:92px;transition:width .3s ease;color:#ddd;flex:none}
+.header-search.is-open{width:328px}
+.header-search button{font:400 13px/1.4 "CoFo Sans",Arial,sans-serif;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+.search-toggle{display:flex;align-items:center;gap:9px;min-height:44px;white-space:nowrap}
+.is-open .search-toggle{width:30px;flex:none}
+.is-open .search-toggle>span{display:none}
+.search-toggle:hover,.search-toggle:focus-visible{color:#BE1622}
+.search-field{display:flex;align-items:center;flex:1;min-width:0;border-bottom:1px solid #BE1622}
+.search-field[hidden],.search-results[hidden],.catalog-search-empty[hidden],.search-clear[hidden]{display:none!important}
+.search-field input{min-width:0;width:100%;height:40px;padding:0;border:0;background:none;outline:none;color:#fff;font:400 13px/1.4 "CoFo Sans",Arial,sans-serif}
+.search-field input::placeholder{color:#a7a5a6}
+.search-field input::-webkit-search-cancel-button{display:none}
+.header-search .search-clear{font-size:23px;width:30px;min-height:40px;flex:none}
+.search-field:focus-within{border-color:#ed3b47}
+.search-results{position:absolute;right:0;top:calc(100% + 14px);width:380px;max-width:calc(100vw - 32px);background:#161618;box-shadow:0 14px 40px #0008;border-top:1px solid #BE1622;padding:16px;z-index:30}
+.search-status{margin:0 0 12px;color:#a7a5a6;font:400 12px/1.5 "CoFo Sans",Arial,sans-serif}
+.search-result-list{max-height:min(55vh,440px);overflow:auto;overscroll-behavior:contain}
+.test-navigation .search-result{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid #ffffff0b;white-space:normal}
+.search-result img{width:72px;height:54px;object-fit:cover;flex:none}
+.search-result>span{display:grid;gap:4px}
+.search-result small{font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:#a7a5a6}
+.search-result>span>span{font:400 14px/1.35 "CoFo Sans",Arial,sans-serif}
+.search-result:focus-visible,.search-toggle:focus-visible,.search-clear:focus-visible,.search-reset:focus-visible{outline:2px solid #BE1622;outline-offset:3px}
+.search-no-results{color:#ddd;font:400 14px/1.6 "CoFo Sans",Arial,sans-serif}
+.header-search .search-reset,.catalog-search-empty button{color:#fff;border:0;border-bottom:1px solid #BE1622;background:none;padding:8px 0;font:400 13px/1.4 "CoFo Sans",Arial,sans-serif;cursor:pointer}
+.catalog-search-empty{margin:30px 0;color:#aaa;font:400 15px/1.6 "CoFo Sans",Arial,sans-serif}
+@media(max-width:1000px){.test-navigation{gap:20px}.header-search.is-open{width:280px}}
+@media(max-width:760px){
+ .header-search,.header-search.is-open{width:36px}
+ .search-toggle{width:36px;justify-content:center}
+ .search-toggle>span{display:none}
+ .search-field{position:fixed;left:5%;right:5%;top:76px;height:42px;z-index:32;background:#161618;padding:0 12px}
+ .search-results{position:fixed;top:118px;left:5%;right:5%;width:auto;max-width:none;padding-top:12px}
+ .search-result-list{max-height:calc(70svh - 140px)}
+ .home-scrolltest .test-main-header .test-brand img{max-width:clamp(120px,28vw,180px)}
+ .test-navigation{gap:16px}
+ .test-navigation>a{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.header-search{transition:none}}

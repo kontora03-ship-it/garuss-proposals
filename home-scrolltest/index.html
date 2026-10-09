@@ -10,7 +10,7 @@
 <link rel="icon" href="/garuss-proposals/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/garuss-proposals/style.css?v=20261007-clean">
 <link rel="stylesheet" href="/garuss-proposals/vendor/scrollcraft/scrollcraft.css?v=030">
-<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=48">
+<link rel="stylesheet" href="/garuss-proposals/home-scrolltest/home-scrolltest.css?v=49">
 <link rel="preload" as="image" href="parallax-assets/v34/studio.webp">
 <link rel="preload" as="image" href="parallax-assets/v48/office-base.webp">
 <link rel="preload" as="image" href="parallax-assets/v48/office-light.webp">
@@ -50,7 +50,11 @@
 
 <header class="test-main-header">
   <a class="test-brand" href="#scroll-root" aria-label="Garuss — начало"><img src="/garuss-proposals/logo.svg" width="449" height="62" alt="GARUSS"></a>
-  <nav class="test-navigation" aria-label="Навигация"><a href="#catalog">Проекты</a><a href="/garuss-proposals/">Основной сайт ↗</a></nav>
+  <nav class="test-navigation" aria-label="Навигация"><div class="header-search">
+ <button class="search-toggle" type="button" aria-label="Открыть поиск" aria-expanded="false" aria-controls="header-search-results"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.6"/></svg><span>Поиск</span></button>
+ <form class="search-field" role="search" hidden><input type="search" aria-label="Поиск по кейсам" placeholder="Клиент, проект, продукция" autocomplete="off"><button class="search-clear" type="button" aria-label="Очистить поиск" hidden>×</button></form>
+ <div class="search-results" id="header-search-results" hidden><p class="search-status" role="status" aria-live="polite"></p><div class="search-result-list"></div></div>
+</div><a href="#catalog">Проекты</a><a href="/garuss-proposals/">Основной сайт ↗</a></nav>
 </header>
 
 <main id="scroll-root">
@@ -144,6 +148,7 @@
 
     <p class="sr-only" role="status" aria-live="polite">Кейсов: <span id="result-count">9</span></p>
 
+    <p class="catalog-search-empty" hidden>Ничего не найдено. <button type="button">Сбросить поиск и фильтры</button></p>
     <div class="presentation-grid test-grid">
       <article class="presentation-card" data-categories="Подарочные наборы"><a class="presentation-link" href="/garuss-proposals/cases/burservice-gifts/"><div class="cover"><img src="/garuss-proposals/covers/burservice-gifts-20261007.jpg" alt="" width="1000" height="750" loading="lazy"></div><div class="card-meta"><span>Бурсервис</span></div><h2>Корпоративные подарки</h2></a></article>
       <article class="presentation-card" data-categories="Подарочные наборы"><a class="presentation-link" href="/garuss-proposals/cases/akku-new-year/"><div class="cover"><img src="/garuss-proposals/covers/akku-new-year-20261007.jpg" alt="" width="1000" height="750" loading="lazy"></div><div class="card-meta"><span>АККУ Фертриб</span></div><h2>Подарки к Новому году</h2></a></article>
@@ -165,7 +170,8 @@
 </footer>
 
 <script src="/garuss-proposals/vendor/scrollcraft/scrollcraft.js?v=030"></script>
-<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=48"></script>
+<script src="/garuss-proposals/home-scrolltest/home-scrolltest.js?v=49"></script>
+<script src="/garuss-proposals/home-scrolltest/search.js?v=49"></script>
 </body>
 </html>
 

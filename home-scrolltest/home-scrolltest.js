@@ -242,19 +242,7 @@ document.querySelectorAll('.test-grid .presentation-link').forEach(link=>{
   },{passive:true});
 });
 
-/* Existing catalogue filters, isolated from production */
-const buttons=[...document.querySelectorAll('[data-category]')];
-buttons.forEach(button=>button.addEventListener('click',()=>{
-  buttons.forEach(b=>{const active=b===button;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
-  const category=button.dataset.category;
-  let count=0;
-  cards.forEach(card=>{
-    const show=category==='Все кейсы'||card.dataset.categories.split('|').includes(category);
-    card.hidden=!show;
-    if(show){count++;requestAnimationFrame(()=>card.classList.add('is-in'))}
-  });
-  document.querySelector('#result-count').textContent=count;
-}));
+/* Catalogue search and filters are handled together by search.js. */
 
 addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
 
