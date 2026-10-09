@@ -743,3 +743,9 @@ html.intro-pending{overflow:hidden}
 .city-window-activity rect:nth-child(4n){animation-delay:-3s}
 @keyframes cityWindow{0%,20%,100%{opacity:0}34%,59%{opacity:.78}75%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.city-beacons circle,.city-window-activity rect{animation:none;opacity:.22}}
+
+/* The reflection retains a small curved lamp rim, rather than just a cloud-like haze. */
+.glass-reflection::before{content:"";position:absolute;left:29%;width:42%;top:21%;height:44%;border-radius:70% 70% 45% 45%;border:1px solid rgba(255,218,160,.34);border-bottom:2px solid rgba(255,230,184,.94);background:linear-gradient(transparent 30%,rgba(232,143,75,.20));filter:blur(.65px)}
+.glass-reflection--one{opacity:calc(.10 + var(--lamp-0,0)*.30)}
+.glass-reflection--two{opacity:calc(.08 + var(--lamp-1,0)*.24)}
+.glass-reflection--three{opacity:calc(.08 + var(--lamp-2,0)*.24)}
