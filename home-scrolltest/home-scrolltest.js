@@ -8,7 +8,23 @@ const featuredRail=featuredAct.querySelector('.featured-rail');
 const featuredProgress=document.querySelector('.featured-scroll-progress>i');
 const lampAnchors=[...document.querySelectorAll('[data-lamp-anchor]')];
 const lampMeters=[...document.querySelectorAll('.lamp-meter')];
-const lampPowers=[0];
+const lampPowers=lampAnchors.map(()=>0);
+const lampDistances=lampAnchors.map(()=>Infinity);
+const lampTargets=lampAnchors.map(()=>0);
+const lampCanvas=scene.querySelector('.garuss-parallax__canvas');
+const lampPoints=lampAnchors.map(el=>{
+ const [vx,vy,vw,vh]=el.ownerSVGElement.getAttribute('viewBox').trim().split(/\s+/).map(Number);
+ return {x:+el.getAttribute('cx'),y:+el.getAttribute('cy'),vx,vy,vw,vh};
+});
+function fixedLampCenter(point,bounds){
+ const scale=Math.min(bounds.width/point.vw,bounds.height/point.vh);
+ return {x:bounds.left+(bounds.width-point.vw*scale)/2+(point.x-point.vx)*scale,
+ y:bounds.top+(bounds.height-point.vh*scale)/2+(point.y-point.vy)*scale};
+}
+function stableLampTarget(distance,radius){
+ const fullRadius=Math.min(56,Math.max(28,radius*.18));
+ return ease(clamp(1-(distance-fullRadius)/(radius-fullRadius)));
+}
 const traffic=[...document.querySelectorAll('.city-car')].map(el=>({el,path:document.getElementById(el.dataset.route),length:document.getElementById(el.dataset.route).getTotalLength(),duration:+el.dataset.speed,phase:+el.dataset.phase}));
 let cityClock=0;
 // Random dwell times replace periodic CSS patterns. Each old cycle had eight switches.
@@ -72,7 +88,7 @@ function measure(){
  firstCopyBottom=heroCopy.getBoundingClientRect().top+heroCopy.querySelector(".hero-line").offsetHeight;
  maxScroll=Math.max(0,document.documentElement.scrollHeight-viewHeight);
 }
-addEventListener('resize',()=>{sc.layout();measure()},{passive:true});
+addEventListener('resize',()=>{cursor=null;tx=.5;ty=.45;sc.layout();measure()},{passive:true});
 document.fonts.ready.then(()=>{arrangeCopyRows(true);measure()});
 new ResizeObserver(measure).observe(featuredRail);
 measure();
@@ -112,8 +128,9 @@ function frame(now){
  const redTop=featuredAct.getBoundingClientRect().top;
  const heroTop=heroAct.getBoundingClientRect().top;
  const heroVisible=heroTop<viewHeight&&heroTop+heroAct.offsetHeight>0;
- let lampBoxes=[];
- if(cursor&&heroVisible&&scene.classList.contains('scene-ready'))lampBoxes=lampAnchors.map(el=>el.getBoundingClientRect());
+ // Hit testing uses the unanimated canvas, never the moving/parallax SVG.
+ const lampBounds=cursor&&heroVisible&&scene.classList.contains('scene-ready')
+  ?lampCanvas.getBoundingClientRect():null;
  heroAct.classList.toggle('scene-paused',!heroVisible);
  const rawHero=clamp(-heroTop/heroTravel);
  const targetRail=clamp((clamp(-redTop/railTravel)-.06)/.88);
@@ -150,10 +167,15 @@ function frame(now){
  }
  let targetLight=0;
  lampPowers.forEach((power,index)=>{
-  const box=lampBoxes[index];
-  const distance=box?Math.hypot(cursor.x-(box.left+box.width/2),cursor.y-(box.top+box.height/2)):Infinity;
-  const target=ease(clamp(1-distance/Math.min(245,Math.max(145,viewWidth*.16))));
-  lampPowers[index]=power+(target-power)*follow(dt,240);
+  const center=lampBounds?fixedLampCenter(lampPoints[index],lampBounds):null;
+  const distance=center?Math.hypot(cursor.x-center.x,cursor.y-center.y):Infinity;
+  // Ignore subpixel pointer noise; retain a full-light plateau inside the meter.
+  if(!Number.isFinite(distance)||!Number.isFinite(lampDistances[index])||
+   Math.abs(distance-lampDistances[index])>=1.5)lampDistances[index]=distance;
+  const desired=stableLampTarget(lampDistances[index],Math.min(245,Math.max(145,viewWidth*.16)));
+  if(desired===0||desired===1||Math.abs(desired-lampTargets[index])>=.006)lampTargets[index]=desired;
+  const target=lampTargets[index];
+  lampPowers[index]=power+(target-power)*follow(dt,300);
   if(Math.abs(target-lampPowers[index])<.001)lampPowers[index]=target;
   scene.style.setProperty('--lamp-'+index,lampPowers[index].toFixed(4));
   lampMeters[index].style.setProperty('--local-power',lampPowers[index].toFixed(4));
