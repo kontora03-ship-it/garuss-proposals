@@ -930,3 +930,9 @@ html.intro-pending{overflow:hidden}
 @media(max-width:650px) and (prefers-reduced-motion:reduce){
  .home-scrolltest .garuss-parallax__canvas{transform:translate(-50%,-50%)}
 }
+
+/* Reserve space for the full Halvar word on narrow phone viewports. */
+@media(max-width:760px){
+ .home-scrolltest #hero-title{font-size:clamp(36px,13.2vw,76px);letter-spacing:-.05em;width:100%;max-width:100%}
+ .home-scrolltest #hero-title>.hero-line{width:100%;max-width:100%;margin-left:0;white-space:nowrap!important}
+}
