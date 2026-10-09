@@ -1,3 +1,8 @@
+/* The supplied Garuss font files are served to every device. */
+@font-face{font-family:"Halvar";src:url("/garuss-proposals/fonts/halvar-bold.woff") format("woff");font-style:normal;font-weight:700;font-display:block}
+@font-face{font-family:"CoFo Sans";src:url("/garuss-proposals/fonts/cofo-sans-regular.woff") format("woff");font-style:normal;font-weight:400;font-display:block}
+@font-face{font-family:"CoFo Sans";src:url("/garuss-proposals/fonts/cofo-sans-bold.woff") format("woff");font-style:normal;font-weight:700;font-display:block}
+.home-scrolltest,.case-page{font-synthesis:none}
 /* Common navigation, rhythm and keyboard focus for the test site and its cases. */
 .home-scrolltest{--page-gutter:6%;--red:#BE1622;--graphite:#343132;--muted:#b8b1b3}
 .home-scrolltest .test-main-header{z-index:50}
