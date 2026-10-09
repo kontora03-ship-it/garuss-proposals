@@ -11,6 +11,14 @@ const lampMeters=[...document.querySelectorAll('.lamp-meter')];
 const lampPowers=[0];
 const traffic=[...document.querySelectorAll('.city-car')].map(el=>({el,path:document.getElementById(el.dataset.route),length:document.getElementById(el.dataset.route).getTotalLength(),duration:+el.dataset.speed,phase:+el.dataset.phase}));
 let cityClock=0;
+// Random dwell times replace periodic CSS patterns. Each old cycle had eight switches.
+const cityWindows=[...document.querySelectorAll('.city-window-activity rect')].map(el=>{
+ const formerDuration=parseFloat(el.style.animation.match(/([\d.]+)s/)?.[1]||'12')*1000;
+ const dwell=formerDuration*3/8;
+ const on=Math.random()<.45;
+ el.style.animation='none';el.style.opacity=on?'.82':'0';
+ return {el,on,dwell,next:Math.random()*dwell};
+});
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer=matchMedia('(hover:hover) and (pointer:fine)');
 const sc=window.ScrollCraft.mount(root,{lerp:.12});
@@ -160,6 +168,11 @@ function frame(now){
  prop(scene,'--city-power',cityPower.toFixed(4));
  if(heroVisible&&!reduce){
   cityClock+=dt;
+  cityWindows.forEach(win=>{
+   if(cityClock<win.next)return;
+   win.on=!win.on;win.el.style.opacity=win.on?'.82':'0';
+   win.next=cityClock+win.dwell*(.35+Math.random()*1.3);
+  });
   traffic.forEach(car=>{
    const progress=(cityClock/car.duration+car.phase)%1;
    const point=car.path.getPointAtLength(progress*car.length);
@@ -238,7 +251,7 @@ const sceneAssetsReady=(()=>{
   new ResizeObserver(fit).observe(scene);fit();
   // Decode the actual displayed layers; no obsolete photographic placeholder.
   const layers=[...canvas.querySelectorAll('img')];
-  const masks=["room-mask.webp","outdoor-mask.webp","front-mask.webp","room-visible-mask.webp","city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/v34/"+name;return img.decode()});
+  const masks=["v34/room-mask.webp","v34/outdoor-mask.webp","v40/front-mask.webp","v40/room-visible-mask.webp","v34/city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/"+name;return img.decode()});
   return Promise.all([...layers.map(img=>img.decode()),...masks]).then(()=>{
     scene.classList.add('scene-ready');
   }).catch(()=>{
@@ -331,6 +344,7 @@ featuredRail.addEventListener('focusin',e=>{
  protectedContent.forEach(el=>el.inert=false);
  sc.layout();arrangeCopyRows(true);measure();cancelWheel();
 })();
+
 
 
 
