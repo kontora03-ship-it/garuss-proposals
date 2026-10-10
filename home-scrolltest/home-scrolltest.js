@@ -205,7 +205,7 @@ function frame(now){
  heroCopy.style.opacity='1';
  copyRows.forEach(row=>{
   const rowBottom=row.getBoundingClientRect().bottom;
-  const progress=clamp((rowBottom+fadeDistance-ctaTop)/fadeDistance);
+  const progress=redTop>=viewHeight?0:clamp((rowBottom+fadeDistance-ctaTop)/fadeDistance);
   // Scroll position owns the fade in both directions, without temporal lag.
   const value=redTop<=rowBottom?0:1-ease(progress);
   const opacity=value.toFixed(3);
