@@ -1010,3 +1010,12 @@ html.intro-pending{overflow:hidden}
  .home-scrolltest .hero-cta{--cta-inset:88px;top:auto}
  .home-scrolltest .hero-copy p{margin-top:28px}
 }
+
+/* v69: hold the action until the red section enters the viewport. */
+.home-scrolltest .hero-cta{
+ position:fixed;top:auto;bottom:var(--cta-inset);
+ transform:translate3d(0,var(--cta-lift,0px),0);will-change:transform;
+}
+@media(max-width:650px){
+ .home-scrolltest .hero-cta{top:auto;bottom:var(--cta-inset)}
+}

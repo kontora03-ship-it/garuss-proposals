@@ -195,6 +195,9 @@ function frame(now){
   if(featuredCurrent.textContent!==text){featuredCurrent.textContent=text;featuredCounter.setAttribute('aria-label','Проект '+current+' из '+featuredCards.length);}
  }
  prop(featuredProgress,'transform','scaleX('+displayedProgress.toFixed(4)+')');
+ // The action holds its screen position until the red section enters from below.
+ // After entry, both travel by the same amount, including on reverse scroll.
+ prop(heroCTA,'--cta-lift',Math.min(0,redTop-viewHeight).toFixed(2)+'px');
  // Start each row's fade exactly one action-height before the moving action.
  const ctaBounds=heroCTA.getBoundingClientRect();
  const ctaTop=ctaBounds.top;
