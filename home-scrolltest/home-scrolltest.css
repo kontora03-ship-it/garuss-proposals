@@ -1020,7 +1020,7 @@ html.intro-pending{overflow:hidden}
  .home-scrolltest .hero-cta{top:auto;bottom:var(--cta-inset)}
 }
 
-/* v70: original, full-colour studio opening above the mobile copy. */
+/* v71: original, full-colour studio opening above the mobile copy. */
 .mobile-studio-photo{display:none}
 @media(max-width:650px){
  .home-scrolltest .hero-act>.hero-copy{top:clamp(240px,32svh,278px)}
@@ -1057,4 +1057,10 @@ html.intro-pending{overflow:hidden}
 }
 @media(max-width:650px) and (prefers-reduced-motion:reduce){
  .home-scrolltest .mobile-studio-photo{transform:none}
+}
+
+/* The mobile opening uses one photograph, preventing duplicate scene details. */
+@media(max-width:650px){
+ .home-scrolltest .garuss-parallax{background:#171618}
+ .home-scrolltest .garuss-parallax__canvas{display:none}
 }
