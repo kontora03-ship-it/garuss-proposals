@@ -31,17 +31,30 @@ function stableLampTarget(distance,radius){
  const fullRadius=Math.min(56,Math.max(28,radius*.18));
  return ease(clamp(1-(distance-fullRadius)/(radius-fullRadius)));
 }
+const mobilePhoto=scene.querySelector('.mobile-studio-photo');
+const mobileFrame=mobilePhoto.querySelector('.mobile-studio-frame');
+const cityLife=scene.querySelector('.city-life');
+const cityHome=document.createComment('city animation position');
+cityLife.before(cityHome);
+function fitMobilePhoto(){
+ const b=mobilePhoto.getBoundingClientRect();if(!b.height)return;
+ const width=Math.max(b.width,b.height*2048/1152);
+ mobilePhoto.style.setProperty('--mobile-photo-width',width+'px');
+ mobilePhoto.style.setProperty('--mobile-photo-left',((b.width-width)*.52)+'px');
+}
+new ResizeObserver(fitMobilePhoto).observe(mobilePhoto);
 const mobileView=matchMedia('(max-width:650px)');
 // Keep desktop nodes for viewport changes, but detach unused mobile lighting.
 const mobileLighting=[...scene.querySelectorAll('.lamp-lit,.city-lit,.sky-original,.city-sky-glow,.glass-reflections,.lamp-interaction,.studio-light-glow')].map(el=>({node:el.closest('picture')||el,anchor:document.createComment('desktop scene effect')}));
 function mobileEffects(){
  const mobile=mobileView.matches;
+ if(mobile){mobileFrame.append(cityLife);fitMobilePhoto();}else cityHome.after(cityLife);
  mobileLighting.forEach(({node,anchor})=>{
   if(mobile&&node.isConnected)node.replaceWith(anchor);
   else if(!mobile&&anchor.isConnected)anchor.replaceWith(node);
  });
  document.querySelectorAll('.city-car').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile));
- document.querySelectorAll('.city-window-activity rect').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&i%3!==0));
+ document.querySelectorAll('.city-window-activity rect').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&i%6!==0));
  document.querySelectorAll('.city-beacons circle').forEach((el,i)=>el.classList.toggle('mobile-effect-hidden',mobile&&i%3!==0));
 }
 mobileEffects();mobileView.addEventListener('change',mobileEffects);
