@@ -997,3 +997,16 @@ html.intro-pending{overflow:hidden}
   font:400 11px/1.4 "CoFo Sans",Arial,sans-serif;letter-spacing:.08em;
  }
 }
+
+/* v68: action bottom sits on its former top, anchored to the red block edge. */
+.home-scrolltest .hero-cta{
+ --cta-inset:96px;top:auto;
+ bottom:calc(100% - 100svh + var(--cta-inset));
+}
+@media(min-width:761px){
+ .home-scrolltest #hero-title{font-size:clamp(66.55px,7.18vw,115.6px)}
+}
+@media(max-width:650px){
+ .home-scrolltest .hero-cta{--cta-inset:88px;top:auto}
+ .home-scrolltest .hero-copy p{margin-top:28px}
+}

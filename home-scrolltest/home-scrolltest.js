@@ -69,14 +69,13 @@ const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>n*n*(3-2*n);
 const follow=(dt,ms)=>1-Math.exp(-dt/ms);
 let cursor=null,mx=.5,my=.45,tx=.5,ty=.45,x=0,y=0,lampPower=0,cityPower=0,railProgress=0,heroProgress=0,lastFrame=0;
-let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,copyBottom=0,firstCopyBottom=0,maxScroll=0;
+let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,maxScroll=0;
 let wheelActive=false,wheelTarget=scrollY,wheelY=scrollY,wheelDirection=0,rafId=0,dead=false;
 let layoutWidth=document.documentElement.clientWidth;
 const lastValues=new Map();
 const copyParagraph=heroCopy.querySelector('p');
 const paragraphText=copyParagraph.textContent.trim();
 let copyRows=[],paragraphWidth=-1;
-const copyOpacities=new WeakMap();
 function arrangeCopyRows(force=false){
  const width=copyParagraph.clientWidth;
  const style=getComputedStyle(copyParagraph);
@@ -115,8 +114,6 @@ function measure(){
  railDistance=Math.max(0,featuredRail.scrollWidth-featuredViewport.clientWidth);
  railTravel=Math.max(1,featuredAct.offsetHeight-viewHeight);
  heroTravel=Math.max(1,heroAct.offsetHeight-viewHeight);
- copyBottom=heroCopy.getBoundingClientRect().bottom;
- firstCopyBottom=heroCopy.getBoundingClientRect().top+heroCopy.querySelector(".hero-line").offsetHeight;
  maxScroll=Math.max(0,document.documentElement.scrollHeight-viewHeight);
 }
 addEventListener('resize',()=>{
@@ -198,26 +195,16 @@ function frame(now){
   if(featuredCurrent.textContent!==text){featuredCurrent.textContent=text;featuredCounter.setAttribute('aria-label','Проект '+current+' из '+featuredCards.length);}
  }
  prop(featuredProgress,'transform','scaleX('+displayedProgress.toFixed(4)+')');
- const ctaTop=heroCTA.getBoundingClientRect().top;
- const ctaOriginTop=ctaTop-heroTop;
- const rowPause=10;
- const lastEnd=firstCopyBottom+36;
- const rowDuration=Math.max(24,Math.min(110,(ctaOriginTop-lastEnd-32-(copyRows.length-1)*rowPause)/Math.max(1,copyRows.length)));
- const rowStep=rowDuration+rowPause;
- const firstStart=lastEnd+rowDuration+(copyRows.length-1)*rowStep;
+ // Start each row's fade exactly one action-height before the moving action.
+ const ctaBounds=heroCTA.getBoundingClientRect();
+ const ctaTop=ctaBounds.top;
+ const fadeDistance=Math.max(1,ctaBounds.height);
  heroCopy.style.opacity='1';
- copyRows.forEach((row,index)=>{
-  const order=copyRows.length-1-index;
-  const start=firstStart-order*rowStep;
-  const progress=clamp((start-ctaTop)/rowDuration);
-  const target=1-ease(progress);
-  const previous=copyOpacities.get(row);
-  const current=Number.isFinite(previous)?previous:target;
-  let value=reduce?target:current+(target-current)*follow(dt,65);
-  if(Math.abs(target-value)<.001)value=target;
-  // Never paint residual fading text over the incoming red section.
-  if(ctaTop<=lastEnd||redTop<=copyBottom)value=0;
-  copyOpacities.set(row,value);
+ copyRows.forEach(row=>{
+  const rowBottom=row.getBoundingClientRect().bottom;
+  const progress=clamp((rowBottom+fadeDistance-ctaTop)/fadeDistance);
+  // Scroll position owns the fade in both directions, without temporal lag.
+  const value=redTop<=rowBottom?0:1-ease(progress);
   const opacity=value.toFixed(3);
   if(row.style.opacity!==opacity)row.style.opacity=opacity;
  });
