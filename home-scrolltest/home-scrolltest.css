@@ -936,3 +936,7 @@ html.intro-pending{overflow:hidden}
  .home-scrolltest #hero-title{font-size:clamp(36px,13.2vw,76px);letter-spacing:-.05em;width:100%;max-width:100%}
  .home-scrolltest #hero-title>.hero-line{width:100%;max-width:100%;margin-left:0;white-space:nowrap!important}
 }
+
+/* Keep percentage gutters tied to the viewport, not the max-content card rail. */
+.home-scrolltest .featured-stage{grid-template-columns:minmax(0,1fr)}
+.home-scrolltest .featured-head{min-width:0}
