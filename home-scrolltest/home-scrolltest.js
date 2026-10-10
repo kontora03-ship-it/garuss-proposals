@@ -2,11 +2,16 @@ const root=document.querySelector('#scroll-root');
 const heroAct=document.querySelector('.hero-act');
 const heroStage=document.querySelector('.hero-stage');
 const heroCopy=document.querySelector('.hero-copy');
+const heroCTA=document.querySelector('.hero-cta');
+const mainHeader=document.querySelector('.test-main-header');
 const scene=document.querySelector('#garuss-parallax');
 const featuredAct=document.querySelector('.featured-act');
 const featuredRail=featuredAct.querySelector('.featured-rail');
 const featuredProgress=document.querySelector('.featured-scroll-progress>i');
 const featuredViewport=featuredAct.querySelector('.featured-viewport');
+const featuredCards=[...featuredRail.querySelectorAll('.featured-card')];
+const featuredCounter=featuredAct.querySelector('.featured-counter');
+const featuredCurrent=featuredCounter.querySelector('.featured-current');
 const lampAnchors=[...document.querySelectorAll('[data-lamp-anchor]')];
 const lampMeters=[...document.querySelectorAll('.lamp-meter')];
 const lampPowers=lampAnchors.map(()=>0);
@@ -52,7 +57,14 @@ const cityWindows=[...document.querySelectorAll('.city-window-activity rect')].m
 });
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer=matchMedia('(hover:hover) and (pointer:fine)');
-const sc=window.ScrollCraft.mount(root,{lerp:.12});
+function configureFeatured(){
+ featuredAct.setAttribute('data-sc-act',mobileView.matches?'flow':'pan');
+ featuredAct.style.removeProperty('height');
+ featuredAct.classList.remove('sc-act--pinned');
+ featuredAct.querySelector('.featured-stage').classList.remove('sc-stage');
+}
+configureFeatured();
+let sc=window.ScrollCraft.mount(root,{lerp:.12});
 const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>n*n*(3-2*n);
 const follow=(dt,ms)=>1-Math.exp(-dt/ms);
@@ -117,6 +129,10 @@ addEventListener('resize',()=>{
 document.fonts.ready.then(()=>{arrangeCopyRows(true);measure()});
 new ResizeObserver(measure).observe(featuredRail);
 measure();
+mobileView.addEventListener('change',()=>{
+ sc.destroy();configureFeatured();sc=window.ScrollCraft.mount(root,{lerp:.12});
+ lastValues.clear();cancelWheel();measure();
+});
 heroStage.addEventListener('pointermove',e=>{
  if(mobileView.matches||e.pointerType!=='mouse')return;
  cursor={x:e.clientX,y:e.clientY};
@@ -173,33 +189,45 @@ function frame(now){
  heroProgress+=(rawHero-heroProgress)*follow(dt,120);
  railProgress+=(targetRail-railProgress)*follow(dt,175);
  if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
- const displayedProgress=reduce?clamp(featuredRail.scrollLeft/Math.max(1,railDistance)):railProgress;
+ const nativeGallery=mobileView.matches||reduce;
+ const displayedProgress=nativeGallery?clamp((mobileView.matches?featuredViewport.scrollLeft:featuredRail.scrollLeft)/Math.max(1,railDistance)):railProgress;
+ if(mobileView.matches){
+  const step=featuredCards.length>1?featuredCards[1].offsetLeft-featuredCards[0].offsetLeft:1;
+  const current=Math.min(featuredCards.length,1+Math.round(featuredViewport.scrollLeft/Math.max(1,step)));
+  const text=String(current).padStart(2,'0');
+  if(featuredCurrent.textContent!==text){featuredCurrent.textContent=text;featuredCounter.setAttribute('aria-label','Проект '+current+' из '+featuredCards.length);}
+ }
  prop(featuredProgress,'transform','scaleX('+displayedProgress.toFixed(4)+')');
- const rowDuration=110;
+ const ctaTop=heroCTA.getBoundingClientRect().top;
+ const ctaOriginTop=ctaTop-heroTop;
  const rowPause=10;
  const lastEnd=firstCopyBottom+36;
+ const rowDuration=Math.max(24,Math.min(110,(ctaOriginTop-lastEnd-32-(copyRows.length-1)*rowPause)/Math.max(1,copyRows.length)));
  const rowStep=rowDuration+rowPause;
  const firstStart=lastEnd+rowDuration+(copyRows.length-1)*rowStep;
  heroCopy.style.opacity='1';
  copyRows.forEach((row,index)=>{
   const order=copyRows.length-1-index;
   const start=firstStart-order*rowStep;
-  const progress=clamp((start-redTop)/rowDuration);
+  const progress=clamp((start-ctaTop)/rowDuration);
   const target=1-ease(progress);
   const previous=copyOpacities.get(row);
   const current=Number.isFinite(previous)?previous:target;
   let value=reduce?target:current+(target-current)*follow(dt,65);
   if(Math.abs(target-value)<.001)value=target;
   // Never paint residual fading text over the incoming red section.
-  if(redTop<=lastEnd)value=0;
+  if(ctaTop<=lastEnd||redTop<=copyBottom)value=0;
   copyOpacities.set(row,value);
   const opacity=value.toFixed(3);
   if(row.style.opacity!==opacity)row.style.opacity=opacity;
  });
  const inactive=copyRows.length>0&&copyRows.every(row=>Number(row.style.opacity)<=.001);
  if(heroCopy.inert!==inactive){heroCopy.inert=inactive;heroCopy.style.pointerEvents=inactive?'none':'';}
+ const ctaOpacity=ease(clamp((ctaTop-mainHeader.getBoundingClientRect().bottom-8)/44));
+ heroCTA.style.opacity=ctaOpacity.toFixed(3);
+ heroCTA.inert=ctaOpacity<.01;
  if(!reduce){
-  prop(featuredRail,'transform','translate3d('+(-railDistance*railProgress).toFixed(2)+'px,0,0)');
+  if(!mobileView.matches)prop(featuredRail,'transform','translate3d('+(-railDistance*railProgress).toFixed(2)+'px,0,0)');
   if(heroVisible){
    prop(heroStage,'--scene-scroll',(heroProgress*(mobileView.matches?96:28)).toFixed(2)+'px');
    prop(heroStage,'--scene-pan',(mobileView.matches?-heroProgress*46:0).toFixed(2)+'px');

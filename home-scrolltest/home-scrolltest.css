@@ -944,3 +944,56 @@ html.intro-pending{overflow:hidden}
 /* Clip the moving cards within the same permanent left/right page gutters. */
 .home-scrolltest .featured-viewport{margin-inline:var(--page-gutter);min-width:0;overflow:hidden}
 .home-scrolltest .featured-rail{padding-left:0;padding-right:0}
+
+/* v67: moving hero action; compact native gallery on phones. */
+.home-scrolltest .hero-cta{
+ position:absolute;top:calc(100svh - 96px);left:var(--page-gutter);
+ z-index:21;width:max-content;max-width:calc(100% - var(--page-gutter)*2);
+}
+.home-scrolltest .hero-cta .hero-project-link{
+ margin:0;padding:14px 24px;gap:24px;border:0;background:#BE1622;color:#fff;
+ font:700 13px/1.4 "CoFo Sans",Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;
+ transition:background-color .3s ease;
+}
+.home-scrolltest .hero-cta .hero-project-link:hover{background:#a4121e;color:#fff}
+.home-scrolltest .hero-cta .hero-project-link:focus-visible{outline:2px solid #fff;outline-offset:5px}
+.featured-status{display:contents}
+.featured-counter{display:none}
+.featured-viewport:focus-visible{outline:2px solid #fff;outline-offset:4px}
+@media(max-width:650px){
+ .home-scrolltest .hero-cta{top:calc(100svh - 88px)}
+ .home-scrolltest .featured-act{height:auto!important}
+ .home-scrolltest .featured-stage{
+  position:relative!important;top:auto;height:auto!important;
+  padding:40px 0 32px;display:block;overflow:hidden;
+ }
+ .home-scrolltest .featured-head{padding-bottom:22px}
+ .home-scrolltest .featured-viewport{
+  overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
+  scroll-padding:0;overscroll-behavior-x:contain;scrollbar-width:none;
+ }
+ .home-scrolltest .featured-viewport::-webkit-scrollbar{display:none}
+ .home-scrolltest .featured-rail{
+  width:auto;min-width:0;padding:0;gap:14px;transform:none!important;will-change:auto;
+  overflow:visible;
+ }
+ .home-scrolltest .featured-card{
+  width:100%;flex:0 0 100%;grid-template-rows:auto auto;
+  scroll-snap-align:start;
+ }
+ .home-scrolltest .featured-image{height:auto;aspect-ratio:4/3}
+ .home-scrolltest .featured-card>div:last-child{
+  min-height:0;padding-top:16px;display:block;
+ }
+ .home-scrolltest .featured-card h3{margin-top:8px;font-size:26px;line-height:1.05}
+ .home-scrolltest .featured-status{
+  display:flex;align-items:center;gap:18px;margin:22px var(--page-gutter) 0;
+ }
+ .home-scrolltest .featured-scroll-progress{
+  position:static;flex:1;min-width:0;height:2px;
+ }
+ .home-scrolltest .featured-counter{
+  display:block;flex:none;color:#fff;
+  font:400 11px/1.4 "CoFo Sans",Arial,sans-serif;letter-spacing:.08em;
+ }
+}
