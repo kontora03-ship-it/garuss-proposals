@@ -940,3 +940,7 @@ html.intro-pending{overflow:hidden}
 /* Keep percentage gutters tied to the viewport, not the max-content card rail. */
 .home-scrolltest .featured-stage{grid-template-columns:minmax(0,1fr)}
 .home-scrolltest .featured-head{min-width:0}
+
+/* Clip the moving cards within the same permanent left/right page gutters. */
+.home-scrolltest .featured-viewport{margin-inline:var(--page-gutter);min-width:0;overflow:hidden}
+.home-scrolltest .featured-rail{padding-left:0;padding-right:0}

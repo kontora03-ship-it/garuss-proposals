@@ -6,6 +6,7 @@ const scene=document.querySelector('#garuss-parallax');
 const featuredAct=document.querySelector('.featured-act');
 const featuredRail=featuredAct.querySelector('.featured-rail');
 const featuredProgress=document.querySelector('.featured-scroll-progress>i');
+const featuredViewport=featuredAct.querySelector('.featured-viewport');
 const lampAnchors=[...document.querySelectorAll('[data-lamp-anchor]')];
 const lampMeters=[...document.querySelectorAll('.lamp-meter')];
 const lampPowers=lampAnchors.map(()=>0);
@@ -99,7 +100,7 @@ function prop(el,key,value){
 function measure(){
  arrangeCopyRows();
  viewWidth=document.documentElement.clientWidth;viewHeight=innerHeight;
- railDistance=Math.max(0,featuredRail.scrollWidth-viewWidth);
+ railDistance=Math.max(0,featuredRail.scrollWidth-featuredViewport.clientWidth);
  railTravel=Math.max(1,featuredAct.offsetHeight-viewHeight);
  heroTravel=Math.max(1,heroAct.offsetHeight-viewHeight);
  copyBottom=heroCopy.getBoundingClientRect().bottom;
@@ -189,6 +190,8 @@ function frame(now){
   const current=Number.isFinite(previous)?previous:target;
   let value=reduce?target:current+(target-current)*follow(dt,65);
   if(Math.abs(target-value)<.001)value=target;
+  // Never paint residual fading text over the incoming red section.
+  if(redTop<=lastEnd)value=0;
   copyOpacities.set(row,value);
   const opacity=value.toFixed(3);
   if(row.style.opacity!==opacity)row.style.opacity=opacity;
