@@ -1020,80 +1020,17 @@ html.intro-pending{overflow:hidden}
  .home-scrolltest .hero-cta{top:auto;bottom:var(--cta-inset)}
 }
 
-/* v71: original, full-colour studio opening above the mobile copy. */
-.mobile-studio-photo{display:none}
+/* Mobile copy spacing retained independently of the restored scene. */
 @media(max-width:650px){
- .home-scrolltest .hero-act>.hero-copy{top:clamp(240px,32svh,278px)}
- .home-scrolltest .mobile-studio-photo{
-  display:block;position:absolute;left:0;right:0;top:-36px;z-index:4;
-  height:clamp(450px,72svh,690px);overflow:hidden;pointer-events:none;
-  transform:translate3d(0,var(--scene-pan,0px),0);
-  mask-image:linear-gradient(#000 0%,#000 52%,rgba(0,0,0,.82) 68%,transparent 100%);
- }
- .home-scrolltest .mobile-studio-photo img{
-  display:block;width:100%;height:100%;object-fit:cover;object-position:52% center;
-  filter:none;
- }
- .home-scrolltest .hero-stage::after{background:none}
- .home-scrolltest .garuss-parallax::after{background:none}
- .home-scrolltest .garuss-parallax__shade{
-  background:linear-gradient(180deg,transparent 0%,transparent 28svh,
-   rgba(8,8,10,.58) 34svh,rgba(8,8,10,.83) 50svh,
-   rgba(8,8,10,.64) 75svh,rgba(8,8,10,.46) 100%);
- }
- .home-scrolltest .hero-copy p{color:#f0edef}
+ .home-scrolltest .hero-copy p{margin-top:24px;max-width:100%;color:#f0edef}
+ .home-scrolltest .hero-stage::after,.home-scrolltest .garuss-parallax::after{background:none}
 }
 @media(max-width:650px) and (max-height:640px){
- .home-scrolltest .hero-act>.hero-copy{top:clamp(194px,34svh,218px)}
  .home-scrolltest .hero-copy p{margin-top:20px;max-width:100%}
- .home-scrolltest .garuss-parallax__shade{
-  background:linear-gradient(180deg,transparent 0%,transparent 25svh,
-   rgba(8,8,10,.64) 33svh,rgba(8,8,10,.86) 52svh,rgba(8,8,10,.55) 100%);
- }
 }
 @media(max-width:650px) and (max-height:560px){
- .home-scrolltest .hero-act>.hero-copy{top:142px}
  .home-scrolltest .hero-copy p{margin-top:16px;font-size:13px;line-height:1.4}
 }
-@media(max-width:650px) and (prefers-reduced-motion:reduce){
- .home-scrolltest .mobile-studio-photo{transform:none}
-}
-
-/* The mobile opening uses one photograph, preventing duplicate scene details. */
-@media(max-width:650px){
- .home-scrolltest .garuss-parallax{background:#171618}
- .home-scrolltest .garuss-parallax__canvas{display:none}
-}
-
-/* v72: economical mobile sky/city depth, with copy close to the action. */
-@media(max-width:650px){
- .home-scrolltest .hero-act>.hero-copy{top:auto;bottom:calc(88px + 57.4px + 80px);max-width:90vw}
- .home-scrolltest .hero-copy p{margin-top:24px;max-width:100%}
- .home-scrolltest .mobile-studio-photo{height:calc(100svh + 72px);mask-image:linear-gradient(#000 0%,#000 55%,rgba(0,0,0,.8) 75%,transparent 100%)}
- .mobile-studio-frame{position:absolute;top:0;left:var(--mobile-photo-left);width:var(--mobile-photo-width);height:100%}
- .home-scrolltest .mobile-studio-frame img{object-fit:fill;object-position:center}
- .mobile-sky{position:absolute;inset:0;mask-image:url('parallax-assets/v34/outdoor-mask.webp'),linear-gradient(#000 0%,#000 23%,transparent 35%);mask-size:100% 100%;mask-composite:intersect;overflow:hidden}
- .mobile-clouds{position:absolute;left:-10%;top:-18%;width:220%;height:68%;background:url('parallax-assets/v34/sky.webp') 0 0 / 50% 100% repeat-x;animation:mobileCloudDrift 240s linear infinite;transform:translateY(calc(var(--scene-scroll,0px)*-.08));opacity:.8}
- .home-scrolltest .mobile-studio-frame .city-life{transform:none;width:100%;height:100%;z-index:2}
- .mobile-lamps{position:absolute;inset:0;width:100%;height:100%;fill:#ffe4aa;pointer-events:none}
- .mobile-lamps ellipse{animation:mobileLampBreathe 19s ease-in-out infinite;opacity:.08}
- .hero-act.scene-paused .mobile-clouds,.hero-act.scene-paused .mobile-lamps ellipse{animation-play-state:paused}
- .home-scrolltest .garuss-parallax__shade{background:linear-gradient(180deg,transparent 0%,transparent 36svh,rgba(8,8,10,.25) 48svh,rgba(8,8,10,.76) 65svh,rgba(8,8,10,.78) 100%)}
-}
-@media(max-width:650px) and (max-height:640px){
- .home-scrolltest .hero-act>.hero-copy{top:auto;bottom:calc(88px + 57.4px + 62px)}
- .home-scrolltest .hero-copy p{margin-top:20px}
-}
-@media(max-width:650px) and (max-height:560px){
- .home-scrolltest .hero-act>.hero-copy{bottom:calc(88px + 57.4px + 60px)}
- .home-scrolltest .hero-copy p{margin-top:16px}
-}
-@keyframes mobileCloudDrift{to{background-position-x:-100%}}
-@keyframes mobileLampBreathe{0%,35%,100%{opacity:.06}55%,70%{opacity:.32}}
-@media(prefers-reduced-motion:reduce){
- .mobile-clouds,.mobile-lamps ellipse{animation:none!important}
-}
-
 /* v73: lift the complete mobile scene; bring copy and action lower. */
 @media(max-width:650px){
  .home-scrolltest .mobile-studio-photo{top:-108px}
@@ -1102,4 +1039,33 @@ html.intro-pending{overflow:hidden}
 }
 @media(max-width:650px) and (max-height:640px){
  .home-scrolltest .hero-act>.hero-copy{bottom:calc(68px + 57.4px + 52px)}
+}
+
+/* v74: restore the existing registered sky, city, office and foreground planes. */
+@media(max-width:650px){
+ .home-scrolltest .hero-act>.hero-copy{top:auto}
+ .home-scrolltest .garuss-parallax__canvas{
+  display:block;left:52%;top:-108px;
+  transform:translate(-50%,var(--scene-pan,0px));filter:none;
+ }
+ .home-scrolltest .garuss-parallax__city,.home-scrolltest .city-life{
+  transform:translate3d(0,calc(var(--scene-scroll,0px)*-.025),0) scale(1.005)
+ }
+ .home-scrolltest .garuss-parallax__room{
+  transform:translate3d(0,calc(var(--scene-scroll,0px)*-.10),0) scale(1.005)
+ }
+ .home-scrolltest .front-source-base{
+  transform:translate3d(0,calc(var(--scene-scroll,0px)*.22),0) scale(1.005)
+ }
+ .home-scrolltest .garuss-parallax__sky-track{
+  transform:translate3d(0,calc(var(--scene-scroll,0px)*-.015),0);
+ }
+ .home-scrolltest .night-sky-strip{filter:saturate(.8) brightness(.95);animation-duration:680s}
+ .home-scrolltest .garuss-parallax__city:not(.prepared-plane){filter:saturate(.85) brightness(.94)}
+ .home-scrolltest .garuss-parallax__shade{
+  background:linear-gradient(180deg,transparent 0%,transparent 36svh,rgba(8,8,10,.25) 48svh,rgba(8,8,10,.72) 65svh,rgba(8,8,10,.76) 100%);
+ }
+}
+@media(max-width:650px) and (prefers-reduced-motion:reduce){
+ .home-scrolltest .garuss-parallax__canvas{transform:translate(-50%,0)}
 }
