@@ -1093,3 +1093,13 @@ html.intro-pending{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
  .mobile-clouds,.mobile-lamps ellipse{animation:none!important}
 }
+
+/* v73: lift the complete mobile scene; bring copy and action lower. */
+@media(max-width:650px){
+ .home-scrolltest .mobile-studio-photo{top:-108px}
+ .home-scrolltest .hero-cta{--cta-inset:68px}
+ .home-scrolltest .hero-act>.hero-copy{bottom:calc(68px + 57.4px + 44px)}
+}
+@media(max-width:650px) and (max-height:640px){
+ .home-scrolltest .hero-act>.hero-copy{bottom:calc(68px + 57.4px + 52px)}
+}
