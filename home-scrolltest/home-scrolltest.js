@@ -57,7 +57,8 @@ const ease=n=>n*n*(3-2*n);
 const follow=(dt,ms)=>1-Math.exp(-dt/ms);
 let cursor=null,mx=.5,my=.45,tx=.5,ty=.45,x=0,y=0,lampPower=0,cityPower=0,railProgress=0,heroProgress=0,lastFrame=0;
 let viewWidth=innerWidth,viewHeight=innerHeight,railDistance=0,railTravel=1,heroTravel=1,copyBottom=0,firstCopyBottom=0,maxScroll=0;
-let wheelActive=false,wheelTarget=scrollY,wheelY=scrollY,rafId=0,dead=false;
+let wheelActive=false,wheelTarget=scrollY,wheelY=scrollY,wheelDirection=0,rafId=0,dead=false;
+let layoutWidth=document.documentElement.clientWidth;
 const lastValues=new Map();
 const copyParagraph=heroCopy.querySelector('p');
 const paragraphText=copyParagraph.textContent.trim();
@@ -104,7 +105,13 @@ function measure(){
  firstCopyBottom=heroCopy.getBoundingClientRect().top+heroCopy.querySelector(".hero-line").offsetHeight;
  maxScroll=Math.max(0,document.documentElement.scrollHeight-viewHeight);
 }
-addEventListener('resize',()=>{cursor=null;tx=.5;ty=.45;sc.layout();measure()},{passive:true});
+addEventListener('resize',()=>{
+ cursor=null;tx=.5;ty=.45;
+ const width=document.documentElement.clientWidth;
+ // A phone's URL bar changes height during reverse scroll, not the authored layout.
+ if(!mobileView.matches||width!==layoutWidth)sc.layout();
+ layoutWidth=width;measure();
+},{passive:true});
 document.fonts.ready.then(()=>{arrangeCopyRows(true);measure()});
 new ResizeObserver(measure).observe(featuredRail);
 measure();
@@ -116,7 +123,7 @@ heroStage.addEventListener('pointermove',e=>{
 },{passive:true});
 heroStage.addEventListener('pointerleave',()=>{cursor=null;tx=.5;ty=.45},{passive:true});
 addEventListener('blur',()=>{cursor=null;wheelActive=false});
-function cancelWheel(){wheelActive=false;wheelY=wheelTarget=scrollY;}
+function cancelWheel(){wheelActive=false;wheelDirection=0;wheelY=wheelTarget=scrollY;}
 addEventListener('pointerdown',cancelWheel,{passive:true});
 addEventListener('touchstart',cancelWheel,{passive:true});
 addEventListener('keydown',cancelWheel,{passive:true});
@@ -131,7 +138,10 @@ addEventListener('wheel',e=>{
  const unit=e.deltaMode===1?32:e.deltaMode===2?viewHeight:1;
  const delta=e.deltaY*unit;
  if(!delta)return;
- if(!wheelActive){wheelY=wheelTarget=scrollY;}
+ const direction=Math.sign(delta);
+ // Reverse from the displayed position, discarding the previous scroll destination.
+ if(!wheelActive||direction!==wheelDirection){wheelY=wheelTarget=scrollY;}
+ wheelDirection=direction;
  const target=Math.max(0,Math.min(maxScroll,wheelTarget+delta));
  if(target===wheelTarget&&(target===0||target===maxScroll))return;
  e.preventDefault();wheelTarget=target;wheelActive=true;
@@ -140,7 +150,12 @@ function frame(now){
  if(dead)return;
  const dt=Math.min(50,Math.max(1,now-(lastFrame||now-16.67)));lastFrame=now;
  if(document.hidden){rafId=requestAnimationFrame(frame);return;}
- // Read geometry before writing transforms. One owner drives the rail and scene.
+ if(wheelActive){
+  wheelY+=(wheelTarget-wheelY)*follow(dt,135);
+  if(Math.abs(wheelTarget-wheelY)<.4){wheelY=wheelTarget;wheelActive=false;}
+  window.scrollTo({top:wheelY,behavior:'instant'});
+ }
+ // Read geometry at the displayed scroll position; copy and scene share this frame.
  const redTop=featuredAct.getBoundingClientRect().top;
  const heroTop=heroAct.getBoundingClientRect().top;
  const heroVisible=heroTop<viewHeight&&heroTop+heroAct.offsetHeight>0;
@@ -168,10 +183,15 @@ function frame(now){
   const order=copyRows.length-1-index;
   const start=firstStart-order*rowStep;
   const progress=clamp((start-redTop)/rowDuration);
-  const opacity=(1-ease(progress)).toFixed(3);
+  const target=1-ease(progress);
+  const previous=Number.parseFloat(row.style.opacity);
+  const current=Number.isFinite(previous)?previous:target;
+  let value=reduce?target:current+(target-current)*follow(dt,65);
+  if(Math.abs(target-value)<.001)value=target;
+  const opacity=value.toFixed(3);
   if(row.style.opacity!==opacity)row.style.opacity=opacity;
  });
- const inactive=redTop<=lastEnd;
+ const inactive=copyRows.length>0&&copyRows.every(row=>Number(row.style.opacity)<=.001);
  if(heroCopy.inert!==inactive){heroCopy.inert=inactive;heroCopy.style.pointerEvents=inactive?'none':'';}
  if(!reduce){
   prop(featuredRail,'transform','translate3d('+(-railDistance*railProgress).toFixed(2)+'px,0,0)');
@@ -223,15 +243,15 @@ function frame(now){
    car.el.style.opacity=(Math.min(1,progress*12,(1-progress)*12)*.86).toFixed(3);
   });
  }
- if(wheelActive){
-  wheelY+=(wheelTarget-wheelY)*follow(dt,135);
-  if(Math.abs(wheelTarget-wheelY)<.4){wheelY=wheelTarget;wheelActive=false;}
-  window.scrollTo({top:wheelY,behavior:'instant'});
- }
  rafId=requestAnimationFrame(frame);
 }
 rafId=requestAnimationFrame(frame);
-addEventListener('pagehide',()=>{dead=true;cancelAnimationFrame(rafId)},{once:true});
+addEventListener('pagehide',()=>{dead=true;cancelAnimationFrame(rafId)});
+addEventListener('pageshow',event=>{
+ if(!event.persisted)return;
+ dead=false;lastFrame=0;cancelWheel();sc.layout();measure();
+ rafId=requestAnimationFrame(frame);
+});
 /* Card reveal */
 const cards=[...document.querySelectorAll('.test-grid .presentation-card')];
 if('IntersectionObserver' in window&&!reduce){
@@ -265,7 +285,7 @@ document.querySelectorAll('.test-grid .presentation-link').forEach(link=>{
 
 /* Catalogue search and filters are handled together by search.js. */
 
-addEventListener('pagehide',()=>sc?.destroy?.(),{once:true});
+addEventListener('pagehide',event=>{if(!event.persisted)sc?.destroy?.()});
 
 
 /* Register all raster layers in the same source-coordinate canvas. */
