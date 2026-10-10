@@ -63,6 +63,7 @@ const lastValues=new Map();
 const copyParagraph=heroCopy.querySelector('p');
 const paragraphText=copyParagraph.textContent.trim();
 let copyRows=[],paragraphWidth=-1;
+const copyOpacities=new WeakMap();
 function arrangeCopyRows(force=false){
  const width=copyParagraph.clientWidth;
  const style=getComputedStyle(copyParagraph);
@@ -184,10 +185,11 @@ function frame(now){
   const start=firstStart-order*rowStep;
   const progress=clamp((start-redTop)/rowDuration);
   const target=1-ease(progress);
-  const previous=Number.parseFloat(row.style.opacity);
+  const previous=copyOpacities.get(row);
   const current=Number.isFinite(previous)?previous:target;
   let value=reduce?target:current+(target-current)*follow(dt,65);
   if(Math.abs(target-value)<.001)value=target;
+  copyOpacities.set(row,value);
   const opacity=value.toFixed(3);
   if(row.style.opacity!==opacity)row.style.opacity=opacity;
  });
