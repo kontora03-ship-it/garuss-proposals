@@ -1101,3 +1101,8 @@ html.intro-pending{overflow:hidden}
 @media(max-width:760px){
  .home-scrolltest .garuss-parallax__canvas{top:calc(-108px - 15svh)}
 }
+
+/* v78: mobile hero shade matches the catalogue graphite. */
+@media(max-width:760px){
+ .home-scrolltest .garuss-parallax__shade{background:linear-gradient(180deg,transparent 0%,transparent 36svh,rgba(52,49,50,.25) 48svh,rgba(52,49,50,.72) 65svh,rgba(52,49,50,.76) 100%)}
+}
