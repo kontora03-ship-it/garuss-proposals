@@ -346,7 +346,7 @@ const sceneAssetsReady=(()=>{
   if(!scene||!canvas)return;
   function fit(){
     const bounds=scene.getBoundingClientRect();
-    const extraHeight=mobileView.matches?160:0;
+    const extraHeight=mobileView.matches?160+bounds.height*.15:0;
     const scale=Math.max(bounds.width/2048,(bounds.height+extraHeight)/1152)*1.026;
     scene.style.setProperty('--scene-width',(2048*scale).toFixed(2)+'px');
     scene.style.setProperty('--scene-height',(1152*scale).toFixed(2)+'px');

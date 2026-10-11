@@ -1096,3 +1096,8 @@ html.intro-pending{overflow:hidden}
  .home-scrolltest .test-main-header>.test-brand{display:flex;align-items:center;height:28px;flex:none}
  .home-scrolltest .test-main-header>.test-navigation{height:28px;align-items:center}
 }
+
+/* v77: lift the mobile scene by another 15% of the stable viewport. */
+@media(max-width:760px){
+ .home-scrolltest .garuss-parallax__canvas{top:calc(-108px - 15svh)}
+}
