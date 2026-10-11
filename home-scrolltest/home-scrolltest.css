@@ -1090,3 +1090,9 @@ html.intro-pending{overflow:hidden}
 @media(max-width:650px) and (max-height:640px){
  .home-scrolltest .hero-act>.hero-copy{top:calc(var(--mobile-vh,100svh) - 177.4px - var(--mobile-copy-height,150px))}
 }
+
+/* v76: center the mobile logo and navigation on the same header axis. */
+@media(max-width:760px){
+ .home-scrolltest .test-main-header>.test-brand{display:flex;align-items:center;height:28px;flex:none}
+ .home-scrolltest .test-main-header>.test-navigation{height:28px;align-items:center}
+}
