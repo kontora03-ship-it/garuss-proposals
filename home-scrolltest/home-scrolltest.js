@@ -64,7 +64,19 @@ function configureFeatured(){
  featuredAct.querySelector('.featured-stage').classList.remove('sc-stage');
 }
 configureFeatured();
-let sc=window.ScrollCraft.mount(root,{lerp:.12});
+function mountScroll(){
+ if(!mobileView.matches)return window.ScrollCraft.mount(root,{lerp:.12});
+ // Native phone scrolling needs no second animation engine or pointer loop.
+ heroAct.classList.remove('sc-act--pinned');heroStage.classList.remove('sc-stage');
+ heroAct.style.removeProperty('height');
+ const reveal=[...root.querySelectorAll('[data-sc-in]')];
+ const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('sc-in');io.unobserve(e.target);}
+ }),{threshold:.08});
+ reveal.forEach(el=>io.observe(el));
+ return {layout(){heroAct.style.removeProperty('height');},destroy(){io.disconnect();}};
+}
+let sc=mountScroll();
 const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>n*n*(3-2*n);
 const follow=(dt,ms)=>1-Math.exp(-dt/ms);
@@ -76,6 +88,7 @@ const lastValues=new Map();
 const copyParagraph=heroCopy.querySelector('p');
 const paragraphText=copyParagraph.textContent.trim();
 let copyRows=[],paragraphWidth=-1;
+let mobileDirty=true,lastMobileScroll=-1,windowTick=0,wasHeroVisible=true;
 function arrangeCopyRows(force=false){
  const width=copyParagraph.clientWidth;
  const style=getComputedStyle(copyParagraph);
@@ -110,7 +123,9 @@ function prop(el,key,value){
 }
 function measure(){
  arrangeCopyRows();
- viewWidth=document.documentElement.clientWidth;viewHeight=innerHeight;
+ viewWidth=document.documentElement.clientWidth;viewHeight=mobileView.matches?heroStage.clientHeight:innerHeight;
+ mobileDirty=true;
+ if(mobileView.matches){heroAct.style.setProperty('--mobile-vh',viewHeight+'px');heroAct.style.setProperty('--mobile-copy-height',heroCopy.offsetHeight+'px');}
  railDistance=Math.max(0,featuredRail.scrollWidth-featuredViewport.clientWidth);
  railTravel=Math.max(1,featuredAct.offsetHeight-viewHeight);
  heroTravel=Math.max(1,heroAct.offsetHeight-viewHeight);
@@ -127,7 +142,7 @@ document.fonts.ready.then(()=>{arrangeCopyRows(true);measure()});
 new ResizeObserver(measure).observe(featuredRail);
 measure();
 mobileView.addEventListener('change',()=>{
- sc.destroy();configureFeatured();sc=window.ScrollCraft.mount(root,{lerp:.12});
+ sc.destroy();configureFeatured();sc=mountScroll();
  lastValues.clear();cancelWheel();measure();
 });
 heroStage.addEventListener('pointermove',e=>{
@@ -144,7 +159,7 @@ addEventListener('touchstart',cancelWheel,{passive:true});
 addEventListener('keydown',cancelWheel,{passive:true});
 addEventListener('wheel',e=>{
  if(document.documentElement.classList.contains('intro-pending')){e.preventDefault();return;}
- if(reduce||!finePointer.matches||e.ctrlKey||e.metaKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+ if(mobileView.matches||reduce||!finePointer.matches||e.ctrlKey||e.metaKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
  // Keep scrolling within any independently scrollable control native.
  for(let el=e.target instanceof Element?e.target:null;el&&el!==document.body;el=el.parentElement){
   const s=getComputedStyle(el);
@@ -165,6 +180,18 @@ function frame(now){
  if(dead)return;
  const dt=Math.min(50,Math.max(1,now-(lastFrame||now-16.67)));lastFrame=now;
  if(document.hidden){rafId=requestAnimationFrame(frame);return;}
+ if(mobileView.matches&&!mobileDirty&&scrollY===lastMobileScroll){
+  if(wasHeroVisible&&!reduce){
+   cityClock+=dt;windowTick+=dt;
+   if(windowTick>=250){windowTick=0;cityWindows.forEach(win=>{
+    if(win.el.classList.contains('mobile-effect-hidden')||cityClock<win.next)return;
+    win.on=!win.on;win.el.style.opacity=win.on?'.82':'0';
+    win.next=cityClock+win.dwell*(.35+Math.random()*1.3);
+   });}
+  }
+  rafId=requestAnimationFrame(frame);return;
+ }
+ mobileDirty=false;lastMobileScroll=scrollY;
  if(wheelActive){
   wheelY+=(wheelTarget-wheelY)*follow(dt,135);
   if(Math.abs(wheelTarget-wheelY)<.4){wheelY=wheelTarget;wheelActive=false;}
@@ -174,6 +201,7 @@ function frame(now){
  const redTop=featuredAct.getBoundingClientRect().top;
  const heroTop=heroAct.getBoundingClientRect().top;
  const heroVisible=heroTop<viewHeight&&heroTop+heroAct.offsetHeight>0;
+ wasHeroVisible=heroVisible;
  // Hit testing uses the unanimated canvas, never the moving/parallax SVG.
  const lampBounds=!mobileView.matches&&cursor&&heroVisible&&scene.classList.contains('scene-ready')
   ?lampCanvas.getBoundingClientRect():null;
@@ -183,7 +211,7 @@ function frame(now){
  mx+=(tx-mx)*follow(dt,180);my+=(ty-my)*follow(dt,180);
  x+=(((mx-.5)*26)-x)*follow(dt,100);
  y+=(((my-.5)*18)-y)*follow(dt,100);
- heroProgress+=(rawHero-heroProgress)*follow(dt,120);
+ heroProgress=mobileView.matches?rawHero:heroProgress+(rawHero-heroProgress)*follow(dt,120);
  railProgress+=(targetRail-railProgress)*follow(dt,175);
  if(Math.abs(targetRail-railProgress)<.0001)railProgress=targetRail;
  const nativeGallery=mobileView.matches||reduce;
@@ -318,7 +346,7 @@ const sceneAssetsReady=(()=>{
   if(!scene||!canvas)return;
   function fit(){
     const bounds=scene.getBoundingClientRect();
-    const extraHeight=mobileView.matches?72:0;
+    const extraHeight=mobileView.matches?160:0;
     const scale=Math.max(bounds.width/2048,(bounds.height+extraHeight)/1152)*1.026;
     scene.style.setProperty('--scene-width',(2048*scale).toFixed(2)+'px');
     scene.style.setProperty('--scene-height',(1152*scale).toFixed(2)+'px');
