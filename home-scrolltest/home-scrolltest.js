@@ -354,7 +354,7 @@ const sceneAssetsReady=(()=>{
   new ResizeObserver(fit).observe(scene);fit();
   // Decode the actual displayed layers; no obsolete photographic placeholder.
   const layers=[...canvas.querySelectorAll('img')];
-  const masks=["v34/outdoor-mask.webp","v34/city-mask-v37.svg"].map(name=>{const img=new Image();img.src="parallax-assets/"+name;return img.decode()});
+  const masks=["v34/outdoor-mask.webp","v34/city-mask-v37.svg"].map(name=>{const img=new Image();img.src="/garuss-proposals/home-scrolltest/parallax-assets/"+name;return img.decode()});
   return Promise.all([...layers.map(img=>img.decode()),...masks]).then(()=>{
     scene.classList.add('scene-ready');
   }).catch(()=>{
