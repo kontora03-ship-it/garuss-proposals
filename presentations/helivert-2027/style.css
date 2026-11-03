@@ -2,3 +2,7 @@
 
 /* Shadows follow the transparent silhouette of the supplied PNGs. */
 .hero-calendar{box-shadow:none;filter:drop-shadow(20px 28px 22px #24242440)}.calendar-open img{box-shadow:none;filter:drop-shadow(10px 16px 18px #0005)}.compare-card img{box-shadow:none;filter:drop-shadow(0 8px 8px #0002)}
+
+.variant-count{display:flex;align-items:center;gap:16px;color:var(--red);margin:0 0 24px;font-family:Halvar,Arial,sans-serif}.variant-count strong{font-size:76px;line-height:.9;letter-spacing:-4px}.variant-count span{font-size:20px;line-height:1.25;letter-spacing:-.4px}
+.arrows{display:grid;grid-template-columns:54px 1fr 54px;gap:16px;align-items:center;margin-top:32px;padding:24px 20px 18px;border:1px solid var(--red);background:#be162212;color:white}.switch-label{grid-column:1/-1;font-family:Halvar,Arial,sans-serif;color:#fff;font-size:13px;letter-spacing:.4px}.arrows button{width:54px;height:54px;background:var(--red);border-color:var(--red);color:#fff;transition:background .2s,transform .2s}.arrows button:hover{background:#e0202e;transform:scale(1.06)}#position{text-align:center;color:#fff;font-family:Halvar,Arial,sans-serif;font-size:22px}.switch-hint{grid-column:1/-1;font-size:12px;line-height:1.5;color:#c4c4c4;max-width:280px}
+@media(max-width:650px){.variant-count{margin-bottom:25px;gap:14px}.variant-count strong{font-size:66px}.variant-count span{font-size:18px}.arrows{margin-top:30px;padding:20px 16px 16px;gap:14px}.switch-label{font-size:12px}.switch-hint{font-size:12px}}
