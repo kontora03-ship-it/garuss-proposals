@@ -1,12 +1,13 @@
 {
   "name": "brandmock-online",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
-    "test": "tsx test/engine.ts"
+    "test": "tsx test/engine.ts",
+    "test:e2e": "node test/features.cjs"
   },
   "dependencies": {
     "jszip": "^3.10.2",

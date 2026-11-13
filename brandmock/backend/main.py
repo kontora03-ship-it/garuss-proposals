@@ -63,7 +63,9 @@ def export(id:str,compare:bool=False):
 def archive(id:str): return Response(store.archive(id),media_type='application/zip',headers={'Content-Disposition':'attachment; filename="brandmock-project.zip"'})
 @app.post('/api/restore')
 async def restore(project:UploadFile=File(...)):
-    pb,lb,j=store.restore(await limited(project)); s=Settings(**json.loads(j)['settings']).model_dump(); PreviewRenderer.render(ImageLoader.load(pb),LogoLoader.load(lb),s); return info(store.create(pb,lb,s))
+    pb,lb,j=store.restore(await limited(project)); document=json.loads(j)
+    if document.get('version')!=1: raise ValueError('Этот проект использует онлайн-редактор маски. Откройте его в онлайн-версии BrandMock.')
+    s=Settings(**document['settings']).model_dump(); PreviewRenderer.render(ImageLoader.load(pb),LogoLoader.load(lb),s); return info(store.create(pb,lb,s))
 @app.post('/api/demo/{name}')
 def demo(name:str):
     if name not in ('box','notebook','card'): raise ValueError('Нет примера')

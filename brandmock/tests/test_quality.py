@@ -73,3 +73,13 @@ def test_missing_original_is_reported(tmp_path):
     store=ProjectStorage(tmp_path);id=store.create(b'photo',b'logo',{})
     (store.path(id)/'photo.original').unlink()
     with pytest.raises(ValueError,match='Отсутствуют'):store.read(id)
+
+
+def test_online_mask_project_not_silently_imported():
+    c=TestClient(app);b=io.BytesIO()
+    with zipfile.ZipFile(b,'w') as z:
+        z.writestr('photo.original',(ROOT/'demo/box.png').read_bytes())
+        z.writestr('logo.original',(ROOT/'demo/logo.svg').read_bytes())
+        z.writestr('project.json',json.dumps({'version':2,'settings':{}}))
+    r=c.post('/api/restore',files={'project':('online.zip',b.getvalue())})
+    assert r.status_code==400 and 'онлайн' in r.json()['detail']
