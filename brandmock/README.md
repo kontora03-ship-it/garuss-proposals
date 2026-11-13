@@ -1,3 +1,9 @@
+## Онлайн-приложение
+
+Открыть BrandMock: https://kontora03-ship-it.github.io/garuss-proposals/brandmock/app/
+
+Онлайн-версия обрабатывает изображения через OpenCV.js в браузере, сохраняет проекты в IndexedDB и экспортирует переносимый ZIP. Установка Python не нужна. Исходники онлайн-версии находятся в `online/`, сборка для GitHub Pages — в `app/`. Локальная Python-версия и инструкция ниже сохранены.
+
 # BrandMock — MVP 0.1
 
 Локальный редактор нанесения оригинальных логотипов на плоские поверхности. React + TypeScript + Vite + react-konva; FastAPI + OpenCV + Pillow + CairoSVG. Нет регистрации, базы данных, платных API и генеративной обработки.
