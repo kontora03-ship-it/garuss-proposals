@@ -1,6 +1,6 @@
 {
   "id": "tee-regular",
-  "revision": 2,
+  "revision": 3,
   "panelWidth": 0.91,
   "panelHeight": 1.34,
   "bodyWidth": 0.79,
@@ -24,21 +24,21 @@
       "defaultY": 0.38
     },
     "leftSleeve": {
-      "width": 1.0764737320383133,
-      "height": 0.4563167759353145,
+      "width": 1.0679955224750741,
+      "height": 0.4438820226141176,
       "printWidth": 0.24,
       "wrap": true,
       "defaultX": 0.16,
       "defaultY": 0.38
     },
     "rightSleeve": {
-      "width": 1.0764737320383133,
-      "height": 0.4563167759353145,
+      "width": 1.0679955224750741,
+      "height": 0.4438820226141176,
       "printWidth": 0.24,
       "wrap": true,
       "defaultX": 0.16,
       "defaultY": 0.38
     }
   },
-  "source": "Original continuous garment with fitted sleeve UVs"
+  "source": "Original revision 3 cotton garments, relaxed shoulders, gathered cuffs and lined hood"
 }

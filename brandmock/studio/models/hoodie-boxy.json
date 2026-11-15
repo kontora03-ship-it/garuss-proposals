@@ -1,14 +1,14 @@
 {
   "id": "hoodie-boxy",
-  "revision": 2,
-  "panelWidth": 1.18,
+  "revision": 3,
+  "panelWidth": 1.2,
   "panelHeight": 1.355,
   "bodyWidth": 1.06,
   "height": 1.75,
   "defaultLogoWidth": 0.32,
   "zones": {
     "front": {
-      "width": 1.18,
+      "width": 1.2,
       "height": 1.355,
       "printWidth": 1.06,
       "wrap": false,
@@ -16,7 +16,7 @@
       "defaultY": 0.34
     },
     "back": {
-      "width": 1.18,
+      "width": 1.2,
       "height": 1.355,
       "printWidth": 1.06,
       "wrap": false,
@@ -24,21 +24,21 @@
       "defaultY": 0.38
     },
     "leftSleeve": {
-      "width": 1.2284454024409575,
-      "height": 1.0621322893124001,
+      "width": 1.274721721638424,
+      "height": 0.998060619401447,
       "printWidth": 0.27,
       "wrap": true,
       "defaultX": 0.16,
       "defaultY": 0.38
     },
     "rightSleeve": {
-      "width": 1.2284454024409575,
-      "height": 1.0621322893124001,
+      "width": 1.274721721638424,
+      "height": 0.998060619401447,
       "printWidth": 0.27,
       "wrap": true,
       "defaultX": 0.16,
       "defaultY": 0.38
     }
   },
-  "source": "Original continuous garment with fitted sleeve UVs"
+  "source": "Original revision 3 cotton garments, relaxed shoulders, gathered cuffs and lined hood"
 }
