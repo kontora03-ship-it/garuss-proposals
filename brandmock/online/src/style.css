@@ -3,3 +3,4 @@
 .placementMode{margin-bottom:24px;border:1px solid #dfe5d9;border-radius:6px;padding:12px}.placementMode .field{margin-top:0}.placementMode .tiny{margin:10px 0 0}.modeNotice{padding:10px;background:#f0f5e9;color:#52674a;font-size:10px;line-height:1.7;border-radius:5px}
 
 .surfaceStatus select{max-width:150px;border:1px solid #c7d6c0;border-radius:5px;background:white;color:#52674a;padding:7px;font:inherit}.samples{flex-wrap:wrap}
+.drawFaceButton{background:#31583d!important;color:white!important;border-color:#31583d!important}.placementMode strong{font-size:12px}.placementMode details{margin-top:12px}.placementMode .field input{width:100%;margin:8px 0;padding:9px;border:1px solid #c7d6c0;border-radius:5px;color:#31583d}.placementMode details button,.quarterTurn{padding:7px 9px;border:1px solid #d7e0d0;border-radius:5px;font-size:10px;margin:5px 0 15px}.primary:disabled{opacity:.4;cursor:default}.exportLinks button:disabled{opacity:.4;cursor:default}
