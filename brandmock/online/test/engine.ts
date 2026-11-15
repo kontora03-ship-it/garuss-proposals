@@ -6,7 +6,7 @@ Object.assign(globalThis,{ImageData:PixelData,window:{fetch:fetch,cv:require('..
 const {render,defaults}=await import('../src/online');
 const photo=new ImageData(200,150);for(let i=0;i<photo.data.length;i+=4)photo.data.set([170,150,120,255],i);
 const logo=new ImageData(80,40);for(let y=5;y<35;y++)for(let x=5;x<75;x++)if(!(x>=25&&x<55&&y>=12&&y<28))logo.data.set([240,35,65,255],(y*80+x)*4);
-const s={...defaults(200,150),corners:[[20,20],[180,20],[180,130],[20,130]],surface_width:160,surface_height:110,intensity:0};
+const s={...defaults(200,150),placement_mode:'safe' as const,corners:[[20,20],[180,20],[180,130],[20,130]],surface_width:160,surface_height:110,intensity:0};
 let count=0;
 for(const method of ['print','gold','silver','blind']){const settings={...s,method};const out=await render(photo,logo,settings);const again=await render(photo,logo,settings);assert.deepEqual(out.data,again.data);assert.deepEqual(out.data.slice(0,4),photo.data.slice(0,4));assert.deepEqual(out.data.slice((75*200+100)*4,(75*200+100)*4+4),photo.data.slice((75*200+100)*4,(75*200+100)*4+4));count+=3;}
 assert.deepEqual((await render(photo,logo,{...s,opacity:0})).data,photo.data);count++;
@@ -34,3 +34,10 @@ const mm=surfaceMapping(explicit.corners)!;const inverseCorners=logoGeometry(80,
 console.log('Safe similarity transform, aspect independence, explicit perspective gate, legacy defaults and non-clipping checks passed');
 
 assert.deepEqual(safePixels.data,(await render(photo,logo,{...skewed,surface_width:0,surface_height:NaN})).data);await assert.rejects(()=>render(photo,logo,{...explicit,surface_width:0}));
+
+const {projectedPlane}=await import('./plane');const auto={...s,corners:projectedPlane(),placement_mode:'auto' as const};const autoGeometry=logoGeometry(80,40,auto,1200,900);assert(autoGeometry.perspective);const autoMap=surfaceMapping(auto.corners)!;const back=autoGeometry.corners.map(([x,y])=>autoMap.inverse(x,y)!);const physical=(a:number[],b:number[])=>Math.hypot((a[0]-b[0])*2/1.2,a[1]-b[1]);assert(Math.abs(physical(back[0],back[1])/physical(back[0],back[3])-2)<1e-8);
+const fallback=logoGeometry(80,40,{...s,placement_mode:'auto'},200,150);assert(!fallback.perspective&&fallback.affine);const af2=fallback.affine!;assert(Math.abs(af2[0]*af2[1]+af2[3]*af2[4])<1e-10);
+const large=new ImageData(1200,900);const autoPixels=await render(large,logo,auto);assert.deepEqual(autoPixels.data,(await render(large,logo,{...auto,surface_width:0,surface_height:NaN})).data);assert.deepEqual(autoPixels.data,(await render(large,logo,auto)).data);
+const many=new ImageData(500,300);for(let i=0;i<many.data.length;i+=4)many.data.set([245,245,245,255],i);for(const [x0,x1]of [[40,210],[290,460]])for(let y=50;y<250;y++)for(let x=x0;x<x1;x++)many.data.set([70,80,70,255],(y*500+x)*4);const {detectSurfaces}=await import('../src/surfaceDetection');const surfaces=detectSurfaces(many,cv);assert.equal(surfaces.length,2);assert(surfaces.every(v=>v.corners.length===4));assert.deepEqual(surfaces,detectSurfaces(many,cv));console.log('Automatic camera rendering, source aspect preservation, no-dimensions invariance and multiple-surface tests passed');
+
+const broken=new ImageData(500,300);for(let i=0;i<broken.data.length;i+=4)broken.data.set([245,245,245,255],i);for(let x=100;x<400;x++)for(let k=-1;k<=1;k++)for(const y of [60+k,240+k])broken.data.set([20,20,20,255],(y*500+x)*4);for(let y=90;y<210;y++)for(let k=-1;k<=1;k++)for(const x of [70+k,430+k])broken.data.set([20,20,20,255],(y*500+x)*4);const inferred=detectSurfaces(broken,cv);assert(inferred.length);assert(Math.abs(inferred[0].corners[0][0]-70)<10&&Math.abs(inferred[0].corners[0][1]-60)<10);console.log('Interrupted-edge surface recovery passed');
