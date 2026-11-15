@@ -1,6 +1,6 @@
 # BrandMock 3D prototype — asset provenance
 
-All three garment geometries were constructed for this project with tools/build_garments.py using author-defined cutting outlines, surface functions, sewn boundary strips, thickness, seams, collar/hood/pocket and drawcord meshes. The front/back UVs follow the original two-dimensional pattern coordinates. Sources are stored as .blend files in the source repository; browser models are self-contained GLB files.
+All three garment geometries were constructed for this project with tools/build_garments.py using author-defined cutting outlines, surface functions, continuous fitted armhole boundaries and quad sleeve lofts, thickness, seams, collar/hood/pocket and drawcord meshes. Revision 2 has separate front, back, left-sleeve and right-sleeve print surfaces. The front/back UVs follow the original two-dimensional pattern coordinates; each sleeve has its own cylindrical UV wrap. The hood lining and the pocket are original static geometry. No cloth physics or scanned garment geometry is claimed. Sources are stored as .blend files in the source repository; browser models are self-contained GLB files.
 
 No commercial Brand Mockups files, product photographs, purchased meshes or third-party garment models are included. The referenced store was studied only for general presentation and workflow. Preview images are CPU Cycles renders of these original models. No generative AI image or model API was used. The tiny demo logo is original sample SVG; user logos retain their original source bytes in saved projects.
 

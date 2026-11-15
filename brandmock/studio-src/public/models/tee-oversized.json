@@ -1,11 +1,44 @@
 {
   "id": "tee-oversized",
-  "panelWidth": 1.96,
-  "panelHeight": 1.4,
-  "bodyWidth": 0.96,
-  "height": 1.4,
-  "defaultLogoWidth": 0.3,
-  "source": "Original procedural sewing pattern",
-  "frontMaterial": "Print_Front",
-  "backMaterial": "Print_Back"
+  "revision": 2,
+  "panelWidth": 1.13,
+  "panelHeight": 1.38,
+  "bodyWidth": 1.0,
+  "height": 1.38,
+  "defaultLogoWidth": 0.32,
+  "zones": {
+    "front": {
+      "width": 1.13,
+      "height": 1.38,
+      "printWidth": 1.0,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.34
+    },
+    "back": {
+      "width": 1.13,
+      "height": 1.38,
+      "printWidth": 1.0,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.38
+    },
+    "leftSleeve": {
+      "width": 1.1197499883948638,
+      "height": 0.5181276387146317,
+      "printWidth": 0.24,
+      "wrap": true,
+      "defaultX": 0.16,
+      "defaultY": 0.38
+    },
+    "rightSleeve": {
+      "width": 1.1197499883948638,
+      "height": 0.5181276387146317,
+      "printWidth": 0.24,
+      "wrap": true,
+      "defaultX": 0.16,
+      "defaultY": 0.38
+    }
+  },
+  "source": "Original continuous garment with fitted sleeve UVs"
 }

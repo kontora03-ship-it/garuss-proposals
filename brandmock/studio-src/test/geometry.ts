@@ -1,3 +1,26 @@
-import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';import * as T from 'three';import {models,defaults,validate,type ModelMeta} from '../src/types';import {designRect} from '../src/designTexture';
-for(const model of models){const meta:ModelMeta=JSON.parse(await readFile(new URL('../public/models/'+model.id+'.json',import.meta.url),'utf8')),bytes=await readFile(new URL('../public/models/'+model.id+'.glb',import.meta.url));const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');gltf.scene.updateMatrixWorld(true);let triangles=0,front=0,back=0,uvTop=0,uvBottom=0;const bounds=new T.Box3().setFromObject(gltf.scene);assert(bounds.getSize(new T.Vector3()).z>.15,'Garment must have real depth');gltf.scene.traverse(object=>{if(!(object instanceof T.Mesh))return;const geometry=object.geometry,position=geometry.getAttribute('position');triangles+=(geometry.index?.count||position.count)/3;const mat=object.material as T.Material;if(mat.name.startsWith('Print_Front')){front++;const uv=geometry.getAttribute('uv');assert(uv);const indices=geometry.index?new Set(Array.from(geometry.index.array)):new Set(Array.from({length:position.count},(_,i)=>i));for(const i of indices){const p=new T.Vector3().fromBufferAttribute(position,i).applyMatrix4(object.matrixWorld),u=uv.getX(i),v=uv.getY(i);assert(Number.isFinite(u+v)&&u>-.01&&u<1.01&&v>-.01&&v<1.01);if(p.y>.54&&Math.abs(p.x)<.3){assert(v<.25);uvTop++}if(p.y<-.62){assert(v>.85);uvBottom++}}}if(mat.name.startsWith('Print_Back'))back++});assert(front&&back&&uvTop&&uvBottom);assert(triangles>10000);for(const aspect of [.25,1,2,5]){const r=designRect(meta,defaults.placements.front,aspect*100,100);assert(Math.abs(r.widthMetres/r.heightMetres-aspect)<1e-10);assert(Math.abs(r.width/2048*meta.panelWidth/(r.height/2048*meta.panelHeight)-aspect)<1e-10)}console.log(model.id,Math.round(triangles)+' triangles; physical logo ratio and UV orientation PASS')}
-validate(defaults);assert.throws(()=>validate({...defaults,model:'missing'} as any));assert.throws(()=>validate({...defaults,placements:{...defaults.placements,front:{...defaults.placements.front,scale:NaN}}}));console.log('Original 3D geometry, physical logo proportions, both print surfaces and invalid project rejection PASS');
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+import * as T from 'three';
+import {models,defaults,validate,zones,layerDefaults,type ModelMeta} from '../src/types';
+import {designCorners,layerContains} from '../src/designTexture';
+import {migrateProject} from '../src/projectStorage';
+for(const model of models){
+ const meta:ModelMeta=JSON.parse(await readFile(new URL('../public/models/'+model.id+'.json',import.meta.url),'utf8'));
+ const bytes=await readFile(new URL('../public/models/'+model.id+'.glb',import.meta.url));
+ const gltf=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
+ const found=new Set<string>();let triangles=0;
+ gltf.scene.traverse(o=>{if(!(o instanceof T.Mesh))return;const g=o.geometry;triangles+=(g.index?.count||g.attributes.position.count)/3;found.add((o.material as T.Material).name.split('.')[0]);if((o.material as T.Material).name.startsWith('Print_')){const uv=g.attributes.uv;assert(uv);for(let i=0;i<uv.count;i++)assert(Number.isFinite(uv.getX(i)+uv.getY(i))&&uv.getX(i)>=-.01&&uv.getX(i)<=1.01&&uv.getY(i)>=-.01&&uv.getY(i)<=1.01)}});
+ for(const n of ['Front','Back','LeftSleeve','RightSleeve'])assert(found.has('Print_'+n));assert(triangles>10000);
+ for(const zone of zones)for(const aspect of [.25,1,2,5])for(const rotation of [-90,-45,0,45,90,180]){
+  const m=meta.zones[zone],p={...layerDefaults(zone),rotation},c=designCorners(meta,p,aspect*100,100,2048,zone).map(([x,y])=>[x*m.width/2048,y*m.height/2048]);
+  const edge=(a:number,b:number)=>Math.hypot(c[a][0]-c[b][0],c[a][1]-c[b][1]);assert(Math.abs(edge(0,1)/edge(1,2)-aspect)<1e-9,'Rotation must preserve physical logo aspect');
+  const layer={...defaults.layers[0],...p,zone,canvas:{width:aspect*100,height:100},renderKey:'test'} as any;assert(layerContains(meta,layer,p.x,p.y));assert(!layerContains(meta,layer,p.x,p.y+2));
+ }
+ const sleeve={...defaults.layers[0],...layerDefaults('leftSleeve'),zone:'leftSleeve',x:.99,canvas:{width:100,height:100},renderKey:'test'} as any;assert(layerContains(meta,sleeve,.01,sleeve.y),'Wrapped sleeve hit testing');
+ console.log(model.id+': four real UV surfaces, rotated physical proportions and sleeve seam PASS');
+}
+validate(defaults);assert.throws(()=>validate({...defaults,layers:[defaults.layers[0],defaults.layers[0]]}));assert.throws(()=>validate({...defaults,layers:[{...defaults.layers[0],rotation:NaN}]}));
+const original=new File(['original bytes'],'logo.svg',{type:'image/svg+xml'});
+const old={...defaults,side:'front',logoColor:'#ff0000',recolor:true,removeBackground:false,placements:{front:layerDefaults('front'),back:{...layerDefaults('back'),rotation:32}}};
+const migrated=migrateProject({version:1,settings:old,logo:original});assert.equal(migrated.settings.layers.length,2);assert.equal(migrated.settings.layers[1].rotation,32);assert.equal(await migrated.assets['legacy-logo'].text(),'original bytes');assert.throws(()=>migrateProject({...migrated,assets:{}}));console.log('Project validation and lossless v1 migration PASS');

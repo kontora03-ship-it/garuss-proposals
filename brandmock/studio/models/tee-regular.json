@@ -1,11 +1,44 @@
 {
   "id": "tee-regular",
-  "panelWidth": 1.72,
+  "revision": 2,
+  "panelWidth": 0.91,
   "panelHeight": 1.34,
-  "bodyWidth": 0.8,
+  "bodyWidth": 0.79,
   "height": 1.34,
-  "defaultLogoWidth": 0.3,
-  "source": "Original procedural sewing pattern",
-  "frontMaterial": "Print_Front",
-  "backMaterial": "Print_Back"
+  "defaultLogoWidth": 0.32,
+  "zones": {
+    "front": {
+      "width": 0.91,
+      "height": 1.34,
+      "printWidth": 0.79,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.34
+    },
+    "back": {
+      "width": 0.91,
+      "height": 1.34,
+      "printWidth": 0.79,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.38
+    },
+    "leftSleeve": {
+      "width": 1.0764737320383133,
+      "height": 0.4563167759353145,
+      "printWidth": 0.24,
+      "wrap": true,
+      "defaultX": 0.16,
+      "defaultY": 0.38
+    },
+    "rightSleeve": {
+      "width": 1.0764737320383133,
+      "height": 0.4563167759353145,
+      "printWidth": 0.24,
+      "wrap": true,
+      "defaultX": 0.16,
+      "defaultY": 0.38
+    }
+  },
+  "source": "Original continuous garment with fitted sleeve UVs"
 }
