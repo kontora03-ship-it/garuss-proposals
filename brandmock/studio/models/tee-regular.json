@@ -1,0 +1,11 @@
+{
+  "id": "tee-regular",
+  "panelWidth": 1.72,
+  "panelHeight": 1.34,
+  "bodyWidth": 0.8,
+  "height": 1.34,
+  "defaultLogoWidth": 0.3,
+  "source": "Original procedural sewing pattern",
+  "frontMaterial": "Print_Front",
+  "backMaterial": "Print_Back"
+}

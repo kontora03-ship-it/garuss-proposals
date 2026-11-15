@@ -1,0 +1,18 @@
+
+> brandmock-studio@0.1.0 test:e2e
+> node test/browser.cjs
+
+Rapid model changes discard obsolete asset responses PASS
+Actual GLB model loaded and rendered: tee-regular
+Actual GLB model loaded and rendered: tee-oversized
+Actual GLB model loaded and rendered: hoodie-boxy
+Original alpha/holes, one-unit controls and independent front/back settings PASS
+Direct manipulation on actual UV surface PASS
+1024 PNG contains actual 3D subject and transparent background; repeat export identical
+ZIP, exact original source file, camera and IndexedDB reload PASS
+3D browser workflow PASS
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

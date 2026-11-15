@@ -1,0 +1,11 @@
+{
+  "id": "tee-oversized",
+  "panelWidth": 1.96,
+  "panelHeight": 1.4,
+  "bodyWidth": 0.96,
+  "height": 1.4,
+  "defaultLogoWidth": 0.3,
+  "source": "Original procedural sewing pattern",
+  "frontMaterial": "Print_Front",
+  "backMaterial": "Print_Back"
+}

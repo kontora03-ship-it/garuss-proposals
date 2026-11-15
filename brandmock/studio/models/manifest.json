@@ -1,0 +1,56 @@
+[
+  {
+    "path": "hoodie-boxy-preview.png",
+    "bytes": 527758,
+    "sha256": "1bba811cfc01e4350a8644af3dc7f230e79428afbf0fa77f772e75bba421bfbd",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "hoodie-boxy.glb",
+    "bytes": 3732736,
+    "sha256": "587c0f341bf632a34f4489ed7f47b6a46d0465418a634a6c410734a311c55209",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "hoodie-boxy.json",
+    "bytes": 252,
+    "sha256": "b08d6288ccd705049f1518a4a35b6277e1c7c896c10678489fa48a37b583f471",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "tee-oversized-preview.png",
+    "bytes": 507143,
+    "sha256": "4494f838b6ddd5a61873806e3975cae86acca7a3b50706c2b988c75366e86f76",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "tee-oversized.glb",
+    "bytes": 3197288,
+    "sha256": "af4c3e2491e25bdd0f598d00a986c6362434d8037970ba7a1ec2391f0e89897e",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "tee-oversized.json",
+    "bytes": 252,
+    "sha256": "e34d4cf689b7697f1b837d12b9465d0592efa9ca25919406586a9b01f8e43f98",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "tee-regular-preview.png",
+    "bytes": 499865,
+    "sha256": "582a79f38d366f18c35c49d0c5d3d9eacad78cebc68d33254a692b8f043636db",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "tee-regular.glb",
+    "bytes": 2570216,
+    "sha256": "66526027751220aef7fb268173502e0b434dd4185c0432d4268a9707536dac07",
+    "source": "Original BrandMock parametric garment generator"
+  },
+  {
+    "path": "tee-regular.json",
+    "bytes": 251,
+    "sha256": "a0bd5d9ac169208378c1c14eca4afd6ba03f5b0bb0c6b96bcd233d525c15fa46",
+    "source": "Original BrandMock parametric garment generator"
+  }
+]

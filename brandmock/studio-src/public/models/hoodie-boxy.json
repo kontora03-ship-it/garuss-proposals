@@ -1,0 +1,11 @@
+{
+  "id": "hoodie-boxy",
+  "panelWidth": 1.68,
+  "panelHeight": 1.39,
+  "bodyWidth": 1.0,
+  "height": 1.84,
+  "defaultLogoWidth": 0.32,
+  "source": "Original procedural sewing pattern",
+  "frontMaterial": "Print_Front",
+  "backMaterial": "Print_Back"
+}
