@@ -1,14 +1,16 @@
 {
   "name": "brandmock-next",
-  "version": "0.6.0-lab.1",
+  "version": "0.7.0-lab.1",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
-    "test": "tsx test/engine.ts",
-    "test:e2e": "node test/lab.cjs",
-    "test:ai": "tsx test/ai-engine-smoke.mjs"
+    "test": "tsx test/engine.ts && tsx test/fast.ts",
+    "test:e2e": "node test/speed.cjs",
+    "test:ai": "tsx test/ai-engine-smoke.mjs",
+    "test:clothing": "tsx test/clothing-ai.mjs",
+    "test:point": "node test/point-browser.cjs"
   },
   "dependencies": {
     "@huggingface/transformers": "3.8.1",

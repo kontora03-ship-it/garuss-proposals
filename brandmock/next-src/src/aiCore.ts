@@ -1,5 +1,4 @@
-import type {RawImage as RawImageType} from '@huggingface/transformers';
-export type AiKind='mug'|'shirt'|'towel';
+export type AiKind='mug'|'shirt';
 export type AiRequest={width:number;height:number;rgba:Uint8Array;kind:AiKind;point?:number[]};
 export type AiResult={width:number;height:number;mask:Uint8Array;seed:number[];detectedCup:boolean;source:string};
 export type AiProgress=(stage:string)=>void;
