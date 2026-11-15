@@ -1,0 +1,8 @@
+import {surfaceMapping} from './surfaceMapping';
+export type Placement={corners:number[][];surface_width:number;surface_height:number;x:number;y:number;scale:number;rotation:number;placement_mode?:'safe'|'perspective';perspective_confirmed?:boolean};
+export const usesPerspective=(s:Placement)=>s.placement_mode==='perspective'&&s.perspective_confirmed===true;
+/** Safe placement is a similarity transform: one scale, one rotation, no skew. */
+export function logoGeometry(lw:number,lh:number,s:Placement){const mapping=surfaceMapping(s.corners);if(!mapping)throw Error('Не удалось построить область размещения');const center=mapping.forward(s.x,s.y),angle=s.rotation*Math.PI/180,c=Math.cos(angle),n=Math.sin(angle),perspective=usesPerspective(s);let width:number,height:number;
+ if(perspective){width=Math.min(s.surface_width,s.surface_height*lw/lh)*s.scale;height=width*lh/lw;const corners=[[-width/2,-height/2],[width/2,-height/2],[width/2,height/2],[-width/2,height/2]].map(([x,y])=>mapping.forward((x*c-y*n)/s.surface_width+s.x,(x*n+y*c)/s.surface_height+s.y));return {corners,center,affine:undefined}}
+ const p=s.corners,edge=(a:number,b:number)=>Math.hypot(p[a][0]-p[b][0],p[a][1]-p[b][1]),availableWidth=Math.min(edge(0,1),edge(3,2)),availableHeight=Math.min(edge(0,3),edge(1,2));width=Math.min(availableWidth,availableHeight*lw/lh)*s.scale;height=width*lh/lw;const k=width/lw;const affine=[k*c,-k*n,center[0]-width*c/2+height*n/2,k*n,k*c,center[1]-width*n/2-height*c/2];const corners=[[0,0],[lw,0],[lw,lh],[0,lh]].map(([x,y])=>[affine[0]*x+affine[1]*y+affine[2],affine[3]*x+affine[4]*y+affine[5]]);return {corners,center,affine};
+}
