@@ -1,0 +1,40 @@
+
+> brandmock-next@0.8.0-lab.1 test
+> tsx test/engine.ts && tsx test/fast.ts
+
+17 geometry, alpha, mask and repeatability assertions passed
+Logo masking, recoloring, source preservation, surface proposal and drag mapping tests passed
+Synthetic camera estimate {
+  perspective: true,
+  aspectRatio: 1.6666666666666672,
+  rotation: 0,
+  reason: 'Наклон прямоугольной грани оценён по рёбрам. Проверьте результат — размеры вводить не нужно.'
+}
+Automatic metric plane recovery and ambiguous/extreme-view rejection passed
+Face projection, explicit approximation, no fake placement without a face, original aspect, corner order and interrupted-edge recovery passed
+LAB cylinder deformation/round trips, object clipping, deterministic texture warp, fine strokes PASS
+Product recolour is deterministic, reversible and leaves all pixels outside its mask unchanged
+shirt 207ms [
+  [ 243.07999999999998, 160.82 ],
+  [ 402.92, 160.82 ],
+  [ 402.92, 286.12 ],
+  [ 243.07999999999998, 286.12 ]
+]
+hoodie 131ms [
+  [ 208.87232904828775, 171.58496597169707 ],
+  [ 404.243594036945, 146.982658528681 ],
+  [ 417.19238954304853, 249.81132872420875 ],
+  [ 221.82112455439125, 274.4136361672248 ]
+]
+polo 156ms [
+  [ 258.017017828201, 165.59854132901137 ],
+  [ 413.7260615883306, 203.08405186385738 ],
+  [ 389.1801231766612, 305.04410372771474 ],
+  [ 233.4710794165316, 267.5585931928687 ]
+]
+Fast segmentation, garment axes, collar/sleeve exclusion, print zones and blank rejection PASS
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

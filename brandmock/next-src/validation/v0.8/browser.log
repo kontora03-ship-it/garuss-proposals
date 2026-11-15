@@ -1,0 +1,24 @@
+
+> brandmock-next@0.8.0-lab.1 test:e2e
+> node test/catalog-browser.cjs
+
+Selected actual photo, mask and color tee-classic
+Selected actual photo, mask and color tee-relaxed
+Selected actual photo, mask and color hoodie-back
+Selected actual photo, mask and color sweatshirt
+Selected actual photo, mask and color mug-round
+Selected actual photo, mask and color mug-tall
+Selected actual photo, mask and color box-flaps
+Selected actual photo, mask and color box-shipping
+Selected actual photo, mask and color cap-trucker
+Selected actual photo, mask and color cap-classic
+Full-size export, object-only recolour, exact logo recolour PASS
+ZIP restores catalogue photo, attribution, both colours and masks PASS
+Own photo upload still works and clears template tint
+Changing own-photo type actually runs detection PASS
+All 10 real templates, categories/styles, tooltips, precise controls, logo colour, ZIP and custom upload PASS
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

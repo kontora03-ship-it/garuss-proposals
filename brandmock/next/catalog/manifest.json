@@ -1,0 +1,62 @@
+[
+  {
+    "id": "tee-classic",
+    "source": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1000&q=90",
+    "sha256": "23d2bdf25919d5be8d7117aeef7a5ad844310a3972cf42c0e3e718267a0babe8",
+    "bytes": 94302
+  },
+  {
+    "id": "tee-relaxed",
+    "source": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=1000&q=90",
+    "sha256": "f6fda038535a901718f063fcf4129ca9fa66303dd55f851b518b4ac3a0a3463c",
+    "bytes": 410724
+  },
+  {
+    "id": "hoodie-back",
+    "source": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=1000&q=90",
+    "sha256": "59ab0a72f77dfdddea9568abfa235d9a5b65343e470f1de1a0dec46918a9dd10",
+    "bytes": 301642
+  },
+  {
+    "id": "sweatshirt",
+    "source": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=1000&q=90",
+    "sha256": "e126d40ff955c92ba546227838fd301762869b686e3302694d4145cb9e9e8daa",
+    "bytes": 113803
+  },
+  {
+    "id": "mug-round",
+    "source": "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=1000&q=90",
+    "sha256": "bd0f8cbc0b06a2d0e1977da8aa4aef2e65d7358f38f5b424187146341ec36d21",
+    "bytes": 28403
+  },
+  {
+    "id": "mug-tall",
+    "source": "https://commons.wikimedia.org/wiki/File:Mug_vs_cup.jpg",
+    "sha256": "b59340f7783f3a2281d613be519c89b1e372dfe460b016333bf298a6c11da098",
+    "bytes": 71154
+  },
+  {
+    "id": "cap-trucker",
+    "source": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=1000&q=90",
+    "sha256": "f0b4645eecbb30634e250f4b4d0efe505136bfe0c069cf56869f5487517ae910",
+    "bytes": 93259
+  },
+  {
+    "id": "cap-classic",
+    "source": "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=1000&q=90",
+    "sha256": "bef5241ccf3af33f5e9b48833759d9a63feaa287b70d19f2fe0ec0f0d2bfc664",
+    "bytes": 59425
+  },
+  {
+    "id": "box-flaps",
+    "source": "https://commons.wikimedia.org/wiki/File:Box.agr.jpg",
+    "sha256": "e7b1f1e6804ab689c7aba3e63c6feae1c5705557feb9bba66dc457dc3b3d2fc7",
+    "bytes": 128494
+  },
+  {
+    "id": "box-shipping",
+    "source": "https://commons.wikimedia.org/wiki/File:Cardboard_box.jpg",
+    "sha256": "1cd5c5016878023a376606a8f5ee00978465b08922ecb05e38575fccdb860450",
+    "bytes": 392479
+  }
+]
