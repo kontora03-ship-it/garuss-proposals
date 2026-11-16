@@ -1,0 +1,14 @@
+{
+  "title": "Hoodie",
+  "author": "ShoyoX",
+  "authorUrl": "https://sketchfab.com/ShoyoX",
+  "sourceUrl": "https://sketchfab.com/3d-models/hoodie-2c674228f1e946b5b8f508f8f818e130",
+  "license": "CC-BY-4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "verifiedRequirements": "Author must be credited. Commercial use is allowed.",
+  "preparedDistribution": "https://github.com/omikhan4901/teestudio/blob/95c67447a81196b006fbdab8e0cca2f5dd87b312/public/models/hoodie-pullover.glb",
+  "distributionCredit": "The prepared distribution credited yogaminggames; the current original-model API credits ShoyoX. The model ID is identical.",
+  "sourceSHA256": "264be575651315f4230235d80d8013492c2d609469a3819bdd9f7c27e7a38c44",
+  "sourceBytes": 6592084,
+  "changes": "BrandMock: relaxed sleeve pose; uniform-scale and orthogonal sewing-pattern UV orientation; four print materials; projected front pocket UV; calibrated sleeve defaults. Original source preserved. No rig or avatar in source."
+}

@@ -1,0 +1,7 @@
+Hoodie by ShoyoX (https://sketchfab.com/ShoyoX)
+Source: https://sketchfab.com/3d-models/hoodie-2c674228f1e946b5b8f508f8f818e130
+License: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+Prepared mesh distribution: https://github.com/omikhan4901/teestudio/blob/95c67447a81196b006fbdab8e0cca2f5dd87b312/public/models/hoodie-pullover.glb
+The prepared distribution credited yogaminggames; the current original-model API credits ShoyoX. The model ID is identical.
+Modifications: BrandMock: relaxed sleeve pose; uniform-scale and orthogonal sewing-pattern UV orientation; four print materials; projected front pocket UV; calibrated sleeve defaults. Original source preserved. No rig or avatar in source.
+No endorsement by the original author is implied.

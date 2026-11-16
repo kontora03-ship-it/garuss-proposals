@@ -1,56 +1,65 @@
 [
   {
     "path": "hoodie-boxy-preview.png",
-    "bytes": 534576,
-    "sha256": "af3d17d4984e85e2926df24d7e71b749b6285282800cd19301d28e985779409e",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 204728,
+    "sha256": "301df98e77c9af8a53c43784609ea12d7f641ed1c64afcde28c97263fec90d99",
+    "source": "Hoodie by ShoyoX, CC BY 4.0; prepared by teestudio, adapted by BrandMock",
+    "license": "CC-BY-4.0"
   },
   {
     "path": "hoodie-boxy.glb",
-    "bytes": 8430880,
-    "sha256": "5831d3dcc289d8927425770bd4862e4f601874ff85d9ce8be2ebe090edebafab",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 5738572,
+    "sha256": "34775683fdbdb9e6afd30bed06d387a83577b4fbd96ac9b3c18875b9b60cd2d6",
+    "source": "Hoodie by ShoyoX, CC BY 4.0; prepared by teestudio, adapted by BrandMock",
+    "license": "CC-BY-4.0"
   },
   {
     "path": "hoodie-boxy.json",
-    "bytes": 966,
-    "sha256": "6fd4a206d8ee10ae0b17ae64ff6762db57186a0ac442d6ebda8da0bfcfc902af",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 1409,
+    "sha256": "5029597dbf2bd6fb037a57accae44d3db41dde7f727718a4ad0e9d58be343e28",
+    "source": "Hoodie by ShoyoX, CC BY 4.0; prepared by teestudio, adapted by BrandMock",
+    "license": "CC-BY-4.0"
   },
   {
     "path": "tee-oversized-preview.png",
-    "bytes": 513483,
-    "sha256": "561f990007787c036196a8186b9a55472d4faf2ec2f94ad33bdf1d9799176a6c",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 513950,
+    "sha256": "8d805be04c22788a119e54dd0a6063e8b3ebd489774f9b37944cc36f283791f1",
+    "source": "Original BrandMock garment generator",
+    "license": "Original project asset"
   },
   {
     "path": "tee-oversized.glb",
-    "bytes": 4696828,
-    "sha256": "c070dd5f9bfe34fbe1a0199b0826c98b31566c12a70ac715f3b491b3f9e4202d",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 5369264,
+    "sha256": "a3e1a225b021fec24d89219ffca8c4f38da5b177ccc635261c5b22fe5b966cf2",
+    "source": "Original BrandMock garment generator",
+    "license": "Original project asset"
   },
   {
     "path": "tee-oversized.json",
-    "bytes": 969,
-    "sha256": "9b688bd0559a7a29d96853870de04c3ecd37ff982398f5fbcb4b24245a78c25e",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 991,
+    "sha256": "d3b6235725ea7bd3d97ea76cd0e8d6884288717f9fab8fda6f880e4a2f6fdc80",
+    "source": "Original BrandMock garment generator",
+    "license": "Original project asset"
   },
   {
     "path": "tee-regular-preview.png",
-    "bytes": 503442,
-    "sha256": "a739215f9a027d35ebe7d8245ab0deebb9b83f665f65ad819b4a89797c42376b",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 504001,
+    "sha256": "4f9d8dffe6a8ae06afb7222f778bdd357c23a4c9e67b70cd1015563c0d3b2b9b",
+    "source": "Original BrandMock garment generator",
+    "license": "Original project asset"
   },
   {
     "path": "tee-regular.glb",
-    "bytes": 4050124,
-    "sha256": "b4ab4be0bc612bbf4faed166be26f65f130b98a51af86cea27d5b986dcda13c3",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 5378932,
+    "sha256": "b2cb25c2b645a3fd5e00db8e0b697c985ee9fd8d70b03dd6cda6db8dd9d80372",
+    "source": "Original BrandMock garment generator",
+    "license": "Original project asset"
   },
   {
     "path": "tee-regular.json",
-    "bytes": 970,
-    "sha256": "b214b32b892c9eddbe60d6e33e694023cdb80837241330de8f79b11b790b05d7",
-    "source": "Original BrandMock revision 3 cotton garment generator"
+    "bytes": 992,
+    "sha256": "68a33746a0abb45d1d3310df85ec777882d90bc441a4a66796215106c3142071",
+    "source": "Original BrandMock garment generator",
+    "license": "Original project asset"
   }
 ]

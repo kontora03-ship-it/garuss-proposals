@@ -1,44 +1,51 @@
 {
   "id": "hoodie-boxy",
-  "revision": 3,
-  "panelWidth": 1.2,
-  "panelHeight": 1.355,
+  "revision": 4,
+  "panelWidth": 1.0779453488842836,
+  "panelHeight": 1.587198973922126,
   "bodyWidth": 1.06,
-  "height": 1.75,
+  "height": 1.8,
   "defaultLogoWidth": 0.32,
   "zones": {
     "front": {
-      "width": 1.2,
-      "height": 1.355,
+      "width": 1.0779453488842836,
+      "height": 1.587198973922126,
       "printWidth": 1.06,
       "wrap": false,
       "defaultX": 0.5,
       "defaultY": 0.34
     },
     "back": {
-      "width": 1.2,
-      "height": 1.355,
+      "width": 1.0754386050241465,
+      "height": 1.586970785553614,
       "printWidth": 1.06,
       "wrap": false,
       "defaultX": 0.5,
       "defaultY": 0.38
     },
     "leftSleeve": {
-      "width": 1.274721721638424,
-      "height": 0.998060619401447,
+      "width": 1.0031993975916103,
+      "height": 1.1763741214489842,
       "printWidth": 0.27,
-      "wrap": true,
-      "defaultX": 0.16,
-      "defaultY": 0.38
+      "wrap": false,
+      "defaultX": 0.45068,
+      "defaultY": 0.39952
     },
     "rightSleeve": {
-      "width": 1.274721721638424,
-      "height": 0.998060619401447,
+      "width": 1.0122011725801499,
+      "height": 1.1782763983398594,
       "printWidth": 0.27,
-      "wrap": true,
-      "defaultX": 0.16,
-      "defaultY": 0.38
+      "wrap": false,
+      "defaultX": 0.4939,
+      "defaultY": 0.37507
     }
   },
-  "source": "Original revision 3 cotton garments, relaxed shoulders, gathered cuffs and lined hood"
+  "credit": {
+    "title": "Hoodie",
+    "author": "ShoyoX",
+    "url": "https://sketchfab.com/3d-models/hoodie-2c674228f1e946b5b8f508f8f818e130",
+    "license": "CC BY 4.0",
+    "adaptation": "Prepared mesh distributed by omikhan4901/teestudio; BrandMock: sleeve pose, uniform UV orientation, print materials and metric metadata."
+  },
+  "source": "Licensed authored garment; original sewing-pattern UVs retained without anisotropic rescaling."
 }

@@ -1,0 +1,14 @@
+
+> brandmock-studio@0.4.0 test
+> tsx test/geometry.ts
+
+tee-regular: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+tee-oversized: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Licensed artist sewing-pattern UV distances preserved PASS
+hoodie-boxy: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Project validation and lossless v1 migration PASS
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.2
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+npm notice To update run: npm install -g npm@12.2.2
+npm notice

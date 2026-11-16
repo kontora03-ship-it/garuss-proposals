@@ -1,78 +1,69 @@
-# BrandMock 3D Studio — prototype 0.3
+# BrandMock 3D Studio 0.4
 
-Отдельный браузерный редактор подготовленных 3D-изделий.
+Browser editor: https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.4
 
-- 3D Studio: https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/
-- Фоторедактор LAB 0.8: https://kontora03-ship-it.github.io/garuss-proposals/brandmock/next/
-- Первоначальный редактор: https://kontora03-ship-it.github.io/garuss-proposals/brandmock/app/
+Separate from the photo editors app/online and next/next-src. Those editors and their storage remain unchanged. Studio has its own IndexedDB brandmock-studio-v1. There are no accounts, paid APIs or server uploads of user logos.
 
-Существующие редакторы и их сохранения не изменяются. У Studio отдельная IndexedDB `brandmock-studio-v1`. Нет отправки исходников на сервер, платных API, регистрации или подписок.
+## What works
 
-## Что работает
+- Regular and oversized T-shirts plus a prepared licensed hoodie with authored cloth folds, hood, pocket, hems and cuffs.
+- Chest, back, left and right sleeve surfaces; up to 16 independent logo layers from 12 original files (10 MB each, 40 MB total).
+- Drag a logo to move it on the actual UV surface. Drag fabric outside logos or the background to rotate the model. Wheel zoom works in both modes. The orbit-only mode is also available.
+- Each logo has independent scale, rotation, position, colour, visibility and background removal. Duplicate, delete and layer order controls are available. Numeric steps are 1 degree / 1 percent; position entry supports 0.01 percent.
+- Original SVG/PNG/WebP/JPG files are preserved. SVG is rasterized in a restricted subset without scripts, CSS, DTD or external resources. Recolour preserves every alpha pixel. JPG background removal removes a connected, near-uniform edge background; it does not vectorize a photograph.
+- Cloth uses matte PBR shading, fine fabric maps, rib-knit normals and soft studio shadows. The authoring calculations are baked; the browser renders a static 3D garment using Three.js/WebGL 2.
+- PNG 1024/1600/2400/3200 pixels with optional transparent background. Selection helpers are excluded. Camera motion stops during export.
+- Save in the browser or download a version 2 ZIP containing all used source files, layers and camera. Studio 0.1 archives migrate automatically. Photo-editor projects open in the separate photo editor.
 
-Три оригинальные параметрические модели: regular T-shirt, oversized T-shirt и boxy hoodie. Модели имеют реальную глубину, толщину, открытые горловину/рукава, геометрию складок, раздельные материалы груди, спины и обоих рукавов, воротника/манжет/шнурков. У худи есть карман и капюшон. Исходные Blender-файлы в `sources`, генератор — `tools/build_garments.py`; GLB для браузера — в `public/models`. Чужие коммерческие модели и файлы сайта-референса не использованы.
+## Hoodie preparation and accuracy
 
-Логотип наносится в UV-координатах подготовленной модели. Его пропорции рассчитываются в координатах исходного шаблона ткани, затем изображение следует геометрии поверхности при вращении камеры и освещении. Это не плоская наклейка поверх скриншота. Грудь, спина и оба рукава имеют отдельные UV-развёртки. Можно добавить до 16 слоёв из 12 разных файлов (до 10 МБ каждый, суммарно 40 МБ), в том числе несколько логотипов в одной зоне. У каждого независимые положение, размер, поворот, цвет, удаление фона и видимость. Есть дублирование, удаление и порядок наложения. Есть изменение цвета ткани и отделки, переключение вида, свободное вращение, масштабирование колесом, два варианта света, белый/светлый/тёмный/прозрачный фон.
+The hoodie is **Hoodie by ShoyoX**, CC BY 4.0, distributed as a prepared mesh by omikhan4901/teestudio. Author, original source, distribution, license, hashes and modifications are recorded in sources/vendor/PROVENANCE.json and public/PROVENANCE.md. Credit is visible beneath the model. The original 6.6 MB source is included unchanged under its own license.
 
-В режиме «Логотипы» тяните за область логотипа — перемещается логотип. Тяните за ткань вне логотипа или за фон — вращается модель. Колесо приближает модель в обоих режимах. Raycast считывает UV ближайшей видимой поверхности. Перетаскивание сохраняет место захвата, без скачка к центру. Между грудью, спиной и рукавами слой переносится выбором зоны в правой панели. Кнопки зон приближают нужную поверхность. Клик по пустой ткани больше не переносит выбранный логотип. В режиме «Ракурс» мышь вращает изделие. Числовые поля имеют −/+; размер меняется по 1%, поворот по 1°. Положение можно вводить с точностью 0,01 процентного пункта, стрелки изменяют его на один пункт.
+The import tool retains the original sewing-pattern UVs using uniform scale and orthogonal orientation. It does not redraw the logo or stretch the pattern independently in X and Y. Sleeve defaults are calibrated to a visible front/outside patch. The pocket uses projected front-panel print coordinates so a logo remains visible on its surface. Artist sleeve patterns are bounded cut pieces; printing does not repeat across their side seam.
 
-SVG/PNG/WebP/JPG загружаются локально. Оригинальный файл сохраняется байт в байт. SVG растеризуется в безопасном подмножестве без скриптов, CSS и внешних ресурсов; растровый предпросмотр ограничен 2048 px по длинной стороне. Перекраска не меняет альфу и прозрачные внутренние элементы. Для JPG есть обратимое удаление связного однотонного фона от краёв. Это не векторизация.
+These are static visual mockups, not a live fabric simulation or manufacturing patterns. Appearance differs with lighting, camera, fold and print position. Cross-device GPU bitwise identity is not guaranteed; unchanged scenes export identically on the test renderer.
 
-PNG экспортируется в выбранном размере 1024/1600/2400/3200 px; прозрачный фон сохраняет альфа-канал. Рендер выполняется с выбранной камерой, без интерфейса. Локальное сохранение и ZIP содержат камеру, независимые настройки всех слоёв и все используемые исходные файлы. Рамки выделения не входят в PNG. Старые Studio ZIP версии 1 автоматически преобразуются в два независимых слоя с общим оригиналом; версии 0.2 и 0.3 сохраняют ZIP версии 2. Studio ZIP открывается только в Studio; фото-проекты открываются в фоторедакторе по ссылке «Своё фото».
+## Windows: run locally
 
-В версии 0.3 переработаны плечевые переходы, объём рукавов, сборки перед манжетами, нижняя резинка, карман и капюшон худи. Материал — матовый хлопок: шероховатость, мелкая тканая фактура, отдельная рубчатая вязка резинок и слабое отражение. Геометрия и материалы созданы программно; коммерческие файлы референса не копировались.
-
-## Реальные ограничения
-
-Это первый геометрический прототип, а не готовая библиотека коммерческого качества или точная симуляция шитья. Фасоны построены алгоритмически по авторским параметрическим контурам; складки заданы в геометрии, физическая динамика ткани и ходьба не реализованы. Качество модели, горловин, материалов и освещения ещё требует художественной доводки до уровня референса. Масштабы шаблона не являются производственными размерами/лекалами.
-
-Браузер использует Three.js/WebGL 2 с PBR-материалами и процедурной микрофактурой. Освещение и мягкая условная тень обеспечивают быстрый предпросмотр, но не идентичны офлайн-рендеру Cycles. Альфа, пропорции и исходный логотип сохраняются; пиксельное совпадение GPU-рендера между разными видеокартами не гарантируется. На слабых устройствах 3D может работать медленно; ускорение браузера желательно. На тестовом устройстве PNG повторно экспортируется идентично при неизменной сцене.
-
-Модели загружаются по одной: около 4–10 МБ GLB плюс собственный JS. Загруженные модели и материалы повторно используются в текущей вкладке; неподвижная сцена не перерисовывается бесконечно. Для изменения фасона не нужны модели компьютерного зрения. Браузерный экспорт ограничен возможностями WebGL устройства; при превышении размера выдаётся ошибка.
-
-## Windows / запуск
-
-Node.js 22 LTS или новее. В PowerShell откройте `brandmock/studio-src`:
+Install Node.js 22 LTS or newer. Open PowerShell in brandmock/studio-src:
 
 ```powershell
 npm ci --ignore-scripts
 npm run dev
 ```
 
-Открыть http://localhost:5181.
+Open http://localhost:5181 .
 
 ```powershell
 npm run build
-npm exec vite preview -- --host 0.0.0.0 --port 5181
+npm exec vite preview -- --host 0.0.0.0 --port 5182
 ```
 
-Публиковать содержимое `dist` в `brandmock/studio`. Не заменять каталоги `app`, `online`, `next` и `next-src`.
+Publish dist/ to brandmock/studio/. Do not replace app/, online/, next/ or next-src/.
 
-Для пересоздания моделей установите Blender 4.3 и выполните из корня исходников:
+## Rebuild the model assets
+
+Blender 4.3 with its bundled NumPy is required. Run from the source directory:
 
 ```powershell
-blender -b --python tools/build_garments.py -- public/models
+blender -b --python-exit-code 1 --python tools/build_garments.py -- public/models --only tee-regular
+blender -b --python-exit-code 1 --python tools/build_garments.py -- public/models --only tee-oversized
+blender -b --python-exit-code 1 --python tools/prepare_vendor_hoodie.py
 ```
 
-Модели, метаданные и превью попадут в `public/models`, Blender-исходники — в `sources`. Превью рендерятся Cycles на CPU без внешних текстур. Генератор детерминирован по входным параметрам и не использует генеративный ИИ.
+The general garment generator also retains an experimental original hoodie for authoring comparisons. The final command above prepares the licensed hoodie used by the current release. It preserves the source file, writes the adapted GLB/JSON and saves an editable Blender source.
 
-## Проверки
+## Validation
 
 ```powershell
 npm test
-# Проверить целостность стыков рукавов (Blender):
-blender -b --python tools/build_garments.py -- public/models --check-joins
 npm exec playwright install chromium
+npm run build
 npm exec vite preview -- --port 5182
-# В другом окне PowerShell:
+# Another PowerShell window:
 npm run test:e2e
 ```
 
-- GLB: настоящая глубина и геометрия, четыре отдельных UV-материала, физические пропорции логотипов разных форматов при поворотах ±45°/±90°/180°, попадание в слой через шов рукава, отказ на некорректных настройках проекта.
-- Chromium: настоящая загрузка/рендер трёх GLB, альфа и просветы оригинала при перекраске, независимые настройки слоёв и четыре зоны, прямое перемещение по UV, прозрачный PNG нужного размера и повторяемость, сохранение исходного SVG и камеры в ZIP, повторное открытие и IndexedDB reload, отсутствие внешних запросов.
+Tests check real GLB surfaces, original sewing-pattern distances, physical logo ratios at multiple rotations, alpha and interior holes, real sleeve/chest dragging, model rotation outside logos, independent layers, deterministic transparent PNG, ZIP source bytes, IndexedDB reload, version 1 migration and self-hosted resources. test-artifacts/ holds generated evidence; the release records are in validation/v0.4/.
 
-`test-artifacts` содержит PNG/скриншоты и ZIP проверок. Для headless-проверки без GPU включён SwiftShader; это не замер производительности пользовательской видеокарты. Подробности подтверждённых проверок — в `validation/v0.3/REPORT.md` после публикации.
-
-## Лицензии
-
-Код, модели, Blender-исходники и геометрические превью созданы для BrandMock; происхождение описано в `public/PROVENANCE.md`. Three.js, React и JSZip — по их лицензиям в `public/licenses`. Оригинальные загруженные логотипы принадлежат их владельцам. Реестр собственных файлов и SHA-256 — `public/models/manifest.json`.
+Three.js, React, JSZip and Lucide keep their own licenses in public/licenses/. The hoodie retains CC BY 4.0; fabric maps retain CC0. Project code and original garment sources are not relicensed by those third-party terms.

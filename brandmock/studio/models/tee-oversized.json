@@ -1,6 +1,6 @@
 {
   "id": "tee-oversized",
-  "revision": 3,
+  "revision": 4,
   "panelWidth": 1.13,
   "panelHeight": 1.38,
   "bodyWidth": 1.0,
@@ -40,5 +40,6 @@
       "defaultY": 0.38
     }
   },
-  "source": "Original revision 3 cotton garments, relaxed shoulders, gathered cuffs and lined hood"
+  "offlineClothRelaxation": false,
+  "source": "Original revision 4 garment with fitted UVs and offline cloth relaxation"
 }
