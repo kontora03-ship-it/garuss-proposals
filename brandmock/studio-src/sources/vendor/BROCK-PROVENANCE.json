@@ -1,0 +1,29 @@
+{
+  "provider": "BrockCreative",
+  "received": "user upload",
+  "archives": [
+    {
+      "name": "Hoodie Mockup BrockCreative.zip",
+      "bytes": 7885942,
+      "sha256": "ee981b5765fc162fdc866185f6a9238d1b27c0096208803dea0291c201a499ac"
+    },
+    {
+      "name": "Tshirt Mockup BrockCreative.zip",
+      "bytes": 26151170,
+      "sha256": "04684941d949d5b5a79795c869ec22e815b8aa533ba28fec9fbfa254ce03ade2"
+    }
+  ],
+  "sources": [
+    "https://brockcreative.gumroad.com/l/3DTshirtMockup",
+    "https://brockcreative.gumroad.com/l/3DHoodieMockup"
+  ],
+  "changes": [
+    "static frame 1",
+    "world-space normalization to 1.8 units height",
+    "uniform orthogonal metric UV orientation, source pattern retained in TEXCOORD_1",
+    "independent front/back/sleeve materials",
+    "pocket projection and non-printable cords",
+    "no source cameras, scripts or demo artwork published"
+  ],
+  "licenseNote": "Original archives contain no separate license document. No CC0 or CC-BY license is asserted for these models."
+}

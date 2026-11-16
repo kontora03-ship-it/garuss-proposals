@@ -1,45 +1,55 @@
 {
   "id": "tee-regular",
-  "revision": 4,
-  "panelWidth": 0.91,
-  "panelHeight": 1.34,
-  "bodyWidth": 0.79,
-  "height": 1.34,
+  "revision": 5,
+  "panelWidth": 1.4994124553803676,
+  "panelHeight": 1.7971903389118153,
+  "bodyWidth": 1.6408745514331815,
+  "height": 1.8,
   "defaultLogoWidth": 0.32,
   "zones": {
+    "back": {
+      "width": 1.5073722920552715,
+      "height": 1.7826312146343304,
+      "sourceScale": 3.2499677627425267,
+      "printWidth": 0.95,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.38
+    },
     "front": {
-      "width": 0.91,
-      "height": 1.34,
-      "printWidth": 0.79,
+      "width": 1.4994124553803676,
+      "height": 1.7971903389118153,
+      "sourceScale": 3.2499585531722888,
+      "printWidth": 0.95,
       "wrap": false,
       "defaultX": 0.5,
       "defaultY": 0.34
     },
-    "back": {
-      "width": 0.91,
-      "height": 1.34,
-      "printWidth": 0.79,
+    "rightSleeve": {
+      "width": 1.0385400493249168,
+      "height": 0.6281196163366227,
+      "sourceScale": 3.2528069370905377,
+      "printWidth": 0.28,
       "wrap": false,
-      "defaultX": 0.5,
-      "defaultY": 0.38
+      "defaultX": 0.5988596677780151,
+      "defaultY": 0.3825967311859131
     },
     "leftSleeve": {
-      "width": 1.0679955224750741,
-      "height": 0.4438820226141176,
-      "printWidth": 0.24,
-      "wrap": true,
-      "defaultX": 0.16,
-      "defaultY": 0.38
-    },
-    "rightSleeve": {
-      "width": 1.0679955224750741,
-      "height": 0.4438820226141176,
-      "printWidth": 0.24,
-      "wrap": true,
-      "defaultX": 0.16,
-      "defaultY": 0.38
+      "width": 1.0387934959389462,
+      "height": 0.6490208448162285,
+      "sourceScale": 3.249288133796427,
+      "printWidth": 0.28,
+      "wrap": false,
+      "defaultX": 0.32132065296173096,
+      "defaultY": 0.37855374813079834
     }
   },
-  "offlineClothRelaxation": false,
-  "source": "Original revision 4 garment with fitted UVs and offline cloth relaxation"
+  "credit": {
+    "title": "3D T-shirt Mockup",
+    "author": "BrockCreative",
+    "url": "https://brockcreative.gumroad.com/l/3DTshirtMockup",
+    "license": "Условия автора",
+    "adaptation": "BrandMock: static WebGL mesh, metric sewing-pattern UVs, independent print zones. Original geometry retained."
+  },
+  "source": "User-uploaded BrockCreative Blender archive, static mesh, source UV retained in UV1"
 }

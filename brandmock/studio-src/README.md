@@ -1,3 +1,34 @@
+# BrandMock 3D Studio 0.5
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.5
+
+## This release
+
+- Replaced both old procedural T-shirt menu entries with the user's BrockCreative T-shirt.
+- Added the user's BrockCreative hoodie as a separate option next to the original ShoyoX hoodie.
+- Real static GLB meshes, all four print surfaces, independent logo layers, fabric colour, camera rotation and PNG export use the existing editor.
+- Preserved uniform proportions of original sewing-pattern UVs. Exported mesh normals transformed with the geometry. Sleeve print orientation is calibrated; pocket prints are projected from the chest, with drawstrings in front of the design.
+- Old oversized projects migrate to the replacement T-shirt without losing logo files. Placement should be checked on the new garment.
+- No sweatshirt or AI generation in this release. The separate photo editor is unchanged.
+
+BrockCreative archive hashes and attribution: sources/vendor/BROCK-PROVENANCE.json and public/PROVENANCE.md. Raw uploaded Blender archives are kept outside the public application. Existing sources/tee-*.blend and tools/build_garments.py document the previous procedural release, not the new BrockCreative assets.
+
+To prepare the supplied files with Blender 4.3, open the relevant .blend with auto-execution disabled and run tools/prepare_brock.py with `-- tee-regular` or `-- hoodie-brock`. These are user-provided commercial assets; no CC license is inferred from the free price. The old hoodie retains its CC BY 4.0 terms.
+
+Checks: TypeScript/Vite build; parsing all three real GLBs; four valid UV print surfaces, preserved pattern distances, metric logo aspect at multiple rotations, sleeve seams, v1 migration and legacy oversized migration. Blender thumbnails visually checked. Browser interaction checks not run in this environment; the existing Playwright workflow has been updated for the new catalogue.
+
+```sh
+npm ci
+npm test
+npm run build
+```
+
+Publish dist/ to ../studio/. Preserve all other Garuss site sections.
+
+---
+
+## Previous release documentation
+
 # BrandMock 3D Studio 0.4
 
 Browser editor: https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.4

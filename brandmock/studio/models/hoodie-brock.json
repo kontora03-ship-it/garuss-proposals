@@ -1,0 +1,55 @@
+{
+  "id": "hoodie-brock",
+  "revision": 5,
+  "panelWidth": 1.1640757299160012,
+  "panelHeight": 1.275302819364752,
+  "bodyWidth": 2.450296325428101,
+  "height": 1.8,
+  "defaultLogoWidth": 0.32,
+  "zones": {
+    "front": {
+      "width": 1.1640757299160012,
+      "height": 1.275302819364752,
+      "sourceScale": 2.758438573622289,
+      "printWidth": 0.95,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.34
+    },
+    "back": {
+      "width": 1.1067158569793831,
+      "height": 1.227560971416724,
+      "sourceScale": 2.7623301614655578,
+      "printWidth": 0.95,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.38
+    },
+    "leftSleeve": {
+      "width": 0.8241264527743118,
+      "height": 1.1214237963840754,
+      "sourceScale": 2.767963818648087,
+      "printWidth": 0.28,
+      "wrap": false,
+      "defaultX": 0.2896481156349182,
+      "defaultY": 0.4513113498687744
+    },
+    "rightSleeve": {
+      "width": 0.8246163142659737,
+      "height": 1.1222470507268172,
+      "sourceScale": 2.767667166888499,
+      "printWidth": 0.28,
+      "wrap": false,
+      "defaultX": 0.7440411448478699,
+      "defaultY": 0.437380850315094
+    }
+  },
+  "credit": {
+    "title": "3D Hoodie Mockup",
+    "author": "BrockCreative",
+    "url": "https://brockcreative.gumroad.com/l/3DHoodieMockup",
+    "license": "Условия автора",
+    "adaptation": "BrandMock: static WebGL mesh, metric sewing-pattern UVs, independent print zones. Original geometry retained."
+  },
+  "source": "User-uploaded BrockCreative Blender archive, static mesh, source UV retained in UV1"
+}

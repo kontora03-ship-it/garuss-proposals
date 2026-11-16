@@ -21,45 +21,45 @@
     "license": "CC-BY-4.0"
   },
   {
-    "path": "tee-oversized-preview.png",
-    "bytes": 513950,
-    "sha256": "8d805be04c22788a119e54dd0a6063e8b3ebd489774f9b37944cc36f283791f1",
-    "source": "Original BrandMock garment generator",
-    "license": "Original project asset"
+    "path": "hoodie-brock-preview.png",
+    "bytes": 511040,
+    "sha256": "dac27f88b00228ce3cb365c8c3b65078fc256ae2cdd3e1b16956b5aa0c36b505",
+    "source": "BrockCreative, user-supplied Blender mockup; adapted by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   },
   {
-    "path": "tee-oversized.glb",
-    "bytes": 5369264,
-    "sha256": "a3e1a225b021fec24d89219ffca8c4f38da5b177ccc635261c5b22fe5b966cf2",
-    "source": "Original BrandMock garment generator",
-    "license": "Original project asset"
+    "path": "hoodie-brock.glb",
+    "bytes": 4470908,
+    "sha256": "4189f1a220589d389509c72ce311c24b091234dd39a975dc40419e1c16cc52cd",
+    "source": "BrockCreative, user-supplied Blender mockup; adapted by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   },
   {
-    "path": "tee-oversized.json",
-    "bytes": 991,
-    "sha256": "d3b6235725ea7bd3d97ea76cd0e8d6884288717f9fab8fda6f880e4a2f6fdc80",
-    "source": "Original BrandMock garment generator",
-    "license": "Original project asset"
+    "path": "hoodie-brock.json",
+    "bytes": 1605,
+    "sha256": "91762e2ffbd02a96f0ced151ff09e8b25c41c40576c79b211c22a0277389c3ef",
+    "source": "BrockCreative, user-supplied Blender mockup; adapted by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-regular-preview.png",
-    "bytes": 504001,
-    "sha256": "4f9d8dffe6a8ae06afb7222f778bdd357c23a4c9e67b70cd1015563c0d3b2b9b",
-    "source": "Original BrandMock garment generator",
-    "license": "Original project asset"
+    "bytes": 511147,
+    "sha256": "c039ae1d751d0008d78c4bdbeebe15915af1efa5df5b6642c03144d84e56c53e",
+    "source": "BrockCreative, user-supplied Blender mockup; adapted by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-regular.glb",
-    "bytes": 5378932,
-    "sha256": "b2cb25c2b645a3fd5e00db8e0b697c985ee9fd8d70b03dd6cda6db8dd9d80372",
-    "source": "Original BrandMock garment generator",
-    "license": "Original project asset"
+    "bytes": 4329160,
+    "sha256": "1a9e1c05a5aaa1f55b788dd6745e9e052289b22b2cd4d3b90fd54eb65e96bb84",
+    "source": "BrockCreative, user-supplied Blender mockup; adapted by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-regular.json",
-    "bytes": 992,
-    "sha256": "68a33746a0abb45d1d3310df85ec777882d90bc441a4a66796215106c3142071",
-    "source": "Original BrandMock garment generator",
-    "license": "Original project asset"
+    "bytes": 1614,
+    "sha256": "5d9a7068cf6f88b9597489099746678c093741d99c5382ec65226b7cdabc4eb2",
+    "source": "BrockCreative, user-supplied Blender mockup; adapted by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   }
 ]
