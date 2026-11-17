@@ -1,3 +1,13 @@
+# Update 0.5.1 — vertical orbit and BrandMock demo
+
+The camera rotates only around the garment's vertical axis. Pitch and panning are disabled; wheel/pinch zoom remains available. All preset views use the garment centre. Old saved cameras keep their azimuth and distance, with tilt removed and the target recentered on the garment.
+
+The default white logo uses the existing BrandMock layer mark and wordmark. Exact built-in FORME demo files in old browser projects and imported v2 archives are upgraded. User-uploaded files, including custom files stored under the demo asset ID, remain byte-for-byte unchanged.
+
+Verified with actual Three.js OrbitControls pointer events under Node: vertical dragging cannot tilt, horizontal dragging still rotates, and legacy camera restoration preserves distance and azimuth. Demo migration and customer-file preservation checks pass alongside the GLB geometry tests and production build. Full browser UI checks were not run.
+
+---
+
 # BrandMock 3D Studio 0.5
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.5
