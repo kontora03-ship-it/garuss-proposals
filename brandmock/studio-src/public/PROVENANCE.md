@@ -1,3 +1,11 @@
+# Release 0.8 — local refinement of the approved Studio tee
+
+The user identified the preferred model as Studio 0.6, derived from their BrockCreative T-shirt. This update retains that fit and native artist fabric atlas, replaces only the collar and adjacent neckline transition, and gently smooths back depth. The approved source is frozen in sources/vendor/tee-studio-v06.glb with matching metadata. The result and the frozen source retain the original BrockCreative terms and credit; the price of the source does not imply a CC license.
+
+The new collar geometry is authored for BrandMock. The body and sleeve print UVs remain the source sewing pattern. Front geometry outside the local neck region, sleeves and hems are verified unchanged by actual exported-vertex comparisons. The rejected Heavy experiment is retained as a separate option and is not used as this model's source. No new third-party assets or textures are introduced.
+
+---
+
 # Release 0.7 — original Heavy T-shirt
 
 tee-heavy is original BrandMock geometry authored from the user's rotating video reference. It does not reuse the reference store's model, textures, marks or video frames, nor the BrockCreative meshes. The user-provided video is used only as a visual guide to proportions, sleeve pose, folds, crew-neck construction and presentation; it is not bundled or publicly redistributed.

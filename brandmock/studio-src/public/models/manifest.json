@@ -64,23 +64,23 @@
   },
   {
     "path": "tee-studio.glb",
-    "bytes": 4329484,
-    "sha256": "b633223f7f752d164f91bbebb998f0959a5393030657608ba387abd3f1c0b14f",
-    "source": "BrockCreative, user-supplied Blender mockup; heavyweight fit and material adaptation by BrandMock",
+    "bytes": 4338084,
+    "sha256": "c8eba3f43fbee6fa14fb3a487a43a14322346eac043a6ce88099a05b2d082a15",
+    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-studio.json",
-    "bytes": 1831,
-    "sha256": "c93752ca126a45ceee013b718c74b6246e1ba0c75aa82368f709316fac73cbda",
-    "source": "BrockCreative, user-supplied Blender mockup; heavyweight fit and material adaptation by BrandMock",
+    "bytes": 1978,
+    "sha256": "e3cc1783140d118f7a06bcee4bc24d3af324f86e348501c2cfb5a5f20822402d",
+    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-studio-preview.png",
-    "bytes": 473635,
-    "sha256": "686aeed7d35d21406efdfa1b07fefb0f414b2da3e7c513d48703360d998f6d82",
-    "source": "BrockCreative, user-supplied Blender mockup; heavyweight fit and material adaptation by BrandMock",
+    "bytes": 188630,
+    "sha256": "18bd2100dd384dfad984ba02e6dd7017686825c08d0a9dbb052bddbfbe3c847c",
+    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
@@ -110,5 +110,19 @@
     "sha256": "848c2ebb8c1e15dbac7bf8ab1f1a4ec1451edab63fc4fa83d7a88168250d5063",
     "source": "Original BrandMock Heavy tee authored from the user-provided video reference; authored geometry, offline cotton drape and original procedural fabric",
     "license": "Original project asset; no third-party model or texture license applies"
+  },
+  {
+    "path": "tee-studio-look.jpg",
+    "bytes": 94025,
+    "sha256": "7de3d8547a7aa53ca90071e206f75908aaae898c5daebad074243cce38bcd67a",
+    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
+  },
+  {
+    "path": "tee-studio-comparison.jpg",
+    "bytes": 271387,
+    "sha256": "97f5630a955db7514df524fc3379b74c6a0fec85e41ca8958a1fa4cb1b1859f2",
+    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   }
 ]

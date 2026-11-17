@@ -1,0 +1,60 @@
+{
+  "id": "tee-studio",
+  "revision": 6,
+  "panelWidth": 1.709330199133619,
+  "panelHeight": 1.6893589185771063,
+  "bodyWidth": 1.8705969886338267,
+  "height": 1.7819998860359192,
+  "defaultLogoWidth": 0.32,
+  "zones": {
+    "back": {
+      "width": 1.7184044129430094,
+      "height": 1.6756733417562704,
+      "sourceScale": 3.2499677627425267,
+      "printWidth": 1.083,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.38
+    },
+    "front": {
+      "width": 1.709330199133619,
+      "height": 1.6893589185771063,
+      "sourceScale": 3.2499585531722888,
+      "printWidth": 1.083,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.34
+    },
+    "rightSleeve": {
+      "width": 1.183935656230405,
+      "height": 0.5904324393564253,
+      "sourceScale": 3.2528069370905377,
+      "printWidth": 0.28,
+      "wrap": false,
+      "defaultX": 0.5988596677780151,
+      "defaultY": 0.3825967311859131
+    },
+    "leftSleeve": {
+      "width": 1.1842245853703985,
+      "height": 0.6100795941272548,
+      "sourceScale": 3.249288133796427,
+      "printWidth": 0.28,
+      "wrap": false,
+      "defaultX": 0.32132065296173096,
+      "defaultY": 0.37855374813079834
+    }
+  },
+  "credit": {
+    "title": "3D T-shirt Mockup",
+    "author": "BrockCreative",
+    "url": "https://brockcreative.gumroad.com/l/3DTshirtMockup",
+    "license": "Условия автора",
+    "adaptation": "BrandMock Studio: wider/shorter heavyweight fit, round crew neck, smoothed cloth, collar material and native sewing-atlas detail. Derived from the user-supplied BrockCreative model."
+  },
+  "source": "BrockCreative source adapted by BrandMock: wider heavyweight fit, mild cloth smoothing, original atlas normal map and studio cotton shading",
+  "surfaceProfile": "cotton-studio",
+  "fitScale": [
+    1.14,
+    0.94
+  ]
+}

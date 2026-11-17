@@ -1,6 +1,6 @@
 {
   "id": "tee-studio",
-  "revision": 6,
+  "revision": 8,
   "panelWidth": 1.709330199133619,
   "panelHeight": 1.6893589185771063,
   "bodyWidth": 1.8705969886338267,
@@ -49,12 +49,20 @@
     "author": "BrockCreative",
     "url": "https://brockcreative.gumroad.com/l/3DTshirtMockup",
     "license": "Условия автора",
-    "adaptation": "BrandMock Studio: wider/shorter heavyweight fit, round crew neck, smoothed cloth, collar material and native sewing-atlas detail. Derived from the user-supplied BrockCreative model."
+    "adaptation": "BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original sewing-pattern UVs retained."
   },
-  "source": "BrockCreative source adapted by BrandMock: wider heavyweight fit, mild cloth smoothing, original atlas normal map and studio cotton shading",
+  "source": "Approved Studio 0.6 fit retained; local round crew-neck replacement and 25% blended back-depth smoothing only.",
   "surfaceProfile": "cotton-studio",
   "fitScale": [
     1.14,
     0.94
-  ]
+  ],
+  "refinement": {
+    "base": "Studio 0.6",
+    "backDepthBlend": 0.25,
+    "backMaxDepthChange": 0.004429467022418976,
+    "neckBlendRadius": 0.145,
+    "frontAndSleevesOutsideNeck": "unchanged",
+    "printUVs": "retained"
+  }
 }

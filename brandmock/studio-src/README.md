@@ -1,3 +1,26 @@
+# Update 0.8 — approved Studio 0.6, round collar and quieter back
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8
+
+The user selected T-shirt Studio 0.6 from their screenshot. This release refines that model in place: a rounder, shallower crew neck and gently reduced back-fold depth. Its body fit, front drape outside the neck region, sleeves, hems, original fabric atlas, four print UVs and print dimensions are retained. The separate Heavy experiment remains available at the end of the catalogue.
+
+The new ribbed band follows an exact local replacement of the body's 144-point neckline. Its angular parameter is monotone along the original loop so the band cannot fold back on itself; it has real material thickness. Neck changes blend out within 0.145 scene units. Back depth uses a 25% blend of a relaxed depth field, with every seam boundary held fixed; the maximum measured change is 0.00443 scene units. Back width and height do not change.
+
+The reproducible tool is tools/refine_studio_tee.py. The approved v0.6 baseline is frozen in sources/vendor/tee-studio-v06.glb and its matching JSON; it is never regenerated from the rejected Heavy model. The editable result is sources/tee-studio-refined.blend.
+
+```sh
+blender -b --threads 4 --disable-autoexec --python-exit-code 1 --python tools/refine_studio_tee.py
+npm test
+npm run build
+npm exec vite preview -- --host 127.0.0.1 --port 5182
+# Another terminal, with an installed Chromium:
+BROWSER_EXECUTABLE=/usr/bin/chromium npm run test:studio-refinement
+```
+
+Independent checks compare actual source and result GLBs by print UV samples: 27,990 front samples and 17,824 sleeve/hem samples remain fixed, while back changes are restrained and affect depth only outside the neckline. Browser checks render the frozen before and real after with identical fabric, contrasting trim, logo placement and lighting, then verify 1600px PNG exports, the vertical orbit lock and saved-project restoration. Evidence is in validation/v0.8/ and ignored test-artifacts/studio-refinement/.
+
+---
+
 # Update 0.7 — Heavy tee authored from the video reference
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.7
