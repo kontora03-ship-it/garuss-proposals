@@ -1,0 +1,23 @@
+{
+  "reference": "https://brandmockups.store/cdn/shop/videos/c/vp/37aeba99c9494b27a7e5de7f921cf582/37aeba99c9494b27a7e5de7f921cf582.m3u8?v=0",
+  "use": "Visual reference only. Original geometry authored for BrandMock; video and store assets are not bundled.",
+  "observedVideo": {
+    "durationSeconds": 10.666656,
+    "resolution": [
+      896,
+      1080
+    ],
+    "fps": 30
+  },
+  "designTargets": [
+    "wide straight body",
+    "dropped rounded shoulders",
+    "volumetric downward sleeves",
+    "heavy crew-neck band",
+    "few large folds",
+    "twin-needle hems",
+    "neutral studio turntable"
+  ],
+  "authoringScript": "tools/build_heavy_tee.py",
+  "source": "sources/tee-heavy.blend"
+}

@@ -1,0 +1,44 @@
+{
+  "version": "0.7.0",
+  "parentCommit": "5f1c298080c52f5ea423224c277c3ddd8aa175ee",
+  "previousAssetsUnchanged": {
+    "hoodie-boxy-preview.png": "301df98e77c9af8a53c43784609ea12d7f641ed1c64afcde28c97263fec90d99",
+    "hoodie-boxy.glb": "34775683fdbdb9e6afd30bed06d387a83577b4fbd96ac9b3c18875b9b60cd2d6",
+    "hoodie-boxy.json": "5029597dbf2bd6fb037a57accae44d3db41dde7f727718a4ad0e9d58be343e28",
+    "hoodie-brock-preview.png": "dac27f88b00228ce3cb365c8c3b65078fc256ae2cdd3e1b16956b5aa0c36b505",
+    "hoodie-brock.glb": "4189f1a220589d389509c72ce311c24b091234dd39a975dc40419e1c16cc52cd",
+    "hoodie-brock.json": "91762e2ffbd02a96f0ced151ff09e8b25c41c40576c79b211c22a0277389c3ef",
+    "tee-regular-preview.png": "c039ae1d751d0008d78c4bdbeebe15915af1efa5df5b6642c03144d84e56c53e",
+    "tee-regular.glb": "1a9e1c05a5aaa1f55b788dd6745e9e052289b22b2cd4d3b90fd54eb65e96bb84",
+    "tee-regular.json": "5d9a7068cf6f88b9597489099746678c093741d99c5382ec65226b7cdabc4eb2",
+    "tee-studio.glb": "b633223f7f752d164f91bbebb998f0959a5393030657608ba387abd3f1c0b14f",
+    "tee-studio.json": "c93752ca126a45ceee013b718c74b6246e1ba0c75aa82368f709316fac73cbda",
+    "tee-studio-preview.png": "686aeed7d35d21406efdfa1b07fefb0f414b2da3e7c513d48703360d998f6d82"
+  },
+  "newAssets": {
+    "tee-heavy.glb": {
+      "bytes": 8161460,
+      "sha256": "24c517597ad1777d2eb7dbe9e27f76315e33117a578345c0661479cf939ffd23"
+    },
+    "tee-heavy.json": {
+      "bytes": 1562,
+      "sha256": "1ad6d8463e05b6ba0cbaf150ed477926ab17adad67720ae56cb7989f8eb47374"
+    },
+    "tee-heavy-preview.png": {
+      "bytes": 519694,
+      "sha256": "ef62c1c1de26b90e62d33ebbd99c4d1354f6598f50ed2165f419c51b5158405b"
+    },
+    "tee-heavy-look.jpg": {
+      "bytes": 52635,
+      "sha256": "848c2ebb8c1e15dbac7bf8ab1f1a4ec1451edab63fc4fa83d7a88168250d5063"
+    },
+    "sources/tee-heavy.blend": {
+      "bytes": 7157494,
+      "sha256": "dbe991c463bd5adafae97dcfc9a3852b2a47edf37ddb518cf35454264db38dad"
+    },
+    "sources/tee-heavy-reference.json": {
+      "bytes": 698,
+      "sha256": "3fe5a2f1f5f560014cfae6fe541e8ae5cede222149e094541a543b1530161d72"
+    }
+  }
+}

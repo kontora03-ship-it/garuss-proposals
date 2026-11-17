@@ -4,7 +4,7 @@ const page=await browser.newPage({viewport:{width:1600,height:1080}}),errors=[],
 const idle=async()=>{await page.waitForFunction(()=>!document.querySelector('.loading'),{},{timeout:120000});await page.waitForTimeout(400);assert.equal(await page.locator('[role=alert]').count(),0)};
 await page.goto(process.env.BRANDMOCK_TEST_URL||'http://localhost:5182');await idle();fs.mkdirSync('test-artifacts/studio-tee',{recursive:true});
 await page.getByRole('button',{name:'Ракурс',exact:true}).click();await page.getByLabel('Фон',{exact:true}).selectOption('white');await page.locator('.viewBar').getByRole('button',{name:'Спереди',exact:true}).click();
-for(const [name,id]of [['T-shirt · BrockCreative','tee-regular'],['T-shirt Studio · новая','tee-studio']]){
+for(const [name,id]of [['T-shirt · BrockCreative','tee-regular'],['T-shirt Studio · 0.6','tee-studio']]){
  await page.getByRole('button',{name:'Выбрать '+name,exact:true}).click();await idle();assert.equal(await page.locator('canvas').getAttribute('data-model'),id);
  for(const [label,color]of [['Хвойный','green'],['Белый','white'],['Графит','dark']]){await page.getByRole('button',{name:'Цвет ткани: '+label,exact:true}).click();await idle();await page.screenshot({path:`test-artifacts/studio-tee/${id}-${color}.png`,fullPage:true});}
 }

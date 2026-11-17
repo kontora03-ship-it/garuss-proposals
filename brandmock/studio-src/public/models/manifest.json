@@ -82,5 +82,33 @@
     "sha256": "686aeed7d35d21406efdfa1b07fefb0f414b2da3e7c513d48703360d998f6d82",
     "source": "BrockCreative, user-supplied Blender mockup; heavyweight fit and material adaptation by BrandMock",
     "license": "Author terms; no separate license file supplied in archive"
+  },
+  {
+    "path": "tee-heavy.glb",
+    "bytes": 8161460,
+    "sha256": "24c517597ad1777d2eb7dbe9e27f76315e33117a578345c0661479cf939ffd23",
+    "source": "Original BrandMock Heavy tee authored from the user-provided video reference; authored geometry, offline cotton drape and original procedural fabric",
+    "license": "Original project asset; no third-party model or texture license applies"
+  },
+  {
+    "path": "tee-heavy.json",
+    "bytes": 1562,
+    "sha256": "1ad6d8463e05b6ba0cbaf150ed477926ab17adad67720ae56cb7989f8eb47374",
+    "source": "Original BrandMock Heavy tee authored from the user-provided video reference; authored geometry, offline cotton drape and original procedural fabric",
+    "license": "Original project asset; no third-party model or texture license applies"
+  },
+  {
+    "path": "tee-heavy-preview.png",
+    "bytes": 519694,
+    "sha256": "ef62c1c1de26b90e62d33ebbd99c4d1354f6598f50ed2165f419c51b5158405b",
+    "source": "Original BrandMock Heavy tee authored from the user-provided video reference; authored geometry, offline cotton drape and original procedural fabric",
+    "license": "Original project asset; no third-party model or texture license applies"
+  },
+  {
+    "path": "tee-heavy-look.jpg",
+    "bytes": 52635,
+    "sha256": "848c2ebb8c1e15dbac7bf8ab1f1a4ec1451edab63fc4fa83d7a88168250d5063",
+    "source": "Original BrandMock Heavy tee authored from the user-provided video reference; authored geometry, offline cotton drape and original procedural fabric",
+    "license": "Original project asset; no third-party model or texture license applies"
   }
 ]

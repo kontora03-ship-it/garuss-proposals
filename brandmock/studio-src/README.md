@@ -1,3 +1,28 @@
+# Update 0.7 — Heavy tee authored from the video reference
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.7
+
+The first catalogue item, **T-shirt Heavy · по видео**, is an original model with a wide straight torso, dropped shoulders, shaped volumetric sleeves, rounded crew neck, actual cotton thickness and twin-needle hem stitching. It is authored from the user's rotating video reference; no reference-store mesh or texture is included. Both previous T-shirts and both hoodies remain available with their original assets and profiles.
+
+The body and both sleeves form one welded closed shell with a real interior and folded material returns. Heavy cotton gravity drape is calculated offline in Blender with supported shoulders and collision forms, then baked. Seams are registered from the rest mesh to the posed cloth before export. The browser loads a static GLB and performs no cloth simulation. The new cotton material uses original fine irregular grain, muted sheen, and neutral studio lighting.
+
+All four print surfaces retain independent logo layers and use calibrated readable UV directions. New projects start with Heavy and BrandMock chest/back samples. Saved projects retain their garment and artwork. Vertical-axis-only orbit and zoom remain.
+
+Rebuild the model with Blender 4.3:
+
+```sh
+blender -b --threads 4 --disable-autoexec --python-exit-code 1 --python tools/build_heavy_tee.py
+npm test
+npm run build
+npm exec vite preview -- --host 127.0.0.1 --port 5182
+# Another terminal, with an installed Chromium:
+BROWSER_EXECUTABLE=/usr/bin/chromium npm run test:heavy-tee
+```
+
+The editable source is sources/tee-heavy.blend; no Blender cameras, collision supports or simulation are shipped in the browser GLB. Reference origin is recorded in sources/tee-heavy-reference.json. Published hashes and verification notes are in validation/v0.7/. Browser evidence is generated in ignored test-artifacts/heavy-tee/.
+
+---
+
 # Update 0.6 — separate heavyweight T-shirt
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.6

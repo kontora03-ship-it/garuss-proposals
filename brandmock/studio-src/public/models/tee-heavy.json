@@ -1,0 +1,60 @@
+{
+  "id": "tee-heavy",
+  "revision": 7,
+  "surfaceProfile": "cotton-heavy",
+  "panelWidth": 1.2,
+  "panelHeight": 1.78,
+  "bodyWidth": 1.05,
+  "height": 1.7999011278152466,
+  "defaultLogoWidth": 0.32,
+  "zones": {
+    "front": {
+      "width": 1.2,
+      "height": 1.78,
+      "printWidth": 1.05,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.31
+    },
+    "back": {
+      "width": 1.2,
+      "height": 1.78,
+      "printWidth": 1.05,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.27
+    },
+    "leftSleeve": {
+      "width": 1.2025536233203806,
+      "height": 0.45500686808003243,
+      "printWidth": 0.27,
+      "wrap": true,
+      "defaultX": 0.73,
+      "defaultY": 0.55
+    },
+    "rightSleeve": {
+      "width": 1.2025536233203806,
+      "height": 0.45500686808003243,
+      "printWidth": 0.27,
+      "wrap": true,
+      "defaultX": 0.27,
+      "defaultY": 0.55
+    }
+  },
+  "source": "Original BrandMock Heavy tee authored from the user-provided rotating video reference. No reference-store or BrockCreative geometry or textures are included.",
+  "construction": {
+    "authorship": "BrandMock",
+    "shellThickness": 0.0048,
+    "closedManifoldShell": true,
+    "shellVertices": 152892,
+    "joinedArmholes": true,
+    "offlineClothDrape": {
+      "frames": 8,
+      "bendingStiffness": 3,
+      "browserSimulation": false
+    },
+    "neckOpening": "round crew",
+    "seams": "real twin-needle geometry",
+    "uvConvention": "Blender bottom-origin V; exported canvas-oriented glTF UVs with readable U direction"
+  }
+}

@@ -1,3 +1,13 @@
+# Release 0.7 — original Heavy T-shirt
+
+tee-heavy is original BrandMock geometry authored from the user's rotating video reference. It does not reuse the reference store's model, textures, marks or video frames, nor the BrockCreative meshes. The user-provided video is used only as a visual guide to proportions, sleeve pose, folds, crew-neck construction and presentation; it is not bundled or publicly redistributed.
+
+Construction: tools/build_heavy_tee.py; editable source: sources/tee-heavy.blend. The body and sleeves are welded, smoothed, given offline gravity drape and actual thickness, and exported with four print materials, an interior, a separate ribbed collar and real twin-needle seam geometry. A rest-to-posed mapping keeps stitches on the baked cloth. Shader grain and neutral diffuse variation are original procedural maps. The surface profile applies only to the new model.
+
+The previous tee-studio, tee-regular, hoodie-brock and hoodie-boxy assets retain their original hashes, terms and attribution below. Original project code and authored models are not relicensed by third-party assets' licenses.
+
+---
+
 # Release 0.6 — separate Studio T-shirt
 
 tee-studio is derived from the user-supplied BrockCreative tee. It changes the fit (width ×1.14, height ×0.94, depth ×1.04), reshapes the crew neck, welds coincident seam vertices, gently smooths interior cloth vertices, and assigns a rib-knit collar. The existing tee-regular assets remain unchanged. The original second UV set is retained for the author’s sewing and fabric normal atlas. The new print metadata records the deliberate fit scale; user artwork keeps its own physical aspect ratio.

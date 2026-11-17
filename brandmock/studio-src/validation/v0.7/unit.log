@@ -1,0 +1,14 @@
+tee-heavy: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Artist sewing-pattern UV distances preserved PASS
+tee-studio: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Artist sewing-pattern UV distances preserved PASS
+tee-regular: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Artist sewing-pattern UV distances preserved PASS
+hoodie-brock: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Artist sewing-pattern UV distances preserved PASS
+hoodie-boxy: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Project validation and lossless v1 migration PASS
+Legacy oversized project maps to replacement tee PASS
+Actual exported Heavy shell: welded closed topology, real interior, volume, readable UV directions, collar and six twin-needle stitch loops PASS
+Real OrbitControls: vertical drag locked, horizontal orbit preserved, old camera recentered PASS
+Built-in demo upgraded to BrandMock; customer originals preserved PASS
