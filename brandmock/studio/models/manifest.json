@@ -61,5 +61,26 @@
     "sha256": "5d9a7068cf6f88b9597489099746678c093741d99c5382ec65226b7cdabc4eb2",
     "source": "BrockCreative, user-supplied Blender mockup; adapted by BrandMock",
     "license": "Author terms; no separate license file supplied in archive"
+  },
+  {
+    "path": "tee-studio.glb",
+    "bytes": 4329484,
+    "sha256": "b633223f7f752d164f91bbebb998f0959a5393030657608ba387abd3f1c0b14f",
+    "source": "BrockCreative, user-supplied Blender mockup; heavyweight fit and material adaptation by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
+  },
+  {
+    "path": "tee-studio.json",
+    "bytes": 1831,
+    "sha256": "c93752ca126a45ceee013b718c74b6246e1ba0c75aa82368f709316fac73cbda",
+    "source": "BrockCreative, user-supplied Blender mockup; heavyweight fit and material adaptation by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
+  },
+  {
+    "path": "tee-studio-preview.png",
+    "bytes": 473635,
+    "sha256": "686aeed7d35d21406efdfa1b07fefb0f414b2da3e7c513d48703360d998f6d82",
+    "source": "BrockCreative, user-supplied Blender mockup; heavyweight fit and material adaptation by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
   }
 ]

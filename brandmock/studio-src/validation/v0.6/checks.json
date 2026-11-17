@@ -1,0 +1,27 @@
+{
+  "version": "0.6.0",
+  "parentCommit": "d87ee87fe56033fd98d83cc0066fcec31f077127",
+  "previousTeeUnchanged": {
+    "tee-regular.glb": "1a9e1c05a5aaa1f55b788dd6745e9e052289b22b2cd4d3b90fd54eb65e96bb84",
+    "tee-regular.json": "5d9a7068cf6f88b9597489099746678c093741d99c5382ec65226b7cdabc4eb2",
+    "tee-regular-preview.png": "c039ae1d751d0008d78c4bdbeebe15915af1efa5df5b6642c03144d84e56c53e"
+  },
+  "newAssets": {
+    "public/models/tee-studio.glb": {
+      "bytes": 4329484,
+      "sha256": "b633223f7f752d164f91bbebb998f0959a5393030657608ba387abd3f1c0b14f"
+    },
+    "public/models/tee-studio.json": {
+      "bytes": 1831,
+      "sha256": "c93752ca126a45ceee013b718c74b6246e1ba0c75aa82368f709316fac73cbda"
+    },
+    "public/models/tee-studio-preview.png": {
+      "bytes": 473635,
+      "sha256": "686aeed7d35d21406efdfa1b07fefb0f414b2da3e7c513d48703360d998f6d82"
+    },
+    "public/textures/tee-studio/original-normal.png": {
+      "bytes": 4751620,
+      "sha256": "3e45e3744cc0f18b81a4157e8bf1dec59ea91e553f0fb9e9ca8b641ef6f39045"
+    }
+  }
+}

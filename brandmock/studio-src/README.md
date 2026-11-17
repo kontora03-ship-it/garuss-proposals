@@ -1,3 +1,23 @@
+# Update 0.6 — separate heavyweight T-shirt
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.6
+
+T-shirt Studio is a separate adaptation of the user-supplied BrockCreative model: 14% wider, 6% shorter body, reshaped round crew neck, gently smoothed printable cloth, native sewing/weave normal atlas on the retained original UV set, ribbed collar and soft cotton shading. Double-sided rendering shows the rear neckline and sleeve interiors. The previous T-shirt and both hoodies retain their assets and material profile. Fresh projects start on the new tee; saved projects retain their garment. BrandMock demo logos and vertical-axis-only rotation remain.
+
+The normal atlas is copied without modification from FBX_normal.png in the supplied archive. tools/prepare_studio_tee.py rebuilds the new GLB/JSON/thumbnail from tee-regular.glb with Blender 4.3 and auto-execution disabled. The previous model is never overwritten. This is an adapted source model, not the reference store's geometry or an offline Blender render.
+
+Validation: production TypeScript/Vite build; all four GLBs, retained original UV atlas, unchanged printable face counts and physical logo ratios; real OrbitControls and demo migration checks. Headless Chromium checks render both T-shirts in green/white/graphite, verify the native map loads, export 1600px front/back/three-quarter PNGs and confirm vertical dragging cannot tilt the new tee. The full browser workflow also passes on the four-model catalogue, independent logo layers, surface dragging, transparent export, ZIP restore and IndexedDB reload. Generated screenshots and exports are in ignored test-artifacts/studio-tee/. See validation/v0.6/.
+
+```sh
+npm test
+npm run build
+npm exec vite preview -- --host 127.0.0.1 --port 5182
+# Another terminal, using an already installed Chromium:
+BROWSER_EXECUTABLE=/usr/bin/chromium npm run test:studio-tee
+```
+
+---
+
 # Update 0.5.1 — vertical orbit and BrandMock demo
 
 The camera rotates only around the garment's vertical axis. Pitch and panning are disabled; wheel/pinch zoom remains available. All preset views use the garment centre. Old saved cameras keep their azimuth and distance, with tilt removed and the target recentered on the garment.

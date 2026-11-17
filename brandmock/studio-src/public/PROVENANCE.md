@@ -1,3 +1,11 @@
+# Release 0.6 — separate Studio T-shirt
+
+tee-studio is derived from the user-supplied BrockCreative tee. It changes the fit (width ×1.14, height ×0.94, depth ×1.04), reshapes the crew neck, welds coincident seam vertices, gently smooths interior cloth vertices, and assigns a rib-knit collar. The existing tee-regular assets remain unchanged. The original second UV set is retained for the author’s sewing and fabric normal atlas. The new print metadata records the deliberate fit scale; user artwork keeps its own physical aspect ratio.
+
+textures/tee-studio/original-normal.png is the unmodified FBX_normal.png supplied with the BrockCreative T-shirt. It inherits the source asset’s terms, not the ambientCG CC0 license. Hash and origin are recorded in textures/tee-studio/PROVENANCE.json. No model or texture from brandmockups.store is included.
+
+---
+
 # Release 0.5 — BrockCreative models supplied by the user
 
 - T-shirt: https://brockcreative.gumroad.com/l/3DTshirtMockup

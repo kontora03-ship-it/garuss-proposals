@@ -1,0 +1,7 @@
+All four actual GLB models render PASS
+Sleeve logo dragging without grab jump PASS
+Multiple originals, independent colour/rotation, four zones and surface dragging PASS
+Drag outside logos rotates model; logo coordinates remain unchanged PASS
+Deterministic 1024 transparent PNG, no editing overlays PASS
+All source bytes, separate layers, ZIP restore and IndexedDB reload PASS
+Browser workflow PASS
