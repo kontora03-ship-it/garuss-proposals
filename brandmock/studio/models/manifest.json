@@ -65,22 +65,22 @@
   {
     "path": "tee-studio.glb",
     "bytes": 4389028,
-    "sha256": "95758cf70cf3c13c826a10f112cc2a2349906ac18552bf35a75a27340b947839",
-    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
+    "sha256": "67b5fcc6a4dec028696d808a43cccbe50cc7ed96d24bd9df8019fc8bb2ba8b4e",
+    "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-studio.json",
-    "bytes": 2366,
-    "sha256": "2848652b566706d0badfc5f846b8c5fe1147f239d04a0cf3d619144b0a6d5c4a",
-    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
+    "bytes": 3046,
+    "sha256": "3fc0ad4e72ec796a3167371e231f4fd0629dd45fbbbc7c9e2199df2574d82fd7",
+    "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-studio-preview.png",
-    "bytes": 188943,
-    "sha256": "d6a26f963eaed8278b7ac062974cc58368148d550a6f3723409848f0f09f19f0",
-    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
+    "bytes": 209534,
+    "sha256": "80fb6d447c50c282347a4f37400d7442e78b65b806a2d833f61baa2a44ba0d21",
+    "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
@@ -113,9 +113,9 @@
   },
   {
     "path": "tee-studio-look.jpg",
-    "bytes": 93899,
-    "sha256": "5b28a7791661bacf3d239fe9566cf60a4f6a82a284fc484d7a92f25e7b6a7ed2",
-    "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
+    "bytes": 94181,
+    "sha256": "9af2e7570d7bf154ed55d2d0ef9b7fe93b3f957b8503b06753c8abf03d7a3945",
+    "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
@@ -130,6 +130,13 @@
     "bytes": 282829,
     "sha256": "08d23028f283d7ea5d15a1100dde9edb3d34105d7307b45090455b05cd381392",
     "source": "BrockCreative user-supplied tee; approved Studio 0.6 fit retained, local round collar and restrained back-depth smoothing by BrandMock",
+    "license": "Author terms; no separate license file supplied in archive"
+  },
+  {
+    "path": "tee-studio-chest-print-comparison.jpg",
+    "bytes": 196390,
+    "sha256": "48dc8688614b217bb7a2c5d8605fa8461341dc7b398031079cb65a0caa32be4a",
+    "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
   }
 ]

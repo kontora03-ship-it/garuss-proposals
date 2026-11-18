@@ -1,6 +1,6 @@
 {
   "id": "tee-studio",
-  "revision": 9,
+  "revision": 10,
   "panelWidth": 1.709330199133619,
   "panelHeight": 1.6893589185771063,
   "bodyWidth": 1.8705969886338267,
@@ -9,12 +9,21 @@
   "zones": {
     "back": {
       "width": 1.7184044129430094,
-      "height": 1.6756733417562704,
+      "height": 1.7897652089595795,
       "sourceScale": 3.2499677627425267,
       "printWidth": 1.083,
       "wrap": false,
       "defaultX": 0.5,
-      "defaultY": 0.38
+      "defaultY": 0.38,
+      "mapping": "planar-back",
+      "projection": {
+        "centerX": -0.011791439726948738,
+        "top": 0.9897516667842865,
+        "anchor": [
+          0.5,
+          0.2
+        ]
+      }
     },
     "front": {
       "width": 1.709330199133619,
@@ -49,9 +58,9 @@
     "author": "BrockCreative",
     "url": "https://brockcreative.gumroad.com/l/3DTshirtMockup",
     "license": "Условия автора",
-    "adaptation": "BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original sewing-pattern UVs retained."
+    "adaptation": "BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original fabric atlas retained; back print coordinates calibrated for clean artwork proportions."
   },
-  "source": "Approved Studio fit with a 2.2x outward-widened collar band, retained neck opening, and subtle 0.040-unit shoulder lift. Back folds and lower garment remain as approved.",
+  "source": "Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and a metric back-print frame.",
   "surfaceProfile": "cotton-studio",
   "fitScale": [
     1.14,
@@ -62,7 +71,23 @@
     "backDepthBlend": 0.25,
     "backMaxDepthChange": 0.004429467022418976,
     "neckBlendRadius": 0.145,
-    "printUVs": "retained",
+    "outsideNeckShouldersAndChest": "unchanged",
+    "printUVs": "front/sleeves retained; back calibrated to a metric planar frame; artist fabric atlas retained",
+    "frontChest": {
+      "blend": 0.85,
+      "inset": 0.01,
+      "maxDepthChange": 0.03,
+      "xFade": [
+        0.35,
+        0.52
+      ],
+      "heightFade": [
+        -0.05,
+        0.16,
+        0.48,
+        0.68
+      ]
+    },
     "shoulderLift": {
       "amount": 0.04,
       "xFade": [
@@ -77,7 +102,6 @@
       ]
     },
     "collarBandWidthScale": 2.2,
-    "collarOpening": "same as approved v0.8; added width lies outward on the existing fabric",
-    "frontAndSleevesOutsideNeckAndShoulders": "unchanged"
+    "collarOpening": "same as approved v0.8; added width lies outward on the existing fabric"
   }
 }

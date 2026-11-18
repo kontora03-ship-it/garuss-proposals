@@ -29,8 +29,8 @@ export class StudioRenderer {
  private async fetchModel(id:ModelId):Promise<Entry>{
   const existing=this.cache.get(id);if(existing)return existing;
   const loader=new GLTFLoader(),[gltf,meta]=await Promise.all([
-   loader.loadAsync(new URL('models/'+id+'.glb?rev=9',document.baseURI).href,event=>{if(event.total&&this.settings.model===id)this.status('Загрузка изделия · '+Math.round(event.loaded/event.total*100)+'%')}),
-   fetch(new URL('models/'+id+'.json?rev=9',document.baseURI)).then(r=>{if(!r.ok)throw Error('Не удалось загрузить параметры изделия');return r.json() as Promise<ModelMeta>}),this.fabricReady
+   loader.loadAsync(new URL('models/'+id+'.glb?rev=10',document.baseURI).href,event=>{if(event.total&&this.settings.model===id)this.status('Загрузка изделия · '+Math.round(event.loaded/event.total*100)+'%')}),
+   fetch(new URL('models/'+id+'.json?rev=10',document.baseURI)).then(r=>{if(!r.ok)throw Error('Не удалось загрузить параметры изделия');return r.json() as Promise<ModelMeta>}),this.fabricReady
   ]);
   const studio=meta.surfaceProfile==='cotton-studio',heavy=meta.surfaceProfile==='cotton-heavy';
   const nativeNormal=studio?await new T.TextureLoader().loadAsync(new URL('textures/tee-studio/original-normal.png',document.baseURI).href):undefined;

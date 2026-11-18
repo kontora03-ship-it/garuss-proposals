@@ -1,0 +1,7 @@
+after front native render / PNG PASS
+after back native render / PNG PASS
+after threequarter native render / PNG PASS
+Back print actual pixel baselines: top 2px / bottom 2px variation PASS
+Recalibrated back actual surface dragging PASS
+Refined Studio: user print placement, contrast trim, vertical orbit and saved project retained PASS
+Configured Studio baseline / refined Studio actual before-after views; native cloth material and all downloads; no browser errors PASS

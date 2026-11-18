@@ -78,6 +78,19 @@ for v in bm.verts:
  weight=ease(.29,.43,x)*(1-ease(.66,.91,x))*ease(.40,.73,z)
  if weight>0:v.co.z+=SHOULDER_LIFT*weight;shoulder_count+=1
 print('SUBTLE_SHOULDER_LIFT',SHOULDER_LIFT,shoulder_count,flush=True)
+# Reduce the paired chest ridges in depth only, with a smooth local blend.
+front_mat={i for i,m in enumerate(mesh.materials)if m.name.startswith('Print_Front')}
+front_verts=[v for v in bm.verts if not v.is_boundary and v.link_faces and all(f.material_index in front_mat for f in v.link_faces)]
+front_saved={v:v.co.y for v in front_verts}
+for _ in range(1000):bmesh.ops.smooth_vert(bm,verts=front_verts,factor=.30,use_axis_x=False,use_axis_y=True,use_axis_z=False)
+chest_delta=[]
+for v,old in front_saved.items():
+ x=abs(v.co.x);z=v.co.z
+ weight=(1-ease(.35,.52,x))*ease(-.05,.16,z)*(1-ease(.48,.68,z))
+ delta=max(-.030,min(.030,(v.co.y-old)*.85+.010))*weight
+ v.co.y=old+delta
+ if abs(delta)>1e-7:chest_delta.append(abs(delta))
+print('LOCAL_FRONT_CHEST',len(chest_delta),max(chest_delta),flush=True)
 bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(mesh);bm.free();mesh.update();mesh.normals_split_custom_set([(0,0,0)]*len(mesh.loops))
 print('LOCAL_NECK_VERTICES',moved,flush=True)
 # Widen the band OUTWARD over the existing fabric, keeping its approved opening.
@@ -114,16 +127,40 @@ bm=bmesh.new();bm.from_mesh(cm);bmesh.ops.recalc_face_normals(bm,faces=list(bm.f
 if sum(f.normal.z for f in bm.faces)<0:bmesh.ops.reverse_faces(bm,faces=list(bm.faces))
 bm.to_mesh(cm);bm.free();bpy.context.view_layer.objects.active=collar;collar.select_set(True)
 solid=collar.modifiers.new('Rib band actual thickness','SOLIDIFY');solid.thickness=.0035;solid.offset=-.5;solid.use_even_offset=False;bpy.ops.object.modifier_apply(modifier=solid.name)
+# Give the back print a metric planar frame. Its original fabric atlas (UV1)
+# remains untouched; centre the new frame at the existing upper-back logo anchor.
+mesh.calc_loop_triangles()
+back_index=next(i for i,m in enumerate(mesh.materials)if m.name.startswith('Print_Back'))
+back_tris=[t for t in mesh.loop_triangles if mesh.polygons[t.polygon_index].material_index==back_index]
+uv_points=[];uv_faces=[]
+for tri in back_tris:
+ start=len(uv_points);uv_points += [(mesh.uv_layers[0].data[l].uv.x,mesh.uv_layers[0].data[l].uv.y,0)for l in tri.loops];uv_faces.append((start,start+1,start+2))
+uv_tree=BVHTree.FromPolygons(uv_points,uv_faces,all_triangles=True)
+hit,_,idx,_=uv_tree.find_nearest(Vector((.5,.8,0)));tri=back_tris[idx];a,b,c=[Vector(uv_points[i])for i in uv_faces[idx]]
+den=(b.y-c.y)*(a.x-c.x)+(c.x-b.x)*(a.y-c.y)
+wa=((b.y-c.y)*(hit.x-c.x)+(c.x-b.x)*(hit.y-c.y))/den;wb=((c.y-a.y)*(hit.x-c.x)+(a.x-c.x)*(hit.y-c.y))/den
+anchor=sum((mesh.vertices[i].co*w for i,w in zip(tri.vertices,(wa,wb,1-wa-wb))),Vector())
+back_meta=dict(json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))['zones']['back'])
+back_vertices={i for t in back_tris for i in t.vertices};bottom=min(mesh.vertices[i].co.z for i in back_vertices)
+frame_height=(anchor.z-bottom)/.8;frame_top=bottom+frame_height
+for p in mesh.polygons:
+ if p.material_index==back_index:
+  for li in p.loop_indices:
+   pnt=mesh.vertices[mesh.loops[li].vertex_index].co
+   mesh.uv_layers[0].data[li].uv=(.5-(pnt.x-anchor.x)/back_meta['width'],(pnt.z-bottom)/frame_height)
+back_meta.update(height=frame_height,mapping='planar-back',projection={'centerX':anchor.x,'top':frame_top,'anchor':[.5,.2]})
+print('METRIC_BACK_PRINT_FRAME',anchor[:],frame_height,frame_top,flush=True)
 # UV1 on the source body remains byte-for-byte the original sewing atlas.
 bpy.ops.object.select_all(action='DESELECT')
 for o in [body,collar]:o.select_set(True)
 bpy.context.view_layer.objects.active=body
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(ROOT,'sources/tee-studio-refined.blend'),compress=True)
 bpy.ops.export_scene.gltf(filepath=os.path.join(OUT,'tee-studio.glb'),export_format='GLB',use_selection=True,export_animations=False,export_materials='EXPORT',export_copyright='BrockCreative; approved Studio fit with local round collar and restrained back folds by BrandMock.')
-# Reuse the approved v0.6 print dimensions; no refit or UV recalibration.
+# Retain source front/sleeve dimensions and install the calibrated back frame.
 meta=json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))
-meta['revision']=9;meta['source']='Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift.'
-meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'frontAndSleevesOutsideNeckAndShoulders':'unchanged','printUVs':'retained','shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
-meta['credit']['adaptation']='BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original sewing-pattern UVs retained.'
+meta['zones']['back']=back_meta
+meta['revision']=10;meta['source']='Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and a metric back-print frame.'
+meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'outsideNeckShouldersAndChest':'unchanged','printUVs':'front/sleeves retained; back calibrated to a metric planar frame; artist fabric atlas retained','frontChest':{'blend':.85,'inset':.010,'maxDepthChange':max(chest_delta),'xFade':[.35,.52],'heightFade':[-.05,.16,.48,.68]},'shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
+meta['credit']['adaptation']='BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original fabric atlas retained; back print coordinates calibrated for clean artwork proportions.'
 with open(os.path.join(OUT,'tee-studio.json'),'w')as f:json.dump(meta,f,indent=2,ensure_ascii=False)
 print('REFINED_STUDIO_READY',flush=True)

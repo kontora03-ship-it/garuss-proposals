@@ -1,3 +1,9 @@
+# Release 0.8.2 — chest depth and back print coordinates
+
+The approved BrockCreative-derived Studio tee receives a local chest-depth relaxation to reduce two raised folds. Body width/height, shoulder line and collar dimensions retain 0.8.1 values. Sleeve, hem and back positions are unchanged; fifteen outer-band samples follow the cloth by at most 0.000101 scene units. Back print UV0 is calibrated to a metric planar frame so artwork has straight baselines and correct proportions; the original fabric/sewing normal atlas on UV1 remains unchanged. No new third-party assets or textures are introduced. Source attribution and terms remain below.
+
+---
+
 # Release 0.8.1 — wider collar band and supported shoulders
 
 The approved Studio collar's inner edge is retained. Its band extends outward by a width factor of 2.2 and conforms to the existing body, giving a wider ribbed trim comparable to the sleeves. A subtle smooth lift supports the shoulder line and upper sleeves. Existing width/depth coordinates, indices and UV sets are retained; central chest, lower torso, cuffs and the neck opening stay fixed. Normals follow the adjusted shoulders. No new third-party assets or texture changes are introduced; BrockCreative attribution and source terms remain below.

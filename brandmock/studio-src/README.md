@@ -1,3 +1,13 @@
+# Update 0.8.2 — softer chest and corrected back print
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.2
+
+The two raised chest folds are softened with a depth-only local relaxation; width and height stay fixed. The approved collar width/opening and raised shoulders stay as in 0.8.1; sleeves, hem and back positions are unchanged. Fifteen outer-band samples follow the locally adjusted cloth by at most 0.000101 scene units. A separate metric planar UV0 frame on Print_Back removes the old uneven baseline and stretched lettering. The source normal/sewing atlas on UV1 is unchanged. The old upper-back demo anchor remains at the same physical point, and uploaded artwork files are retained.
+
+The browser comparison uses parent 0.8.1 assets and identical settings. It checks actual PNG exports, back-print horizontal baselines, pointer dragging, saved projects and the vertical orbit lock. Evidence: validation/v0.8.2/. See models/tee-studio-chest-print-comparison.jpg for actual browser before/after crops.
+
+---
+
 # Update 0.8.1 — wider neckband and subtle shoulder lift
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.1
