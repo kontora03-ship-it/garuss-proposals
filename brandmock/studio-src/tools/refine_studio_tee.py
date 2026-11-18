@@ -5,6 +5,7 @@ Blender 4.3, --disable-autoexec. Blender axes X horizontal, Z up, -Y front.
 import bpy,bmesh,os,json,math
 from mathutils import Vector
 from mathutils.kdtree import KDTree
+from mathutils.bvhtree import BVHTree
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));OUT=os.path.join(ROOT,'public/models');BASE=os.path.join(ROOT,'sources/vendor/tee-studio-v06.glb')
 bpy.context.preferences.filepaths.save_version=0
 bpy.ops.object.select_all(action='SELECT');bpy.ops.object.delete(use_global=False)
@@ -67,18 +68,36 @@ for v in bm.verts:
   t=1-distance/radius;weight=t*t*(3-2*t);v.co+=delta*weight;moved+=1
 # Boundary vertices use exact targets, to avoid interpolation accumulation.
 for v,target in zip(ordered,outer):v.co=target
+# Subtle supported shoulder line; collar, central chest, lower torso and cuffs stay fixed.
+SHOULDER_LIFT=.040
+shoulder_count=0
+for v in bm.verts:
+ x=abs(v.co.x);z=v.co.z
+ def ease(a,b,value):
+  t=max(0,min(1,(value-a)/(b-a)));return t*t*(3-2*t)
+ weight=ease(.29,.43,x)*(1-ease(.66,.91,x))*ease(.40,.73,z)
+ if weight>0:v.co.z+=SHOULDER_LIFT*weight;shoulder_count+=1
+print('SUBTLE_SHOULDER_LIFT',SHOULDER_LIFT,shoulder_count,flush=True)
 bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(mesh);bm.free();mesh.update();mesh.normals_split_custom_set([(0,0,0)]*len(mesh.loops))
 print('LOCAL_NECK_VERTICES',moved,flush=True)
-# A new narrow rib band shares the exact outer boundary and turns inward/upward.
-N=len(outer);ROWS=5;verts=[];faces=[];uvs=[]
+# Widen the band OUTWARD over the existing fabric, keeping its approved opening.
+# Two sections meet at the existing body cut: the added outer fabric and unchanged inner rib.
+bpy.context.view_layer.update();surface=BVHTree.FromObject(body,bpy.context.evaluated_depsgraph_get())
+BAND_WIDTH_SCALE=2.2
+weights=[BAND_WIDTH_SCALE-(BAND_WIDTH_SCALE-1)*r/4 for r in range(5)]+[1-r/5 for r in range(1,6)]
+N=len(outer);ROWS=len(weights)-1;verts=[];faces=[];uvs=[]
 dist=[0.]
 for i in range(1,N):dist.append(dist[-1]+(outer[i]-outer[i-1]).length)
 length=dist[-1]+(outer[0]-outer[-1]).length
 for r in range(ROWS+1):
- t=r/ROWS
+ w=weights[r]
  for i,p in enumerate(outer):
   a=angles[i];inner=Vector((cx+(RX-.027)*math.cos(a),cy+(RY-.024)*math.sin(a),p.z+.014+.008*abs(math.sin(a))))
-  point=p.lerp(inner,t);point.z+=.0008;verts.append(point);uvs.append((dist[i]/length,t))
+  point=inner+(p-inner)*w
+  if w>1.000001:
+   hit,normal,_,_=surface.find_nearest(point);point=hit+normal*.002
+  else:point.z+=.0008
+  verts.append(point);uvs.append((dist[i]/length,1-w/BAND_WIDTH_SCALE))
 for r in range(ROWS):
  for j in range(N):k=(j+1)%N;faces.append((r*N+j,r*N+k,(r+1)*N+k,(r+1)*N+j))
 cm=bpy.data.meshes.new('Studio round crew neck');cm.from_pydata(verts,[],faces);cm.update()
@@ -89,7 +108,7 @@ for p in cm.polygons:
  for li in p.loop_indices:
   idx=cm.loops[li].vertex_index;j=idx%N;r=idx//N;u=uvs[idx][0]
   if j==0 and any(cm.loops[k].vertex_index%N==N-1 for k in p.loop_indices):u=1
-  uv.data[li].uv=(u,r/ROWS)
+  uv.data[li].uv=(u,uvs[idx][1])
 bm=bmesh.new();bm.from_mesh(cm);bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
 # The top of the band must face out of the garment, including at the shoulders.
 if sum(f.normal.z for f in bm.faces)<0:bmesh.ops.reverse_faces(bm,faces=list(bm.faces))
@@ -103,8 +122,8 @@ bpy.ops.wm.save_as_mainfile(filepath=os.path.join(ROOT,'sources/tee-studio-refin
 bpy.ops.export_scene.gltf(filepath=os.path.join(OUT,'tee-studio.glb'),export_format='GLB',use_selection=True,export_animations=False,export_materials='EXPORT',export_copyright='BrockCreative; approved Studio fit with local round collar and restrained back folds by BrandMock.')
 # Reuse the approved v0.6 print dimensions; no refit or UV recalibration.
 meta=json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))
-meta['revision']=8;meta['source']='Approved Studio 0.6 fit retained; local round crew-neck replacement and 25% blended back-depth smoothing only.'
-meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'frontAndSleevesOutsideNeck':'unchanged','printUVs':'retained'}
+meta['revision']=9;meta['source']='Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift.'
+meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'frontAndSleevesOutsideNeckAndShoulders':'unchanged','printUVs':'retained','shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
 meta['credit']['adaptation']='BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original sewing-pattern UVs retained.'
 with open(os.path.join(OUT,'tee-studio.json'),'w')as f:json.dump(meta,f,indent=2,ensure_ascii=False)
 print('REFINED_STUDIO_READY',flush=True)

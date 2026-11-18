@@ -1,18 +1,18 @@
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs');
 (async()=>{const browser=await chromium.launch({executablePath:process.env.BROWSER_EXECUTABLE,headless:true,args:['--no-sandbox','--enable-unsafe-swiftshader','--use-angle=swiftshader']});try{
 const dir='test-artifacts/studio-refinement';fs.mkdirSync(dir,{recursive:true});const errors=[];
-for(const version of ['before','after']){
+for(const version of (process.env.STUDIO_AFTER_ONLY?['after']:['before','after'])){
  const context=await browser.newContext({viewport:{width:1600,height:1100}}),page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));page.on('requestfailed',r=>errors.push(r.url()+': '+r.failure()?.errorText));
  if(version==='before'){
-  await page.route(url=>url.pathname.endsWith('/models/tee-studio.glb'),r=>r.fulfill({contentType:'model/gltf-binary',body:fs.readFileSync('sources/vendor/tee-studio-v06.glb')}));
-  await page.route(url=>url.pathname.endsWith('/models/tee-studio.json'),r=>r.fulfill({contentType:'application/json',body:fs.readFileSync('sources/vendor/tee-studio-v06.json')}));
+  await page.route(url=>url.pathname.endsWith('/models/tee-studio.glb'),r=>r.fulfill({contentType:'model/gltf-binary',body:fs.readFileSync(process.env.STUDIO_BASELINE_GLB||'sources/vendor/tee-studio-v06.glb')}));
+  await page.route(url=>url.pathname.endsWith('/models/tee-studio.json'),r=>r.fulfill({contentType:'application/json',body:fs.readFileSync(process.env.STUDIO_BASELINE_JSON||'sources/vendor/tee-studio-v06.json')}));
  }
  const idle=async()=>{await page.waitForFunction(()=>!document.querySelector('.loading'),{},{timeout:180000});await page.waitForTimeout(500);assert.equal(await page.locator('[role=alert]').count(),0)};
  const value=async(label,n)=>{await page.getByLabel(label,{exact:true}).fill(String(n));await page.getByLabel(label,{exact:true}).press('Tab')};
  await page.goto(process.env.BRANDMOCK_TEST_URL||'http://localhost:5182');await idle();assert.equal(await page.locator('canvas').getAttribute('data-model'),'tee-studio');
  await page.getByRole('button',{name:'Ракурс',exact:true}).click();await page.getByText('Отделка в цвет ткани',{exact:true}).uncheck();await page.getByLabel('Цвет отделки',{exact:true}).fill('#d5d7d6');
  await value('Позиция X',50);await value('Позиция Y',28);await value('Размер логотипа',35);await idle();
- for(const [view,file]of [['Спереди','front'],['Сзади','back'],['¾','threequarter']]){
+ for(const [view,file]of (process.env.STUDIO_FRONT_ONLY?[['Спереди','front'],['¾','threequarter']]:[['Спереди','front'],['Сзади','back'],['¾','threequarter']])){
   await page.locator('.viewBar').getByRole('button',{name:view,exact:true}).click();await idle();await page.screenshot({path:`${dir}/${version}-${file}-ui.png`,fullPage:true});
   const download=page.waitForEvent('download',{timeout:180000});await page.getByRole('button',{name:'Экспорт PNG',exact:true}).click();await(await download).saveAs(`${dir}/${version}-${file}.png`);const bytes=fs.readFileSync(`${dir}/${version}-${file}.png`);assert.equal(bytes.readUInt32BE(16),1600);console.log(version+' '+file+' native render / PNG PASS');
  }
@@ -24,5 +24,5 @@ for(const version of ['before','after']){
  }
  await context.close();
 }
-assert.equal(errors.length,0,errors.join('\n'));console.log('Approved v0.6 / refined Studio actual before-after views; native cloth material and all downloads; no browser errors PASS');
+assert.equal(errors.length,0,errors.join('\n'));console.log('Configured Studio baseline / refined Studio actual before-after views; native cloth material and all downloads; no browser errors PASS');
 }finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

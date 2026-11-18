@@ -1,3 +1,13 @@
+# Update 0.8.1 — wider neckband and subtle shoulder lift
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.1
+
+The collar band is 2.2 times wider, extending outward over the existing cloth so the approved neck opening stays the same size. The added band rows conform to the existing body surface. A smooth 0.040-unit height adjustment slightly supports the shoulders and upper sleeves. Width, depth, triangles and both UV sets retain their source values. The inner collar rim, central chest, lower body and cuffs stay fixed; back-fold depth and cloth shading remain as approved. The change uses the same Studio model ID and preserves saved projects.
+
+For the latest before/after browser comparison, extract the parent commit's tee-studio.glb and JSON to temporary files and provide their paths as STUDIO_BASELINE_GLB and STUDIO_BASELINE_JSON to the existing test:studio-refinement script. STUDIO_FRONT_ONLY=1 checks front and three-quarter exports. The default test still compares against the frozen 0.6 source.
+
+---
+
 # Update 0.8 — approved Studio 0.6, round collar and quieter back
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8

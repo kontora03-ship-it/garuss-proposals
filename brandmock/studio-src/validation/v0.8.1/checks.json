@@ -1,0 +1,39 @@
+{
+  "version": "0.8.1",
+  "baselineCommit": "0da90c82bddb6f8b59e15b6ff75d8e772585c67a",
+  "collarBandWidthScale": 2.2,
+  "shoulderLiftMax": 0.04000002145767212,
+  "liftedHeightSamples": 9772,
+  "fixedHeightSamples": 72452,
+  "unchangedGeometryAttributes": [
+    "x",
+    "z",
+    "indices",
+    "uv",
+    "uv1"
+  ],
+  "innerNeckRimMaxChange": 7.450580596923828e-08,
+  "newAssets": {
+    "tee-studio.glb": "95758cf70cf3c13c826a10f112cc2a2349906ac18552bf35a75a27340b947839",
+    "tee-studio.json": "2848652b566706d0badfc5f846b8c5fe1147f239d04a0cf3d619144b0a6d5c4a",
+    "tee-studio-preview.png": "d6a26f963eaed8278b7ac062974cc58368148d550a6f3723409848f0f09f19f0",
+    "tee-studio-look.jpg": "5b28a7791661bacf3d239fe9566cf60a4f6a82a284fc484d7a92f25e7b6a7ed2",
+    "tee-studio-comparison.jpg": "97f5630a955db7514df524fc3379b74c6a0fec85e41ca8958a1fa4cb1b1859f2",
+    "tee-studio-band-comparison.jpg": "08d23028f283d7ea5d15a1100dde9edb3d34105d7307b45090455b05cd381392"
+  },
+  "otherModelsUnchanged": {
+    "hoodie-boxy-preview.png": "301df98e77c9af8a53c43784609ea12d7f641ed1c64afcde28c97263fec90d99",
+    "hoodie-boxy.glb": "34775683fdbdb9e6afd30bed06d387a83577b4fbd96ac9b3c18875b9b60cd2d6",
+    "hoodie-boxy.json": "5029597dbf2bd6fb037a57accae44d3db41dde7f727718a4ad0e9d58be343e28",
+    "hoodie-brock-preview.png": "dac27f88b00228ce3cb365c8c3b65078fc256ae2cdd3e1b16956b5aa0c36b505",
+    "hoodie-brock.glb": "4189f1a220589d389509c72ce311c24b091234dd39a975dc40419e1c16cc52cd",
+    "hoodie-brock.json": "91762e2ffbd02a96f0ced151ff09e8b25c41c40576c79b211c22a0277389c3ef",
+    "tee-regular-preview.png": "c039ae1d751d0008d78c4bdbeebe15915af1efa5df5b6642c03144d84e56c53e",
+    "tee-regular.glb": "1a9e1c05a5aaa1f55b788dd6745e9e052289b22b2cd4d3b90fd54eb65e96bb84",
+    "tee-regular.json": "5d9a7068cf6f88b9597489099746678c093741d99c5382ec65226b7cdabc4eb2",
+    "tee-heavy.glb": "24c517597ad1777d2eb7dbe9e27f76315e33117a578345c0661479cf939ffd23",
+    "tee-heavy.json": "1ad6d8463e05b6ba0cbaf150ed477926ab17adad67720ae56cb7989f8eb47374",
+    "tee-heavy-preview.png": "ef62c1c1de26b90e62d33ebbd99c4d1354f6598f50ed2165f419c51b5158405b",
+    "tee-heavy-look.jpg": "848c2ebb8c1e15dbac7bf8ab1f1a4ec1451edab63fc4fa83d7a88168250d5063"
+  }
+}

@@ -1,3 +1,9 @@
+# Release 0.8.1 — wider collar band and supported shoulders
+
+The approved Studio collar's inner edge is retained. Its band extends outward by a width factor of 2.2 and conforms to the existing body, giving a wider ribbed trim comparable to the sleeves. A subtle smooth lift supports the shoulder line and upper sleeves. Existing width/depth coordinates, indices and UV sets are retained; central chest, lower torso, cuffs and the neck opening stay fixed. Normals follow the adjusted shoulders. No new third-party assets or texture changes are introduced; BrockCreative attribution and source terms remain below.
+
+---
+
 # Release 0.8 — local refinement of the approved Studio tee
 
 The user identified the preferred model as Studio 0.6, derived from their BrockCreative T-shirt. This update retains that fit and native artist fabric atlas, replaces only the collar and adjacent neckline transition, and gently smooths back depth. The approved source is frozen in sources/vendor/tee-studio-v06.glb with matching metadata. The result and the frozen source retain the original BrockCreative terms and credit; the price of the source does not imply a CC license.
