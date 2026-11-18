@@ -1,0 +1,12 @@
+after front lower-torso actual logo / native PNG PASS
+after back lower-torso actual logo / native PNG PASS
+front y=25: surface calibration visible; natural drape variation 0/0px PASS
+front y=55: surface calibration visible; natural drape variation 1/1px PASS
+front y=75: surface calibration visible; natural drape variation 0/1px PASS
+front: actual lower-torso pointer drag follows artwork PASS
+back y=25: surface calibration visible; natural drape variation 1/2px PASS
+back y=55: surface calibration visible; natural drape variation 1/1px PASS
+back y=75: surface calibration visible; natural drape variation 0/1px PASS
+back: actual lower-torso pointer drag follows artwork PASS
+Original project selection and corrected placement retained on reload PASS
+Torso print production browser regression: lower logos, rotated views, six height calibrations, pointer dragging and saved project PASS

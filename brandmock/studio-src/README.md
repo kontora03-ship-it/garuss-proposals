@@ -1,3 +1,17 @@
+# Update 0.8.3 — print unwrap follows the actual cloth surface
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.3
+
+The 0.8.2 flat back projection introduced UV foldovers wherever the cloth turned back in width/height. At a rear angle around 60 degrees, a stroke could smear across a fold while other letters disappeared. A straight upper-back screenshot did not expose this defect. The final fix uses a fresh angle-based surface unwrap for both torso panels, calibrated in actual 3D surface units and anchored at the existing chest/back demo centres. No flat projection is used for Studio torso artwork.
+
+The front, sleeves, collar, shoulder line, garment width/height and original fabric-atlas UV1 are retained. The deep central back groove receives a local depth-only relaxation toward a low-frequency torso contour, following the earlier request for fewer back folds. Back seams and surrounding regions are held fixed. The actual logo files and saved settings are retained. Other print centres may move slightly because they now follow the corrected surface pattern. The relaxed back improves large-print readability; a fold can still naturally occlude artwork at extreme side angles, but must not smear it into an oval.
+
+The geometry regression checks signed UV triangle area and the intrinsic 3D-to-UV Jacobian for every torso triangle. It explicitly exposes the flat-projection failure, rather than testing coordinates against the same projection. Browser checks use lower prints, views rotated about 60 degrees, three heights on each side, pointer dragging and saved-project reload. Natural drape is retained, so screen-space horizontal baselines are recorded without requiring an artificially flat result.
+
+Run npm test, npm run build, start Vite preview on port 5182, then STUDIO_BASELINE_GLB=<extracted 0.8.2 GLB> STUDIO_BASELINE_JSON=<matching JSON> BROWSER_EXECUTABLE=/usr/bin/chromium npm run test:torso-print. The default comparison uses the frozen Studio 0.6. Evidence: validation/v0.8.3/.
+
+---
+
 # Update 0.8.2 — softer chest and corrected back print
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.2

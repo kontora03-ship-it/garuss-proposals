@@ -5,12 +5,12 @@ import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
 const parse=async(path:string)=>{const b=await readFile(new URL(path,import.meta.url));return(await new GLTFLoader().parseAsync(b.buffer.slice(b.byteOffset,b.byteOffset+b.byteLength),'')).scene};
 const [before,after]=await Promise.all([parse('../sources/vendor/tee-studio-v06.glb'),parse('../public/models/tee-studio.glb')]);
 const meta=JSON.parse(await readFile(new URL('../public/models/tee-studio.json',import.meta.url),'utf8')),originalMeta=JSON.parse(await readFile(new URL('../sources/vendor/tee-studio-v06.json',import.meta.url),'utf8'));
-for(const zone of Object.keys(originalMeta.zones)){if(zone==='back'&&meta.zones.back.mapping==='planar-back')assert.equal(meta.zones.back.printWidth,originalMeta.zones.back.printWidth);else assert.deepEqual(meta.zones[zone],originalMeta.zones[zone])}assert.deepEqual(meta.fitScale,originalMeta.fitScale);
+for(const zone of Object.keys(originalMeta.zones)){if((meta.zones[zone].mapping?.startsWith('planar-')||meta.zones[zone].mapping==='surface-torso'))assert.equal(meta.zones[zone].printWidth,originalMeta.zones[zone].printWidth);else assert.deepEqual(meta.zones[zone],originalMeta.zones[zone])}assert.deepEqual(meta.fitScale,originalMeta.fitScale);
 const surfaces=(root:T.Object3D)=>{const out=new Map<string,T.Mesh>();root.traverse(o=>{if(o instanceof T.Mesh){const name=(o.material as T.Material).name;if(name.startsWith('Print_')||name.startsWith('Ribbing_Hem'))out.set(name,o)}});return out};
 const old=surfaces(before),current=surfaces(after);let fixedFront=0,fixedSleeves=0,softenedBack=0,backMax=0;const lift=meta.refinement?.shoulderLift?.amount||0;
 for(const[name,mesh]of current){
  const baseline=old.get(name);assert(baseline);const g=mesh.geometry,b=baseline.geometry;assert.equal(g.index?.count,b.index?.count,'Retain every original printed/hem triangle');
- const uv=b.getAttribute('uv'),atlas=b.getAttribute('uv1'),pos=b.getAttribute('position'),map=new Map<string,number[]>(),projected=name==='Print_Back'&&meta.zones.back.mapping==='planar-back',sourceUV=projected?atlas:uv;
+ const uv=b.getAttribute('uv'),atlas=b.getAttribute('uv1'),pos=b.getAttribute('position'),map=new Map<string,number[]>(),projected=(name==='Print_Back'&&!!meta.zones.back.mapping)||(name==='Print_Front'&&!!meta.zones.front.mapping),sourceUV=projected?atlas:uv;
  const key=(u:number,v:number)=>Math.round(u*1e5)+','+Math.round(v*1e5);
  for(let i=0;i<sourceUV.count;i++){const k=key(sourceUV.getX(i),sourceUV.getY(i));map.set(k,[...(map.get(k)||[]),i])}
  const nu=g.getAttribute('uv'),na=g.getAttribute('uv1'),np=g.getAttribute('position');assert(na);const currentUV=projected?na:nu;
@@ -28,10 +28,10 @@ for(const[name,mesh]of current){
     if(outsideShoulder){assert(dx<2e-6&&dy<2e-6&&dz<=depthLimit,'Front away from the chest keeps its original shape');if(!insideChest)fixedFront++}
     else assert(dx<2e-6&&dz<=depthLimit&&dy<=lift+2e-6,'Shoulder height and local chest depth stay restrained');
    }
-   else{assert(dx<2e-6&&dy<=(outsideShoulder?2e-6:lift+2e-6),'Back fold smoothing preserves width and lower-back height');assert(dz<=.015002,'Back adjustment stays restrained');if(dz>1e-6)softenedBack++;backMax=Math.max(backMax,dz)}
+   else{assert(dx<2e-6&&dy<=(outsideShoulder?2e-6:lift+2e-6),'Back fold smoothing preserves width and lower-back height');assert(dz<=meta.refinement.backMaxDepthChange+2e-6&&dz<.105,'Back relaxation remains local and depth-only');if(dz>1e-6)softenedBack++;backMax=Math.max(backMax,dz)}
   }
  }
 }
-assert(fixedFront>10000&&fixedSleeves>6000&&softenedBack>10000);assert(backMax>1e-4&&backMax<.015);
+assert(fixedFront>10000&&fixedSleeves>6000&&softenedBack>10000);assert(backMax>1e-4&&backMax<.105);
 let collar:T.Mesh|undefined;after.traverse(o=>{if(o instanceof T.Mesh&&(o.material as T.Material).name.startsWith('Ribbing_Collar'))collar=o});assert(collar);const bounds=new T.Box3().setFromObject(collar!);assert(bounds.getSize(new T.Vector3()).x<.57,'Wider crew band stays local to the neck');
 console.log(`Studio refinement: ${fixedFront} front samples away from edits fixed, ${fixedSleeves} lower-sleeve/cuff/hem samples fixed; ${softenedBack} back samples subtly smoothed, max ${backMax.toFixed(6)}; calibrated print UVs and original fabric atlas verified PASS`);

@@ -1,3 +1,9 @@
+# Release 0.8.3 — continuous surface-aware torso print unwrap
+
+The previous flat back projection could fold over itself on curved cloth. Both torso print zones now use angle-based UV0 unwraps of the actual 3D surface, with calibrated physical scale and the existing default artwork anchors. This removes artificial stroke stretching across folds. A local depth relaxation softens the deep central back groove. Front fit, collar, shoulders, sleeves, width/height, original artist texture and sewing-atlas UV1 are retained. BrockCreative attribution and original terms remain below; no new third-party assets or textures are introduced.
+
+---
+
 # Release 0.8.2 — chest depth and back print coordinates
 
 The approved BrockCreative-derived Studio tee receives a local chest-depth relaxation to reduce two raised folds. Body width/height, shoulder line and collar dimensions retain 0.8.1 values. Sleeve, hem and back positions are unchanged; fifteen outer-band samples follow the cloth by at most 0.000101 scene units. Back print UV0 is calibrated to a metric planar frame so artwork has straight baselines and correct proportions; the original fabric/sewing normal atlas on UV1 remains unchanged. No new third-party assets or textures are introduced. Source attribution and terms remain below.

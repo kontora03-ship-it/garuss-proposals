@@ -1,0 +1,150 @@
+{
+  "version": "0.8.3",
+  "baselineCommit": "117c581dd57879d84b1381a5c98aa70f52a85b61",
+  "geometryProof": {
+    "Ribbing_Hem": {
+      "vertices": 4599,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "movedPositionSamples": 0,
+      "originalFabricUVUnchanged": true,
+      "printUVUnchanged": true
+    },
+    "Print_Front": {
+      "vertices": 31343,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "movedPositionSamples": 0,
+      "originalFabricUVUnchanged": true,
+      "printUVUnchanged": false
+    },
+    "Print_Back": {
+      "vertices": 33057,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.09000000357627869
+      ],
+      "movedPositionSamples": 24046,
+      "originalFabricUVUnchanged": true,
+      "printUVUnchanged": false
+    },
+    "Print_LeftSleeve": {
+      "vertices": 6603,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "movedPositionSamples": 0,
+      "originalFabricUVUnchanged": true,
+      "printUVUnchanged": true
+    },
+    "Print_RightSleeve": {
+      "vertices": 6622,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "movedPositionSamples": 0,
+      "originalFabricUVUnchanged": true,
+      "printUVUnchanged": true
+    },
+    "Ribbing_Collar.001": {
+      "vertices": 2900,
+      "maxPositionAbsXYZ": [
+        5.05298376083374e-05,
+        8.83936882019043e-05,
+        0.00010019540786743164
+      ],
+      "movedPositionSamples": 17,
+      "originalFabricUVUnchanged": true,
+      "printUVUnchanged": true
+    }
+  },
+  "backFoldRelaxation": {
+    "blend": 0.85,
+    "maxAdditionalDepth": 0.09,
+    "xFade": [
+      0.32,
+      0.5
+    ],
+    "heightFade": [
+      -0.65,
+      -0.45,
+      0.35,
+      0.6
+    ]
+  },
+  "torsoPrintFrames": {
+    "front": {
+      "width": 1.7127488595318863,
+      "height": 2.009594530409645,
+      "sourceScale": 3.2499585531722888,
+      "printWidth": 1.083,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.34,
+      "mapping": "surface-torso",
+      "calibration": {
+        "method": "angle-based surface unwrap",
+        "anchor": [
+          0.7,
+          0.28
+        ],
+        "areaScale": 1.769333391107225,
+        "surfaceArea": 2.36542349899824
+      }
+    },
+    "back": {
+      "width": 1.7218412217688954,
+      "height": 1.8070959714719856,
+      "sourceScale": 3.2499677627425267,
+      "printWidth": 1.083,
+      "wrap": false,
+      "defaultX": 0.5,
+      "defaultY": 0.38,
+      "mapping": "surface-torso",
+      "calibration": {
+        "method": "angle-based surface unwrap",
+        "anchor": [
+          0.5,
+          0.2
+        ],
+        "areaScale": 1.795669849361086,
+        "surfaceArea": 2.254859641060692
+      }
+    }
+  },
+  "oldBackPlanarUVFoldovers": 3846,
+  "correctedTorsoUVFoldovers": {
+    "front": 0,
+    "back": 0
+  },
+  "intrinsicTriangleMetrics": {
+    "front": {
+      "triangles": 62089,
+      "scaleMin": 0.8707,
+      "scaleMax": 1.1574,
+      "maxAnisotropy": 1.2117
+    },
+    "back": {
+      "triangles": 65562,
+      "scaleMin": 0.7997,
+      "scaleMax": 1.2455,
+      "maxAnisotropy": 1.0802
+    }
+  },
+  "newAssets": {
+    "tee-studio.glb": "78cdf61ed17997fb7d79d804d8c4bb181fb38c34c36d9a3da4242cc71924e0c2",
+    "tee-studio.json": "af43c3320d2d58a9268fc39b60fc81e9f853bf20fea80fca8142d5c912178b55",
+    "tee-studio-surface-print-comparison.jpg": "89b2b6df8aa11f6f242cd56c0a9262f5348eba6cd8e29313e51c0b95ca8f75de"
+  }
+}

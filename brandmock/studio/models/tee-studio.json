@@ -1,6 +1,6 @@
 {
   "id": "tee-studio",
-  "revision": 10,
+  "revision": 11,
   "panelWidth": 1.709330199133619,
   "panelHeight": 1.6893589185771063,
   "bodyWidth": 1.8705969886338267,
@@ -8,31 +8,42 @@
   "defaultLogoWidth": 0.32,
   "zones": {
     "back": {
-      "width": 1.7184044129430094,
-      "height": 1.7897652089595795,
+      "width": 1.7218412217688954,
+      "height": 1.8070959714719856,
       "sourceScale": 3.2499677627425267,
       "printWidth": 1.083,
       "wrap": false,
       "defaultX": 0.5,
       "defaultY": 0.38,
-      "mapping": "planar-back",
-      "projection": {
-        "centerX": -0.011791439726948738,
-        "top": 0.9897516667842865,
+      "mapping": "surface-torso",
+      "calibration": {
+        "method": "angle-based surface unwrap",
         "anchor": [
           0.5,
           0.2
-        ]
+        ],
+        "areaScale": 1.795669849361086,
+        "surfaceArea": 2.254859641060692
       }
     },
     "front": {
-      "width": 1.709330199133619,
-      "height": 1.6893589185771063,
+      "width": 1.7127488595318863,
+      "height": 2.009594530409645,
       "sourceScale": 3.2499585531722888,
       "printWidth": 1.083,
       "wrap": false,
       "defaultX": 0.5,
-      "defaultY": 0.34
+      "defaultY": 0.34,
+      "mapping": "surface-torso",
+      "calibration": {
+        "method": "angle-based surface unwrap",
+        "anchor": [
+          0.7,
+          0.28
+        ],
+        "areaScale": 1.769333391107225,
+        "surfaceArea": 2.36542349899824
+      }
     },
     "rightSleeve": {
       "width": 1.183935656230405,
@@ -58,9 +69,9 @@
     "author": "BrockCreative",
     "url": "https://brockcreative.gumroad.com/l/3DTshirtMockup",
     "license": "Условия автора",
-    "adaptation": "BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original fabric atlas retained; back print coordinates calibrated for clean artwork proportions."
+    "adaptation": "BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch."
   },
-  "source": "Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and a metric back-print frame.",
+  "source": "Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with a locally relaxed central back groove.",
   "surfaceProfile": "cotton-studio",
   "fitScale": [
     1.14,
@@ -69,10 +80,24 @@
   "refinement": {
     "base": "Studio 0.6",
     "backDepthBlend": 0.25,
-    "backMaxDepthChange": 0.004429467022418976,
+    "backFoldRelaxation": {
+      "blend": 0.85,
+      "maxAdditionalDepth": 0.09,
+      "xFade": [
+        0.32,
+        0.5
+      ],
+      "heightFade": [
+        -0.65,
+        -0.45,
+        0.35,
+        0.6
+      ]
+    },
+    "backMaxDepthChange": 0.09400758147239685,
     "neckBlendRadius": 0.145,
     "outsideNeckShouldersAndChest": "unchanged",
-    "printUVs": "front/sleeves retained; back calibrated to a metric planar frame; artist fabric atlas retained",
+    "printUVs": "sleeves retained; front/back use continuous angle-based surface unwraps; artist fabric atlas retained",
     "frontChest": {
       "blend": 0.85,
       "inset": 0.01,

@@ -1,5 +1,5 @@
 """Local collar and back-fold refinement of the approved Studio 0.6 tee.
-The frozen v0.6 mesh is the source: body fit, sleeves, hems and print UVs stay intact.
+The frozen v0.6 mesh is the source; local shape refinements and torso print calibration retain the artist fabric atlas and sleeve UVs.
 Blender 4.3, --disable-autoexec. Blender axes X horizontal, Z up, -Y front.
 """
 import bpy,bmesh,os,json,math
@@ -25,6 +25,26 @@ back_delta=[]
 for v,old in saved.items():
  delta=max(-.015,min(.015,(v.co.y-old)*.25));v.co.y=old+delta;back_delta.append(abs(delta))
 print('BACK_DEPTH_REFINEMENT',len(back),max(back_delta),sum(back_delta)/len(back_delta),flush=True)
+
+# Relax the deep central back groove, preserving width, height and seam boundaries.
+# A low-frequency depth fit retains the torso contour while reducing self-occlusion.
+import numpy as np
+fit_vertices=[v for v in back if abs(v.co.x)<.50 and -.65<v.co.z<.65]
+fit_xyz=np.array([tuple(v.co)for v in fit_vertices]);xx=fit_xyz[:,0];zz=fit_xyz[:,2]
+fit_matrix=np.stack([np.ones(len(xx)),xx,xx*xx,zz,zz*zz,xx*zz],axis=1)
+back_coeff=np.linalg.lstsq(fit_matrix,fit_xyz[:,1],rcond=None)[0]
+def back_ease(a,b,value):
+ t=max(0,min(1,(value-a)/(b-a)));return t*t*(3-2*t)
+back_extra=[]
+for v in back:
+ x=v.co.x;z=v.co.z
+ weight=(1-back_ease(.32,.50,abs(x)))*back_ease(-.65,-.45,z)*(1-back_ease(.35,.60,z))
+ target=float(np.array([1,x,x*x,z,z*z,x*z])@back_coeff)
+ delta=max(-.09,min(.09,(target-v.co.y)*.85))*weight
+ v.co.y+=delta;back_extra.append(abs(delta))
+back_delta=[abs(v.co.y-old)for v,old in saved.items()]
+print('CENTRAL_BACK_FOLD_RELAXATION',max(back_extra),max(back_delta),back_coeff.tolist(),flush=True)
+
 # The author's body has one exact 144-edge neck boundary after its collar is removed.
 edges=[e for e in bm.edges if e.is_boundary and all(v.co.z>.6 and abs(v.co.x)<.42 for v in e.verts)]
 adj={}
@@ -127,40 +147,26 @@ bm=bmesh.new();bm.from_mesh(cm);bmesh.ops.recalc_face_normals(bm,faces=list(bm.f
 if sum(f.normal.z for f in bm.faces)<0:bmesh.ops.reverse_faces(bm,faces=list(bm.faces))
 bm.to_mesh(cm);bm.free();bpy.context.view_layer.objects.active=collar;collar.select_set(True)
 solid=collar.modifiers.new('Rib band actual thickness','SOLIDIFY');solid.thickness=.0035;solid.offset=-.5;solid.use_even_offset=False;bpy.ops.object.modifier_apply(modifier=solid.name)
-# Give the back print a metric planar frame. Its original fabric atlas (UV1)
-# remains untouched; centre the new frame at the existing upper-back logo anchor.
-mesh.calc_loop_triangles()
-back_index=next(i for i,m in enumerate(mesh.materials)if m.name.startswith('Print_Back'))
-back_tris=[t for t in mesh.loop_triangles if mesh.polygons[t.polygon_index].material_index==back_index]
-uv_points=[];uv_faces=[]
-for tri in back_tris:
- start=len(uv_points);uv_points += [(mesh.uv_layers[0].data[l].uv.x,mesh.uv_layers[0].data[l].uv.y,0)for l in tri.loops];uv_faces.append((start,start+1,start+2))
-uv_tree=BVHTree.FromPolygons(uv_points,uv_faces,all_triangles=True)
-hit,_,idx,_=uv_tree.find_nearest(Vector((.5,.8,0)));tri=back_tris[idx];a,b,c=[Vector(uv_points[i])for i in uv_faces[idx]]
-den=(b.y-c.y)*(a.x-c.x)+(c.x-b.x)*(a.y-c.y)
-wa=((b.y-c.y)*(hit.x-c.x)+(c.x-b.x)*(hit.y-c.y))/den;wb=((c.y-a.y)*(hit.x-c.x)+(a.x-c.x)*(hit.y-c.y))/den
-anchor=sum((mesh.vertices[i].co*w for i,w in zip(tri.vertices,(wa,wb,1-wa-wb))),Vector())
-back_meta=dict(json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))['zones']['back'])
-back_vertices={i for t in back_tris for i in t.vertices};bottom=min(mesh.vertices[i].co.z for i in back_vertices)
-frame_height=(anchor.z-bottom)/.8;frame_top=bottom+frame_height
-for p in mesh.polygons:
- if p.material_index==back_index:
-  for li in p.loop_indices:
-   pnt=mesh.vertices[mesh.loops[li].vertex_index].co
-   mesh.uv_layers[0].data[li].uv=(.5-(pnt.x-anchor.x)/back_meta['width'],(pnt.z-bottom)/frame_height)
-back_meta.update(height=frame_height,mapping='planar-back',projection={'centerX':anchor.x,'top':frame_top,'anchor':[.5,.2]})
-print('METRIC_BACK_PRINT_FRAME',anchor[:],frame_height,frame_top,flush=True)
+# Unwrap the actual curved cloth surface, never its flat camera projection.
+# A planar map folds over wherever the 3D cloth bends back in width/height.
+import sys
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+from unwrap_studio_prints import unwrap_surface
+source_zones=json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))['zones']
+front_meta=unwrap_surface(body,'Print_Front',source_zones['front'],(.7,.28))
+back_meta=unwrap_surface(body,'Print_Back',source_zones['back'],(.5,.2))
 # UV1 on the source body remains byte-for-byte the original sewing atlas.
 bpy.ops.object.select_all(action='DESELECT')
 for o in [body,collar]:o.select_set(True)
 bpy.context.view_layer.objects.active=body
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(ROOT,'sources/tee-studio-refined.blend'),compress=True)
 bpy.ops.export_scene.gltf(filepath=os.path.join(OUT,'tee-studio.glb'),export_format='GLB',use_selection=True,export_animations=False,export_materials='EXPORT',export_copyright='BrockCreative; approved Studio fit with local round collar and restrained back folds by BrandMock.')
-# Retain source front/sleeve dimensions and install the calibrated back frame.
+# Retain sleeve dimensions and install surface-aware torso print frames.
 meta=json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))
 meta['zones']['back']=back_meta
-meta['revision']=10;meta['source']='Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and a metric back-print frame.'
-meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'outsideNeckShouldersAndChest':'unchanged','printUVs':'front/sleeves retained; back calibrated to a metric planar frame; artist fabric atlas retained','frontChest':{'blend':.85,'inset':.010,'maxDepthChange':max(chest_delta),'xFade':[.35,.52],'heightFade':[-.05,.16,.48,.68]},'shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
-meta['credit']['adaptation']='BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original fabric atlas retained; back print coordinates calibrated for clean artwork proportions.'
+meta['zones']['front']=front_meta
+meta['revision']=11;meta['source']='Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with a locally relaxed central back groove.'
+meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'backFoldRelaxation':{'blend':.85,'maxAdditionalDepth':max(back_extra),'xFade':[.32,.50],'heightFade':[-.65,-.45,.35,.60]},'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'outsideNeckShouldersAndChest':'unchanged','printUVs':'sleeves retained; front/back use continuous angle-based surface unwraps; artist fabric atlas retained','frontChest':{'blend':.85,'inset':.010,'maxDepthChange':max(chest_delta),'xFade':[.35,.52],'heightFade':[-.05,.16,.48,.68]},'shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
+meta['credit']['adaptation']='BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch.'
 with open(os.path.join(OUT,'tee-studio.json'),'w')as f:json.dump(meta,f,indent=2,ensure_ascii=False)
 print('REFINED_STUDIO_READY',flush=True)

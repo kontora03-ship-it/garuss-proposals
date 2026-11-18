@@ -65,15 +65,15 @@
   {
     "path": "tee-studio.glb",
     "bytes": 4389028,
-    "sha256": "67b5fcc6a4dec028696d808a43cccbe50cc7ed96d24bd9df8019fc8bb2ba8b4e",
-    "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
+    "sha256": "78cdf61ed17997fb7d79d804d8c4bb181fb38c34c36d9a3da4242cc71924e0c2",
+    "source": "BrockCreative user-supplied tee; Studio surface-aware print unwraps, local central-back depth relaxation and original artist fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-studio.json",
-    "bytes": 3046,
-    "sha256": "3fc0ad4e72ec796a3167371e231f4fd0629dd45fbbbc7c9e2199df2574d82fd7",
-    "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
+    "bytes": 3715,
+    "sha256": "af43c3320d2d58a9268fc39b60fc81e9f853bf20fea80fca8142d5c912178b55",
+    "source": "BrockCreative user-supplied tee; Studio surface-aware print unwraps, local central-back depth relaxation and original artist fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
@@ -138,5 +138,12 @@
     "sha256": "48dc8688614b217bb7a2c5d8605fa8461341dc7b398031079cb65a0caa32be4a",
     "source": "BrockCreative user-supplied tee; approved Studio fit with local collar, shoulder and chest refinements, calibrated back-print frame; original fabric atlas retained",
     "license": "Author terms; no separate license file supplied in archive"
+  },
+  {
+    "path": "tee-studio-surface-print-comparison.jpg",
+    "source": "BrockCreative user-supplied tee; Studio surface-aware print unwraps, local central-back depth relaxation and original artist fabric atlas retained",
+    "license": "Author terms; no separate license file supplied in archive",
+    "bytes": 150186,
+    "sha256": "89b2b6df8aa11f6f242cd56c0a9262f5348eba6cd8e29313e51c0b95ca8f75de"
   }
 ]
