@@ -1,0 +1,12 @@
+before turntable 0 degrees actual render PASS
+before turntable 90 degrees actual render PASS
+before turntable 270 degrees actual render PASS
+after turntable 0 degrees actual render PASS
+after turntable 45 degrees actual render PASS
+after turntable 90 degrees actual render PASS
+after turntable 135 degrees actual render PASS
+after turntable 180 degrees actual render PASS
+after turntable 225 degrees actual render PASS
+after turntable 270 degrees actual render PASS
+after turntable 315 degrees actual render PASS
+Profile, straight hem, default artwork and complete eight-angle rotation actual renders PASS

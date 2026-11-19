@@ -5,6 +5,7 @@ Blender 4.3, --disable-autoexec. Blender axes X horizontal, Z up, -Y front.
 import bpy,bmesh,os,json,math,sys
 sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from fair_studio_torso import fair_panel,level_hem
+from shape_studio_torso import shape_torso
 from mathutils import Vector
 from mathutils.kdtree import KDTree
 from mathutils.bvhtree import BVHTree
@@ -102,6 +103,7 @@ hem_mat={i for i,m in enumerate(mesh.materials)if m.name.startswith('Ribbing_Hem
 hem_level=level_hem(bm,front_mat|back_mat,hem_mat)
 back_fair=fair_panel(bm,back_mat,hem_mat,450.,1)
 front_fair=fair_panel(bm,front_mat,hem_mat,450.,-1)
+torso_cage=shape_torso(bm,1.)
 back_delta=[abs(v.co.y-rest_depth[v])for v in bm.verts if any(f.material_index in back_mat for f in v.link_faces)and v.co.z<.68]
 front_total=[abs(v.co.y-rest_depth[v])for v in bm.verts if any(f.material_index in front_mat for f in v.link_faces)and v.co.z<.68]
 
@@ -159,8 +161,8 @@ bpy.ops.export_scene.gltf(filepath=os.path.join(OUT,'tee-studio.glb'),export_for
 meta=json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))
 meta['zones']['back']=back_meta
 meta['zones']['front']=front_meta
-meta['revision']=12;meta['source']='Studio 0.6 wide cut retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with continuous front/back depth fairing through a level hem, removing the high side cuts.'
-meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'torsoFairing':{'front':front_fair,'back':back_fair},'levelHem':hem_level,'frontMaxDepthChange':max(front_total),'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'protected':'neck opening, shoulder line, sleeves and original fabric atlas','printUVs':'sleeves retained; front/back use continuous angle-based surface unwraps; artist fabric atlas retained','frontChest':{'blend':.85,'inset':.010,'maxDepthChange':max(chest_delta),'xFade':[.35,.52],'heightFade':[-.05,.16,.48,.68]},'shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
-meta['credit']['adaptation']='BrandMock Studio: approved wider fit, round ribbed crew neck, supported shoulders, continuous front/back fairing and a level hem. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch.'
+meta['revision']=13;meta['source']='Studio 0.6 wide cut retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with continuous front/back depth fairing through a level hem, removing the high side cuts, plus a continuous broad human torso contour from chest through waist to lower body.'
+meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'torsoFairing':{'front':front_fair,'back':back_fair},'torsoCage':torso_cage,'levelHem':hem_level,'frontMaxDepthChange':max(front_total),'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'protected':'neck opening, shoulder height, outer sleeves/cuffs, level hem and original fabric atlas','printUVs':'sleeves retained; front/back use continuous angle-based surface unwraps; artist fabric atlas retained','frontChest':{'blend':.85,'inset':.010,'maxDepthChange':max(chest_delta),'xFade':[.35,.52],'heightFade':[-.05,.16,.48,.68]},'shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
+meta['credit']['adaptation']='BrandMock Studio: approved wider fit, round ribbed crew neck, supported shoulders, continuous human torso shaping, front/back fairing and a level hem. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch.'
 with open(os.path.join(OUT,'tee-studio.json'),'w')as f:json.dump(meta,f,indent=2,ensure_ascii=False)
 print('REFINED_STUDIO_READY',flush=True)

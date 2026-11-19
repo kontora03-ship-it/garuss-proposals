@@ -1,0 +1,13 @@
+# Studio 0.8.5 validation
+
+Baseline: published 0.8.4, commit f32e157ff97c4f77d1d82fb2dd92a8d531a03ce6. The requested change is a continuous human torso silhouette: the chest should project naturally without appearing as a separate localized lump. A depth cage with shape-preserving cubic height interpolation and a smooth lateral weight changes the whole torso coherently. Inner sleeve roots share the field, avoiding hard material-boundary transitions; cuffs and outer sleeves are held fixed.
+
+Direct exported-buffer comparisons verify unchanged X/height coordinates for body and sleeve meshes, original fabric UV1, protected points outside the cage, the exact inner collar rim and the level lower hem. The collar's outer band conforms to the updated support within 0.000101 scene units per axis. Front depth changes at most 0.119991 units; back depth at most 0.024999; sleeve roots at most 0.002862. Original artist normal texture and logo source files are unchanged.
+
+A geometry regression measures central front depth at chest and abdomen. The 90th-percentile chest depth increases from 0.19767 to 0.31388; abdomen depth changes from 0.25397 to 0.27860. Their final difference 0.03528 is constrained to 0.02–0.065, with an abdomen floor of 0.26, preventing both a flat torso and an isolated chest above a pinched waist. Adjacent upper/lower chest sections and lateral chest strips verify broad continuity. Lower-profile envelopes still satisfy the previous anti-bulge bounds, and the actual 370-edge lower boundary remains level.
+
+Every actual torso UV triangle retains consistent signed area. Max intrinsic anisotropy is 1.2118 front and 1.2552 back. At least 99% of scale measurements remain within 25% of area-calibrated cloth scale; whole ranges are 0.8945–1.4672 front and 0.7736–1.2716 back. This distinguishes legitimate local uniform scale on curved cloth from anisotropic stroke smearing or UV foldovers.
+
+Actual captures compare the immediate baseline with the final mesh in front and both profiles, plus an eight-angle revolution. Native PNG exports, rectangular SVGs at three heights per torso side, pointer dragging and saved-project reload are checked in the production editor. Public comparisons only crop/resize actual renderer captures and add labels.
+
+Commands: blender -b --threads 4 --disable-autoexec --python-exit-code 1 --python tools/refine_studio_tee.py; npm test; npm run build. Vite dev 5183 + STUDIO_BASELINE_GLB=<0.8.4 GLB> STUDIO_BASELINE_JSON=<matching JSON> npm run test:studio-turntable. Vite preview 5182 + TORSO_AFTER_ONLY=1 BROWSER_EXECUTABLE=/usr/bin/chromium npm run test:torso-print. Raw PNGs are in ignored test-artifacts/studio-turntable/ and test-artifacts/torso-print/.

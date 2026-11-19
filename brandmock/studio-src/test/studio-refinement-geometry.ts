@@ -23,8 +23,9 @@ for(const[name,mesh]of current){
   const fair=meta.refinement?.torsoFairing,level=meta.refinement?.levelHem;
   const lowerTorso=level&&pos.getY(j)<.351&&!name.includes('Sleeve');
   if(name.includes('Sleeve')){
-   if(outsideShoulder){assert(Math.max(dx,dy,dz)<2e-6,'Cuffs and lower sleeves remain unchanged');fixedSleeves++}
-   else{assert(dx<2e-6&&dz<2e-6&&dy<=lift+2e-6);assert(np.getY(i)>=pos.getY(j)-2e-6)}
+   const cage=meta.refinement?.torsoCage,root=cage&&Math.abs(pos.getX(j))<cage.halfWidth&&pos.getY(j)<.721&&pos.getY(j)>-.847,depthLimit=root?cage.maxDepthChange+2e-6:2e-6;
+   if(outsideShoulder){assert(dx<2e-6&&dy<2e-6&&dz<=depthLimit,'Outer sleeves/cuffs stay fixed; inner sleeve roots may follow the torso cage');if(!root)fixedSleeves++}
+   else{assert(dx<2e-6&&dz<=depthLimit&&dy<=lift+2e-6);assert(np.getY(i)>=pos.getY(j)-2e-6)}
   }else if(name.startsWith('Ribbing_Hem')){
    if(lowerTorso){assert(dx<2e-6&&dz<.23&&dy<=level.maxHeightChange+2e-6);assert(np.getY(i)<=pos.getY(j)+2e-6,'Level hem only lowers the side cuts')}
    else{assert(Math.max(dx,dy,dz)<2e-6);fixedSleeves++}

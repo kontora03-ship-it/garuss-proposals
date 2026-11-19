@@ -1,3 +1,17 @@
+# Update 0.8.5 — one continuous human torso contour
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.5
+
+The 0.8.4 profile was too flat. The Studio tee now follows a continuous torso envelope: a broad chest flows into the abdomen and lower body, with a gentle upper-back contour. The deformation is shared across the mesh, including inner sleeve roots, so there are no separate chest patches or displaced seam boundaries. Shape-preserving cubic height curves and a smooth lateral cage keep the volume broad and the waist relaxed. No person/avatar geometry is added.
+
+Torso width and vertex heights are retained from 0.8.4. The neck opening, raised shoulder height, outer sleeves/cuffs and level hem remain. Original fabric-atlas UV1 is unchanged. Print UV0 is rebuilt on the final surface. The previous garments, customer artwork files, project settings and vertical-only orbit are retained.
+
+Geometry tests verify a visible but moderate chest-to-abdomen contour, broad rather than paired chest peaks, retained abdomen volume, low print anisotropy and the level lower rim. Actual renderer evidence compares 0.8.4 and 0.8.5 in profile/front and captures a complete eight-angle revolution. See models/tee-studio-human-profile-comparison.jpg, models/tee-studio-turntable.jpg and validation/v0.8.5/.
+
+Rebuild with tools/refine_studio_tee.py (Blender 4.3, --disable-autoexec), then npm test and npm run build. Vite dev on 5183 serves test:studio-turntable; set STUDIO_BASELINE_GLB and STUDIO_BASELINE_JSON to extracted 0.8.4 assets for the immediate comparison. Vite preview on 5182 serves TORSO_AFTER_ONLY=1 npm run test:torso-print.
+
+---
+
 # Update 0.8.4 — continuous profiles and a level lower hem
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.4

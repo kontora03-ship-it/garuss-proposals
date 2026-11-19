@@ -1,6 +1,6 @@
 {
   "id": "tee-studio",
-  "revision": 12,
+  "revision": 13,
   "panelWidth": 1.709330199133619,
   "panelHeight": 1.6893589185771063,
   "bodyWidth": 1.8705969886338267,
@@ -9,7 +9,7 @@
   "zones": {
     "back": {
       "width": 1.7218412217688954,
-      "height": 1.9775586560107692,
+      "height": 1.980819600925578,
       "sourceScale": 3.2499677627425267,
       "printWidth": 1.083,
       "wrap": false,
@@ -22,13 +22,13 @@
           0.5,
           0.2
         ],
-        "areaScale": 1.9487226929030184,
-        "surfaceArea": 2.190138249599677
+        "areaScale": 1.9487230316177409,
+        "surfaceArea": 2.2016958532756816
       }
     },
     "front": {
       "width": 1.7127488595318863,
-      "height": 1.9811459758540764,
+      "height": 2.04691483050853,
       "sourceScale": 3.2499585531722888,
       "printWidth": 1.083,
       "wrap": false,
@@ -41,8 +41,8 @@
           0.7,
           0.28
         ],
-        "areaScale": 1.9235927780980056,
-        "surfaceArea": 2.2926467686128325
+        "areaScale": 1.941339327018605,
+        "surfaceArea": 2.3661817680707653
       }
     },
     "rightSleeve": {
@@ -69,9 +69,9 @@
     "author": "BrockCreative",
     "url": "https://brockcreative.gumroad.com/l/3DTshirtMockup",
     "license": "Условия автора",
-    "adaptation": "BrandMock Studio: approved wider fit, round ribbed crew neck, supported shoulders, continuous front/back fairing and a level hem. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch."
+    "adaptation": "BrandMock Studio: approved wider fit, round ribbed crew neck, supported shoulders, continuous human torso shaping, front/back fairing and a level hem. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch."
   },
-  "source": "Studio 0.6 wide cut retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with continuous front/back depth fairing through a level hem, removing the high side cuts.",
+  "source": "Studio 0.6 wide cut retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with continuous front/back depth fairing through a level hem, removing the high side cuts, plus a continuous broad human torso contour from chest through waist to lower body.",
   "surfaceProfile": "cotton-studio",
   "fitScale": [
     1.14,
@@ -108,6 +108,44 @@
         ]
       }
     },
+    "torsoCage": {
+      "method": "continuous shape-preserving torso cage",
+      "amount": 1.0,
+      "halfWidth": 0.58,
+      "heightKnots": [
+        -0.846,
+        -0.55,
+        -0.22,
+        0.1,
+        0.34,
+        0.52,
+        0.72,
+        0.94
+      ],
+      "frontDepthOffsets": [
+        0,
+        0.008,
+        0.027,
+        0.09,
+        0.12,
+        0.09,
+        0,
+        0
+      ],
+      "backDepthOffsets": [
+        0,
+        0.003,
+        0.006,
+        0.018,
+        0.025,
+        0.02,
+        0,
+        0
+      ],
+      "maxDepthChange": 0.11999031789474174,
+      "changedVertices": 63656,
+      "protected": "X/height, collar above .72, cuffs outside .58 and lower rim"
+    },
     "levelHem": {
       "method": "harmonic height extension to a level lower rim",
       "rimVertices": 370,
@@ -119,9 +157,10 @@
       ],
       "iterations": 674
     },
-    "frontMaxDepthChange": 0.1349855363368988,
-    "backMaxDepthChange": 0.13641756772994995,
+    "frontMaxDepthChange": 0.13464805483818054,
+    "backMaxDepthChange": 0.13633349537849426,
     "neckBlendRadius": 0.145,
+    "protected": "neck opening, shoulder height, outer sleeves/cuffs, level hem and original fabric atlas",
     "printUVs": "sleeves retained; front/back use continuous angle-based surface unwraps; artist fabric atlas retained",
     "frontChest": {
       "blend": 0.85,
@@ -152,7 +191,6 @@
       ]
     },
     "collarBandWidthScale": 2.2,
-    "collarOpening": "same as approved v0.8; added width lies outward on the existing fabric",
-    "protected": "neck opening, shoulder line, sleeves and original fabric atlas"
+    "collarOpening": "same as approved v0.8; added width lies outward on the existing fabric"
   }
 }

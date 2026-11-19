@@ -64,23 +64,23 @@
   },
   {
     "path": "tee-studio.glb",
-    "bytes": 4389032,
-    "sha256": "20aee4a5d39a6eaa62d2e6bb879e1e554d574931acc79fd5c8a3bbbb912747c6",
-    "source": "BrockCreative user-supplied tee; BrandMock Studio full front/back depth fairing, level hem, original fabric atlas and surface-aware print UVs",
+    "bytes": 4389028,
+    "sha256": "26897e103283b16750d8a27a02200594b471650e720a91703e265caef02472c1",
+    "source": "BrockCreative user-supplied tee; BrandMock Studio continuous human torso contour, level hem, original fabric atlas and surface print UVs",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-studio.json",
-    "bytes": 4667,
-    "sha256": "5d835efc9ca28949dea79c5b3cc7924e5957b2166041c86f337a064befefa1f1",
-    "source": "BrockCreative user-supplied tee; BrandMock Studio full front/back depth fairing, level hem, original fabric atlas and surface-aware print UVs",
+    "bytes": 5514,
+    "sha256": "89ba52987b6e203b4f865acddbe241e032a5c804fc1cf7e648c8b43de7b51f0b",
+    "source": "BrockCreative user-supplied tee; BrandMock Studio continuous human torso contour, level hem, original fabric atlas and surface print UVs",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
     "path": "tee-studio-preview.png",
-    "bytes": 153999,
-    "sha256": "e22d3ea7c55479ea852c834ad97d7282efb40052785570c6d1c6337cca3ea2a6",
-    "source": "BrockCreative user-supplied tee; BrandMock Studio full front/back depth fairing, level hem, original fabric atlas and surface-aware print UVs",
+    "bytes": 155085,
+    "sha256": "066814a4bebc278acf35454399b7b6033245e03710c9a0a7c02458300ab8bafa",
+    "source": "BrockCreative user-supplied tee; BrandMock Studio continuous human torso contour, level hem, original fabric atlas and surface print UVs",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
@@ -113,9 +113,9 @@
   },
   {
     "path": "tee-studio-look.jpg",
-    "bytes": 87314,
-    "sha256": "dbd420f52bf2dcbc897e17d54e5e183aaf626278a49fdb1c68b8dac9ad0ce58c",
-    "source": "BrockCreative user-supplied tee; BrandMock Studio full front/back depth fairing, level hem, original fabric atlas and surface-aware print UVs",
+    "bytes": 86022,
+    "sha256": "ac40d5b5f82504d66014d7fc8fc36667bf3960b07f8d56a4725e801aec1071b9",
+    "source": "BrockCreative user-supplied tee; BrandMock Studio continuous human torso contour, level hem, original fabric atlas and surface print UVs",
     "license": "Author terms; no separate license file supplied in archive"
   },
   {
@@ -155,9 +155,16 @@
   },
   {
     "path": "tee-studio-turntable.jpg",
-    "source": "BrockCreative user-supplied tee; BrandMock Studio full front/back depth fairing, level hem, original fabric atlas and surface-aware print UVs",
+    "source": "BrockCreative user-supplied tee; BrandMock Studio continuous human torso contour, level hem, original fabric atlas and surface print UVs",
     "license": "Author terms; no separate license file supplied in archive",
-    "bytes": 97231,
-    "sha256": "4364e533f3ca77316d8288270e2c2a8982132977cd8364df9da84f908af46969"
+    "bytes": 97642,
+    "sha256": "1e73b1137ba82af9065626a9089c23df2201b0c20d62e2a3461ecdf74245703e"
+  },
+  {
+    "path": "tee-studio-human-profile-comparison.jpg",
+    "source": "BrockCreative user-supplied tee; BrandMock Studio continuous human torso contour, level hem, original fabric atlas and surface print UVs",
+    "license": "Author terms; no separate license file supplied in archive",
+    "bytes": 155077,
+    "sha256": "17fcf611521a23b4c4e554c804b528453e2a1b2b5aafd488f08a2df923871cc2"
   }
 ]

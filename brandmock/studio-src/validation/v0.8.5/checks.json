@@ -1,0 +1,119 @@
+{
+  "version": "0.8.5",
+  "baselineCommit": "f32e157ff97c4f77d1d82fb2dd92a8d531a03ce6",
+  "torsoCage": {
+    "method": "continuous shape-preserving torso cage",
+    "amount": 1.0,
+    "halfWidth": 0.58,
+    "heightKnots": [
+      -0.846,
+      -0.55,
+      -0.22,
+      0.1,
+      0.34,
+      0.52,
+      0.72,
+      0.94
+    ],
+    "frontDepthOffsets": [
+      0,
+      0.008,
+      0.027,
+      0.09,
+      0.12,
+      0.09,
+      0,
+      0
+    ],
+    "backDepthOffsets": [
+      0,
+      0.003,
+      0.006,
+      0.018,
+      0.025,
+      0.02,
+      0,
+      0
+    ],
+    "maxDepthChange": 0.11999031789474174,
+    "changedVertices": 63656,
+    "protected": "X/height, collar above .72, cuffs outside .58 and lower rim"
+  },
+  "geometryProof": {
+    "Ribbing_Hem": {
+      "vertices": 4599,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.0003408193588256836
+      ],
+      "originalFabricUVUnchanged": true
+    },
+    "Print_Front": {
+      "vertices": 31343,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.11999031901359558
+      ],
+      "originalFabricUVUnchanged": true
+    },
+    "Print_Back": {
+      "vertices": 33057,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.024998188018798828
+      ],
+      "originalFabricUVUnchanged": true
+    },
+    "Print_LeftSleeve": {
+      "vertices": 6603,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.002688806504011154
+      ],
+      "originalFabricUVUnchanged": true
+    },
+    "Print_RightSleeve": {
+      "vertices": 6622,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.002861320972442627
+      ],
+      "originalFabricUVUnchanged": true
+    },
+    "Ribbing_Collar.001": {
+      "vertices": 2900,
+      "maxPositionAbsXYZ": [
+        4.931911826133728e-05,
+        8.83936882019043e-05,
+        0.00010019540786743164
+      ],
+      "originalFabricUVUnchanged": true
+    }
+  },
+  "profile90Quantile": {
+    "chest": 0.31388,
+    "abdomen": 0.2786,
+    "difference": 0.03528,
+    "baselineChest": 0.19767,
+    "baselineAbdomen": 0.25397
+  },
+  "actualLowerRimHeightRange": 0.0,
+  "uvFoldovers": {
+    "front": 0,
+    "back": 0
+  },
+  "assets": {
+    "tee-studio.glb": "26897e103283b16750d8a27a02200594b471650e720a91703e265caef02472c1",
+    "tee-studio.json": "89ba52987b6e203b4f865acddbe241e032a5c804fc1cf7e648c8b43de7b51f0b",
+    "tee-studio-preview.png": "066814a4bebc278acf35454399b7b6033245e03710c9a0a7c02458300ab8bafa",
+    "tee-studio-look.jpg": "ac40d5b5f82504d66014d7fc8fc36667bf3960b07f8d56a4725e801aec1071b9",
+    "tee-studio-turntable.jpg": "1e73b1137ba82af9065626a9089c23df2201b0c20d62e2a3461ecdf74245703e",
+    "tee-studio-human-profile-comparison.jpg": "17fcf611521a23b4c4e554c804b528453e2a1b2b5aafd488f08a2df923871cc2"
+  },
+  "otherGarmentsUnchanged": true
+}

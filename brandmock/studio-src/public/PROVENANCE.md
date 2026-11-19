@@ -1,3 +1,9 @@
+# Release 0.8.5 — continuous torso volume
+
+The BrockCreative-derived Studio tee receives an original BrandMock torso cage: a broad chest transitions continuously through the abdomen and upper back. A shared depth-only deformation also moves the small inner sleeve-root region coherently. Width, vertex heights, neck opening, raised shoulder height, outer sleeves/cuffs and the level lower rim are retained. The collar's outer band conforms to its support surface within 0.000101 scene units. Original artist fabric-atlas UV1 and source normal texture are unchanged; angle-based torso print UV0 is rebuilt. No new third-party model, avatar or texture is introduced; original attribution and terms remain below.
+
+---
+
 # Release 0.8.4 — torso profiles and lower hem
 
 The approved BrockCreative-derived Studio tee now uses continuous implicit depth fairing across the full front/back panels and their hem vertices. This replaces the 0.8.3 polynomial back patch. A harmonic height extension lowers the raised side cuts to one level lower rim; the normal bottom opening and both sleeve openings remain. Width, shoulder line, neck opening and sleeve geometry are retained. Original artist fabric-atlas UV1 and the original normal texture remain unchanged. Angle-based torso print UV0 is rebuilt on the final surface. No new third-party assets or textures are introduced; original terms and attribution remain below.

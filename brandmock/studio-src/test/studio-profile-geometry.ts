@@ -10,6 +10,11 @@ for(const[name,sign]of [['Print_Front',1],['Print_Back',-1]]as const){
  const lower=values.filter(p=>p[1]>-.86&&p[1]<-.65).map(p=>sign*p[2]);assert(lower.length>500);
  const depth=quantile(lower,.95);assert(depth<.36,'Lower front/back must not retain the 0.8.3 inflated profile');console.log(`${name}: lower torso 95th-percentile depth ${depth.toFixed(5)} < 0.36 PASS`);
 }
+// The chest is part of a broad human torso, not a localized bulge or a flat sheet.
+const front=meshes.get('Print_Front')!.getAttribute('position');
+function frontDepth(lo:number,hi:number,xlo=-.18,xhi=.18){const a:number[]=[];for(let j=0;j<front.count;j++)if(front.getY(j)>lo&&front.getY(j)<hi&&front.getX(j)>xlo&&front.getX(j)<xhi)a.push(front.getZ(j));assert(a.length>50);return quantile(a,.9)}
+const chest=frontDepth(.25,.40),waist=frontDepth(-.30,-.12),lowerChest=frontDepth(.05,.15),upperChest=frontDepth(.45,.55),left=frontDepth(.25,.40,-.30,-.15),right=frontDepth(.25,.40,.15,.30);
+assert(chest-waist>.02&&chest-waist<.065,'Chest-to-waist contour must be visible and gently continuous');assert(waist>.26,'The abdomen must retain torso volume instead of pinching behind an isolated chest bump');assert(Math.abs(chest-lowerChest)<.07&&Math.abs(chest-upperChest)<.09,'Chest volume must extend smoothly into the surrounding torso');assert(chest>=left-.015&&chest>=right-.015,'A broad central chest must not split into two separate lobes');console.log(`Human torso: chest ${chest.toFixed(5)}, abdomen ${waist.toFixed(5)}, continuous profile difference ${(chest-waist).toFixed(5)} PASS`);
 // Weld exported material splits by position to identify the actual open lower rim.
 const counts=new Map<string,{a:number[];b:number[];count:number}>();
 for(const name of ['Print_Front','Print_Back','Ribbing_Hem']){
