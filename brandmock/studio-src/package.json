@@ -1,17 +1,18 @@
 {
   "name": "brandmock-studio",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port 5181",
     "build": "tsc -b && vite build",
-    "test": "tsx test/geometry.ts && tsx test/heavy-geometry.ts && tsx test/studio-refinement-geometry.ts && tsx test/torso-print-geometry.ts && tsx test/orbit.ts",
+    "test": "tsx test/geometry.ts && tsx test/heavy-geometry.ts && tsx test/studio-refinement-geometry.ts && tsx test/torso-print-geometry.ts && tsx test/studio-profile-geometry.ts && tsx test/orbit.ts",
     "test:e2e": "node test/browser.cjs",
     "test:studio-tee": "node test/studio-tee.cjs",
     "test:heavy-tee": "node test/heavy-tee.cjs",
     "test:studio-refinement": "node test/studio-refinement.cjs",
-    "test:torso-print": "node test/torso-print.cjs"
+    "test:torso-print": "node test/torso-print.cjs",
+    "test:studio-turntable": "node test/studio-turntable.cjs"
   },
   "dependencies": {
     "react": "^19.0.0",

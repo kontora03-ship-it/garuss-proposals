@@ -20,18 +20,23 @@ for(const[name,mesh]of current){
   assert(Math.abs(na.getX(i)-atlas.getX(j))<2e-7&&Math.abs(na.getY(i)-atlas.getY(j))<2e-7,'Native artist atlas retained');
   const dx=Math.abs(np.getX(i)-pos.getX(j)),dy=Math.abs(np.getY(i)-pos.getY(j)),dz=Math.abs(np.getZ(i)-pos.getZ(j));
   const outsideShoulder=!lift||pos.getY(j)<.38||Math.abs(pos.getX(j))<.27||Math.abs(pos.getX(j))>.93;
-  if(name.startsWith('Ribbing_Hem')||(name.includes('Sleeve')&&outsideShoulder)){assert(Math.max(dx,dy,dz)<2e-6,'Approved cuffs, hems and lower sleeves remain unchanged');fixedSleeves++}
-  else if(name.includes('Sleeve')){assert(dx<2e-6&&dz<2e-6&&dy<=lift+2e-6,'Only the upper sleeve height may change');assert(np.getY(i)>=pos.getY(j)-2e-6,'Upper sleeves lift rather than sag')}
-  else if(pos.getY(j)<.58||Math.abs(pos.getX(j))>.46){
-   if(name==='Print_Front'){
-    const chest=meta.refinement?.frontChest,insideChest=chest&&Math.abs(pos.getX(j))<.54&&pos.getY(j)>-.10&&pos.getY(j)<.74,depthLimit=insideChest?chest.maxDepthChange+2e-6:2e-6;
-    if(outsideShoulder){assert(dx<2e-6&&dy<2e-6&&dz<=depthLimit,'Front away from the chest keeps its original shape');if(!insideChest)fixedFront++}
-    else assert(dx<2e-6&&dz<=depthLimit&&dy<=lift+2e-6,'Shoulder height and local chest depth stay restrained');
-   }
-   else{assert(dx<2e-6&&dy<=(outsideShoulder?2e-6:lift+2e-6),'Back fold smoothing preserves width and lower-back height');assert(dz<=meta.refinement.backMaxDepthChange+2e-6&&dz<.105,'Back relaxation remains local and depth-only');if(dz>1e-6)softenedBack++;backMax=Math.max(backMax,dz)}
+  const fair=meta.refinement?.torsoFairing,level=meta.refinement?.levelHem;
+  const lowerTorso=level&&pos.getY(j)<.351&&!name.includes('Sleeve');
+  if(name.includes('Sleeve')){
+   if(outsideShoulder){assert(Math.max(dx,dy,dz)<2e-6,'Cuffs and lower sleeves remain unchanged');fixedSleeves++}
+   else{assert(dx<2e-6&&dz<2e-6&&dy<=lift+2e-6);assert(np.getY(i)>=pos.getY(j)-2e-6)}
+  }else if(name.startsWith('Ribbing_Hem')){
+   if(lowerTorso){assert(dx<2e-6&&dz<.23&&dy<=level.maxHeightChange+2e-6);assert(np.getY(i)<=pos.getY(j)+2e-6,'Level hem only lowers the side cuts')}
+   else{assert(Math.max(dx,dy,dz)<2e-6);fixedSleeves++}
+  }else if(pos.getY(j)<.58||Math.abs(pos.getX(j))>.46){
+   assert(dx<2e-6,'The approved torso width is retained');
+   if(lowerTorso){assert(np.getY(i)<=pos.getY(j)+2e-6&&dy<=level.maxHeightChange+2e-6)}
+   else assert(dy<=(outsideShoulder?2e-6:lift+2e-6),'Upper torso height changes only by the approved shoulder lift');
+   if(name==='Print_Front'){assert(dz<.23,'Front depth fairing remains bounded');fixedFront++}
+   else{assert(dz<=meta.refinement.backMaxDepthChange+2e-6&&dz<.23);if(dz>1e-6)softenedBack++;backMax=Math.max(backMax,dz)}
   }
  }
 }
-assert(fixedFront>10000&&fixedSleeves>6000&&softenedBack>10000);assert(backMax>1e-4&&backMax<.105);
+assert(fixedFront>10000&&fixedSleeves>6000&&softenedBack>10000);assert(backMax>1e-4&&backMax<.23);
 let collar:T.Mesh|undefined;after.traverse(o=>{if(o instanceof T.Mesh&&(o.material as T.Material).name.startsWith('Ribbing_Collar'))collar=o});assert(collar);const bounds=new T.Box3().setFromObject(collar!);assert(bounds.getSize(new T.Vector3()).x<.57,'Wider crew band stays local to the neck');
-console.log(`Studio refinement: ${fixedFront} front samples away from edits fixed, ${fixedSleeves} lower-sleeve/cuff/hem samples fixed; ${softenedBack} back samples subtly smoothed, max ${backMax.toFixed(6)}; calibrated print UVs and original fabric atlas verified PASS`);
+console.log(`Studio refinement: ${fixedFront} front samples retain width and protected height, ${fixedSleeves} protected sleeve/cuff samples fixed; ${softenedBack} back samples faired, max ${backMax.toFixed(6)}; calibrated print UVs and original fabric atlas verified PASS`);

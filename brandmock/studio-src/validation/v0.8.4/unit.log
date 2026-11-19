@@ -1,0 +1,29 @@
+
+> brandmock-studio@0.8.4 test
+> tsx test/geometry.ts && tsx test/heavy-geometry.ts && tsx test/studio-refinement-geometry.ts && tsx test/torso-print-geometry.ts && tsx test/studio-profile-geometry.ts && tsx test/orbit.ts
+
+Artist fabric UV retained; authored print zones and calibrated back plane verified PASS
+tee-studio: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Artist fabric UV retained; authored print zones and calibrated back plane verified PASS
+tee-regular: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Artist fabric UV retained; authored print zones and calibrated back plane verified PASS
+hoodie-brock: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Artist fabric UV retained; authored print zones and calibrated back plane verified PASS
+hoodie-boxy: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+tee-heavy: four real UV surfaces, rotated physical proportions and sleeve seam PASS
+Project validation and lossless v1 migration PASS
+Legacy oversized project maps to replacement tee PASS
+Actual exported Heavy shell: welded closed topology, real interior, volume, readable UV directions, collar and six twin-needle stitch loops PASS
+Studio refinement: 27990 front samples retain width and protected height, 9419 protected sleeve/cuff samples fixed; 28658 back samples faired, max 0.136418; calibrated print UVs and original fabric atlas verified PASS
+Print_Front: 62089 actual surface triangles, zero UV foldovers; scale 0.8756–1.4461, max anisotropy 1.2121; flat-projection regression exposed PASS
+Print_Back: 65562 actual surface triangles, zero UV foldovers; scale 0.7696–1.2690, max anisotropy 1.2511; flat-projection regression exposed PASS
+Print_Front: lower torso 95th-percentile depth 0.30141 < 0.36 PASS
+Print_Back: lower torso 95th-percentile depth 0.31674 < 0.36 PASS
+Actual lower boundary: 370 edges, height range 0.00e+0, no high side opening PASS
+Real OrbitControls: vertical drag locked, horizontal orbit preserved, old camera recentered PASS
+Built-in demo upgraded to BrandMock; customer originals preserved PASS
+npm notice
+npm notice New major version of npm available! 11.9.0 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

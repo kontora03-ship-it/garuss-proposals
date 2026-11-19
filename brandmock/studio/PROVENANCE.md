@@ -1,3 +1,9 @@
+# Release 0.8.4 — torso profiles and lower hem
+
+The approved BrockCreative-derived Studio tee now uses continuous implicit depth fairing across the full front/back panels and their hem vertices. This replaces the 0.8.3 polynomial back patch. A harmonic height extension lowers the raised side cuts to one level lower rim; the normal bottom opening and both sleeve openings remain. Width, shoulder line, neck opening and sleeve geometry are retained. Original artist fabric-atlas UV1 and the original normal texture remain unchanged. Angle-based torso print UV0 is rebuilt on the final surface. No new third-party assets or textures are introduced; original terms and attribution remain below.
+
+---
+
 # Release 0.8.3 — continuous surface-aware torso print unwrap
 
 The previous flat back projection could fold over itself on curved cloth. Both torso print zones now use angle-based UV0 unwraps of the actual 3D surface, with calibrated physical scale and the existing default artwork anchors. This removes artificial stroke stretching across folds. A local depth relaxation softens the deep central back groove. Front fit, collar, shoulders, sleeves, width/height, original artist texture and sewing-atlas UV1 are retained. BrockCreative attribution and original terms remain below; no new third-party assets or textures are introduced.

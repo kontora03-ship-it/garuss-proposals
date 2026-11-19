@@ -1,8 +1,10 @@
-"""Local collar and back-fold refinement of the approved Studio 0.6 tee.
+"""Studio tee: approved cut, continuous torso fairing, level hem and surface print UVs.
 The frozen v0.6 mesh is the source; local shape refinements and torso print calibration retain the artist fabric atlas and sleeve UVs.
 Blender 4.3, --disable-autoexec. Blender axes X horizontal, Z up, -Y front.
 """
-import bpy,bmesh,os,json,math
+import bpy,bmesh,os,json,math,sys
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+from fair_studio_torso import fair_panel,level_hem
 from mathutils import Vector
 from mathutils.kdtree import KDTree
 from mathutils.bvhtree import BVHTree
@@ -17,6 +19,7 @@ old_collar={i for i,m in enumerate(mesh.materials)if m.name.startswith('Ribbing_
 back_mat={i for i,m in enumerate(mesh.materials)if m.name.startswith('Print_Back')}
 bmesh.ops.delete(bm,geom=[f for f in bm.faces if f.material_index in old_collar],context='FACES')
 bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=.00001)
+rest_depth={v:v.co.y for v in bm.verts}
 # Smooth only back DEPTH and blend back 25%. Hold every material/seam boundary.
 back=[v for v in bm.verts if not v.is_boundary and v.link_faces and all(f.material_index in back_mat for f in v.link_faces)]
 saved={v:v.co.y for v in back}
@@ -25,25 +28,6 @@ back_delta=[]
 for v,old in saved.items():
  delta=max(-.015,min(.015,(v.co.y-old)*.25));v.co.y=old+delta;back_delta.append(abs(delta))
 print('BACK_DEPTH_REFINEMENT',len(back),max(back_delta),sum(back_delta)/len(back_delta),flush=True)
-
-# Relax the deep central back groove, preserving width, height and seam boundaries.
-# A low-frequency depth fit retains the torso contour while reducing self-occlusion.
-import numpy as np
-fit_vertices=[v for v in back if abs(v.co.x)<.50 and -.65<v.co.z<.65]
-fit_xyz=np.array([tuple(v.co)for v in fit_vertices]);xx=fit_xyz[:,0];zz=fit_xyz[:,2]
-fit_matrix=np.stack([np.ones(len(xx)),xx,xx*xx,zz,zz*zz,xx*zz],axis=1)
-back_coeff=np.linalg.lstsq(fit_matrix,fit_xyz[:,1],rcond=None)[0]
-def back_ease(a,b,value):
- t=max(0,min(1,(value-a)/(b-a)));return t*t*(3-2*t)
-back_extra=[]
-for v in back:
- x=v.co.x;z=v.co.z
- weight=(1-back_ease(.32,.50,abs(x)))*back_ease(-.65,-.45,z)*(1-back_ease(.35,.60,z))
- target=float(np.array([1,x,x*x,z,z*z,x*z])@back_coeff)
- delta=max(-.09,min(.09,(target-v.co.y)*.85))*weight
- v.co.y+=delta;back_extra.append(abs(delta))
-back_delta=[abs(v.co.y-old)for v,old in saved.items()]
-print('CENTRAL_BACK_FOLD_RELAXATION',max(back_extra),max(back_delta),back_coeff.tolist(),flush=True)
 
 # The author's body has one exact 144-edge neck boundary after its collar is removed.
 edges=[e for e in bm.edges if e.is_boundary and all(v.co.z>.6 and abs(v.co.x)<.42 for v in e.verts)]
@@ -111,6 +95,16 @@ for v,old in front_saved.items():
  v.co.y=old+delta
  if abs(delta)>1e-7:chest_delta.append(abs(delta))
 print('LOCAL_FRONT_CHEST',len(chest_delta),max(chest_delta),flush=True)
+
+# Fair the complete front/back surface through the rear/front hem. A local
+# polynomial patch with a lower cutoff created the 0.8.3 profile bulge.
+hem_mat={i for i,m in enumerate(mesh.materials)if m.name.startswith('Ribbing_Hem')}
+hem_level=level_hem(bm,front_mat|back_mat,hem_mat)
+back_fair=fair_panel(bm,back_mat,hem_mat,450.,1)
+front_fair=fair_panel(bm,front_mat,hem_mat,450.,-1)
+back_delta=[abs(v.co.y-rest_depth[v])for v in bm.verts if any(f.material_index in back_mat for f in v.link_faces)and v.co.z<.68]
+front_total=[abs(v.co.y-rest_depth[v])for v in bm.verts if any(f.material_index in front_mat for f in v.link_faces)and v.co.z<.68]
+
 bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces));bm.to_mesh(mesh);bm.free();mesh.update();mesh.normals_split_custom_set([(0,0,0)]*len(mesh.loops))
 print('LOCAL_NECK_VERTICES',moved,flush=True)
 # Widen the band OUTWARD over the existing fabric, keeping its approved opening.
@@ -165,8 +159,8 @@ bpy.ops.export_scene.gltf(filepath=os.path.join(OUT,'tee-studio.glb'),export_for
 meta=json.load(open(os.path.join(ROOT,'sources/vendor/tee-studio-v06.json')))
 meta['zones']['back']=back_meta
 meta['zones']['front']=front_meta
-meta['revision']=11;meta['source']='Approved Studio 0.6 fit retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with a locally relaxed central back groove.'
-meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'backFoldRelaxation':{'blend':.85,'maxAdditionalDepth':max(back_extra),'xFade':[.32,.50],'heightFade':[-.65,-.45,.35,.60]},'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'outsideNeckShouldersAndChest':'unchanged','printUVs':'sleeves retained; front/back use continuous angle-based surface unwraps; artist fabric atlas retained','frontChest':{'blend':.85,'inset':.010,'maxDepthChange':max(chest_delta),'xFade':[.35,.52],'heightFade':[-.05,.16,.48,.68]},'shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
-meta['credit']['adaptation']='BrandMock Studio: approved wider fit, local round ribbed crew neck and gentler back folds. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch.'
+meta['revision']=12;meta['source']='Studio 0.6 wide cut retained; local round crew-neck replacement, 25% blended back-depth smoothing, and a 2.2x outward-widened collar band with the approved opening retained, plus a subtle 0.040-unit shoulder lift, local chest-depth relaxation and continuous surface-aware front/back print unwraps, with continuous front/back depth fairing through a level hem, removing the high side cuts.'
+meta['refinement']={'base':'Studio 0.6','backDepthBlend':.25,'torsoFairing':{'front':front_fair,'back':back_fair},'levelHem':hem_level,'frontMaxDepthChange':max(front_total),'backMaxDepthChange':max(back_delta),'neckBlendRadius':radius,'protected':'neck opening, shoulder line, sleeves and original fabric atlas','printUVs':'sleeves retained; front/back use continuous angle-based surface unwraps; artist fabric atlas retained','frontChest':{'blend':.85,'inset':.010,'maxDepthChange':max(chest_delta),'xFade':[.35,.52],'heightFade':[-.05,.16,.48,.68]},'shoulderLift':{'amount':SHOULDER_LIFT,'xFade':[.29,.43,.66,.91],'heightFade':[.40,.73]},'collarBandWidthScale':BAND_WIDTH_SCALE,'collarOpening':'same as approved v0.8; added width lies outward on the existing fabric'}
+meta['credit']['adaptation']='BrandMock Studio: approved wider fit, round ribbed crew neck, supported shoulders, continuous front/back fairing and a level hem. Original fabric atlas retained; front and back print unwraps follow the 3D cloth surface with consistent triangle orientation and low intrinsic stretch.'
 with open(os.path.join(OUT,'tee-studio.json'),'w')as f:json.dump(meta,f,indent=2,ensure_ascii=False)
 print('REFINED_STUDIO_READY',flush=True)

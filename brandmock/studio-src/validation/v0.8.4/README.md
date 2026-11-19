@@ -1,0 +1,13 @@
+# Studio 0.8.4 validation
+
+Baseline: published Studio 0.8.3, commit 50fa1cf36999d163c9cde142049e5e439d4d9c69. The reported defects were a lower-back bulge, an inflated front profile, and a high side opening at the hem. The former back polynomial patch ended above the unchanged original hem, causing an abrupt change in silhouette. It is removed.
+
+A positive-weight implicit depth solve fairs each complete torso panel including the front/rear hem. It retains X coordinates and fades out below the shoulder/neck region. A separate harmonic height field extends a level lower rim smoothly upward through the lower torso, ending below the chest. All 370 lower-rim edges are still open garment edges and lie on one height plane; the high side cut is removed without capping the garment bottom. Sleeve geometry and the original fabric-atlas UV1 are verified retained.
+
+The 95th-percentile lower-front depth falls from 0.43016 to 0.30141 scene units; lower-back depth falls from 0.43505 to 0.31674. The actual lower boundary height range falls from 0.325329 to zero. Dedicated geometry tests reject the previous bulging envelopes and a raised lower-rim section. Original printable face counts, protected shoulder/cuff points, atlas coordinates, camera constraints and artwork migration tests also pass.
+
+Print geometry tests check every actual UV triangle for consistent signed area and intrinsic anisotropy <1.3. At least 99% of singular-scale measurements stay within 25% of area-calibrated cloth scale. The final front range is 0.8756–1.4461 and back range 0.7696–1.2690; rare boundary regions can have larger uniform scale while preserving letter proportions. This is distinguished from anisotropic stroke smearing or UV foldovers.
+
+Actual renderer captures compare identical lighting, camera, fabric and artwork. The final model is rendered at eight angles over a complete revolution, including both exact profiles, front and rear. The production editor also exports native PNGs, shows rectangular print calibration at three heights on each side, drags it on the actual surface, and verifies saved-project reload. Comparisons and previews only crop/resize actual renders and add labels.
+
+Commands: blender -b --threads 4 --disable-autoexec --python-exit-code 1 --python tools/refine_studio_tee.py; npm test; npm run build. Vite dev 5183 + STUDIO_BASELINE_GLB=<0.8.3 GLB> STUDIO_BASELINE_JSON=<matching JSON> npm run test:studio-turntable. Vite preview 5182 + TORSO_AFTER_ONLY=1 BROWSER_EXECUTABLE=/usr/bin/chromium npm run test:torso-print. Raw renders live under ignored test-artifacts/studio-turntable/ and test-artifacts/torso-print/.

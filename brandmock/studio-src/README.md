@@ -1,3 +1,17 @@
+# Update 0.8.4 — continuous profiles and a level lower hem
+
+Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.4
+
+The 0.8.3 local back-depth patch stopped above the hem and left a protruding lower-back pocket in side view. The front also flared too far, and the original hem rose into a high side cut. Both torso panels now use one implicit depth-fairing solve that includes their hem vertices. There is no lower patch cutoff or polynomial depth target. A harmonic height extension lowers the complete 370-vertex lower rim to its original lowest plane, removing the high side opening while keeping the garment bottom open.
+
+The wide cut, shoulder lift, neck opening and sleeve geometry are retained. Original artist fabric UV1 is unchanged. Torso print UV0 is unwrapped again on the final surface; BrandMock defaults, customer artwork originals, saved settings and vertical-axis-only orbit remain. Other garments retain their original files and hashes.
+
+Geometry regressions verify front/back lower-depth envelopes and every actual lower-rim edge. Browser evidence includes both profiles, front/rear views and an eight-angle turntable, plus native PNG exports and print dragging/saved-project checks. Actual captures are published as models/tee-studio-profile-comparison.jpg and models/tee-studio-turntable.jpg. Evidence is in validation/v0.8.4/.
+
+Rebuild with tools/refine_studio_tee.py (Blender 4.3, --disable-autoexec), then npm test and npm run build. The turntable test uses Vite dev on 5183 and test/fixtures/studio-turntable.html; set STUDIO_BASELINE_GLB and STUDIO_BASELINE_JSON to extracted 0.8.3 assets for the immediate before/after comparison. The production print test uses preview on 5182 with TORSO_AFTER_ONLY=1 npm run test:torso-print.
+
+---
+
 # Update 0.8.3 — print unwrap follows the actual cloth surface
 
 Published at https://kontora03-ship-it.github.io/garuss-proposals/brandmock/studio/?v=0.8.3

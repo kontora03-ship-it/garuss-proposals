@@ -1,0 +1,121 @@
+{
+  "version": "0.8.4",
+  "baselineCommit": "50fa1cf36999d163c9cde142049e5e439d4d9c69",
+  "geometryProof": {
+    "Ribbing_Hem": {
+      "vertices": 4599,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0972413420677185,
+        0.14247694611549377
+      ],
+      "fabricUVUnchanged": true
+    },
+    "Print_Front": {
+      "vertices": 31343,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.325329065322876,
+        0.1349855363368988
+      ],
+      "fabricUVUnchanged": true
+    },
+    "Print_Back": {
+      "vertices": 33057,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.325329065322876,
+        0.13641756772994995
+      ],
+      "fabricUVUnchanged": true
+    },
+    "Print_LeftSleeve": {
+      "vertices": 6603,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fabricUVUnchanged": true
+    },
+    "Print_RightSleeve": {
+      "vertices": 6622,
+      "maxPositionAbsXYZ": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "fabricUVUnchanged": true
+    },
+    "Ribbing_Collar.001": {
+      "vertices": 2900,
+      "maxPositionAbsXYZ": [
+        5.05298376083374e-05,
+        8.83936882019043e-05,
+        0.00010019540786743164
+      ],
+      "fabricUVUnchanged": true
+    }
+  },
+  "torsoFairing": {
+    "front": {
+      "method": "implicit depth fairing over complete torso panel and hem",
+      "panel": "front",
+      "strength": 450.0,
+      "vertices": 29376,
+      "iterations": 481,
+      "maxDepthChange": 0.1424769499330985,
+      "hemIncluded": true,
+      "upperFade": [
+        0.28,
+        0.68
+      ]
+    },
+    "back": {
+      "method": "implicit depth fairing over complete torso panel and hem",
+      "panel": "back",
+      "strength": 450.0,
+      "vertices": 30465,
+      "iterations": 485,
+      "maxDepthChange": 0.13831501160008491,
+      "hemIncluded": true,
+      "upperFade": [
+        0.28,
+        0.68
+      ]
+    }
+  },
+  "levelHem": {
+    "method": "harmonic height extension to a level lower rim",
+    "rimVertices": 370,
+    "targetHeight": -0.8459999561309814,
+    "maxHeightChange": 0.325329065322876,
+    "upperFade": [
+      0.05,
+      0.35
+    ],
+    "iterations": 674
+  },
+  "actualLowerRimHeightRange": 0.0,
+  "lowerProfileDepth95": {
+    "front": 0.30141,
+    "back": 0.31674
+  },
+  "uvTriangleOrientationReversals": {
+    "front": 0,
+    "back": 0
+  },
+  "assets": {
+    "tee-studio.glb": "20aee4a5d39a6eaa62d2e6bb879e1e554d574931acc79fd5c8a3bbbb912747c6",
+    "tee-studio.json": "5d835efc9ca28949dea79c5b3cc7924e5957b2166041c86f337a064befefa1f1",
+    "tee-studio-preview.png": "e22d3ea7c55479ea852c834ad97d7282efb40052785570c6d1c6337cca3ea2a6",
+    "tee-studio-look.jpg": "dbd420f52bf2dcbc897e17d54e5e183aaf626278a49fdb1c68b8dac9ad0ce58c",
+    "tee-studio-comparison.jpg": "97f5630a955db7514df524fc3379b74c6a0fec85e41ca8958a1fa4cb1b1859f2",
+    "tee-studio-band-comparison.jpg": "08d23028f283d7ea5d15a1100dde9edb3d34105d7307b45090455b05cd381392",
+    "tee-studio-chest-print-comparison.jpg": "48dc8688614b217bb7a2c5d8605fa8461341dc7b398031079cb65a0caa32be4a",
+    "tee-studio-surface-print-comparison.jpg": "89b2b6df8aa11f6f242cd56c0a9262f5348eba6cd8e29313e51c0b95ca8f75de",
+    "tee-studio-profile-comparison.jpg": "47223ba77ab50bc9a01fb43e2f053782558fdcf82f4fa85927bb2e72f04e1bc3",
+    "tee-studio-turntable.jpg": "4364e533f3ca77316d8288270e2c2a8982132977cd8364df9da84f908af46969"
+  },
+  "otherGarmentHashesUnchanged": true
+}
